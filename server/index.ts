@@ -11,7 +11,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 app.use("/api", router);
 
-const clientPath = path.resolve(__dirname, "../client/dist");
+const clientPath = path.resolve(__dirname, "./dist");
 app.use(express.static(clientPath));
 
 app.get(/.*/, (req, res) => {
