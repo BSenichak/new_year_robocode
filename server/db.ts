@@ -18,10 +18,12 @@ async function initDatabase() {
     try {
         await rootPool.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\``);
         const pool: Pool = createPool({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: DB_NAME,
+            host: process.env.DB_HOST || process.env.MYSQLHOST,
+            user: process.env.DB_USER || process.env.MYSQLUSER,
+            password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
+            database: process.env.DB_NAME || process.env.MYSQLDATABASE,
+            port: Number(process.env.DB_PORT || process.env.MYSQLPORT || 3306),
+
             waitForConnections: true,
             connectionLimit: 100,
         });
