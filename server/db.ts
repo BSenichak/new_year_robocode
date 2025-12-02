@@ -16,8 +16,6 @@ const rootPool = createPool({
 async function initDatabase() {
     try {
         await rootPool.query(`CREATE DATABASE IF NOT EXISTS \`${DB_NAME}\``);
-        console.log("Database checked/created");
-
         const pool: Pool = createPool({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
@@ -35,16 +33,12 @@ async function initDatabase() {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
-
-        console.log("Tables checked/created");
-
         return pool;
     } catch (err) {
         console.error("DB init error:", err);
         process.exit(1);
     }
 }
-
 
 const pool = await initDatabase();
 export default pool;
