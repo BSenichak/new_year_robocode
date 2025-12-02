@@ -1,12 +1,25 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authReducer";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
+
+const logger = createLogger({
+    collapsed: true,
+    duration: true,
+    diff: false,
+    logErrors: true,
+    predicate: (_, action) => {
+        return !action.type.includes("persist");
+    },
+});
+
 export const store = configureStore({
     reducer: {
-        auth: authReducer
+        auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
-        import.meta.env.DEV ? getDefaultMiddleware().concat(logger) : getDefaultMiddleware()
+        import.meta.env.DEV
+            ? getDefaultMiddleware().concat(logger)
+            : getDefaultMiddleware(),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
