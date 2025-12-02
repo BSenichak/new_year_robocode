@@ -1,17 +1,21 @@
+
 import { createTheme, type Theme } from "@mui/material";
 
 const theme: Theme = createTheme({
     palette: {
         mode: "dark",
         primary: {
-            main: "#1b5e20",
+            main: "#228c22", // зелений
         },
         secondary: {
-            main: "#ff9800",
+            main: "#d2691e", // коричнево-оранжевий
+        },
+        error: {
+            main: "#ff0000", // червоний
         },
         background: {
-            default: "#004d00",
-            paper: "#1b5e20",
+            default: "#006600", // темно-зелений
+            paper: "#8b4513", // коричневий
         },
         text: {
             primary: "#ffffff",
@@ -38,3 +42,4 @@ const theme: Theme = createTheme({
 });
 
 export default theme;
+

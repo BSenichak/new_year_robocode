@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { getUsers } from "./store/authReducer";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import NotFound from "./pages/NotFound/NotFound";
 
 export default function App() {
     const dispatch = useDispatch<AppDispatch>();
@@ -17,7 +20,12 @@ export default function App() {
         <ThemeProvider theme={Theme}>
             <Wrapper>
                 <Header />
-                <Content>sdfs</Content>
+                <Content>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Content>
                 <Footer />
             </Wrapper>
         </ThemeProvider>
@@ -34,4 +42,6 @@ const Wrapper = styled(Box)`
 
 let Content = styled(Container)`
     flex: 1;
+    display: flex;
+    flex-direction: column;
 `;

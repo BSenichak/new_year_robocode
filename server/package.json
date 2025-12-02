@@ -20,6 +20,6 @@
   "scripts": {
     "start": "bun run index.ts",
     "dev": "bun --watch index.ts",
-    "build": "bun build index.ts --out-dir dist"
+    "build": "bun build index.ts --outdir . --target node"
   }
 }
