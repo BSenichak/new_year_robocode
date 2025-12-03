@@ -1,34 +1,45 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import userAPI from "../api/user.api";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import authApi from "../api/authApi";
 
-type InitialState = {
-    users: any[];
-};
+export const fetchMe = createAsyncThunk(
+  "auth/fetchMe",
+  async () => {
+    const { data } = await authApi.getMe();
+    return data;
+  }
+);
 
-const initialState: InitialState = {
-    users: [],
-};
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async () => {
+    await authApi.logout();
+  }
+);
 
-const authReducer = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder.addCase(getUsers.fulfilled, (state, action) => {
-            state.users = action.payload;
-        });
-    },
+const authSlice = createSlice({
+  name: "auth",
+  initialState: {
+    user: null,
+    isLoading: false,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMe.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchMe.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchMe.rejected, (state) => {
+        state.user = null;
+        state.isLoading = false;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null;
+      });
+  }
 });
 
-export const getUsers = createAsyncThunk("auth/getUsers", async () => {
-    try {
-        const response = await userAPI.getUsers();
-        return response.data;
-    } catch (err) {
-        console.error(err);
-    }
-});
-
-export const {} = authReducer.actions;
-
-export default authReducer.reducer;
+export default authSlice.reducer;

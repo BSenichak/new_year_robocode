@@ -16,7 +16,10 @@ import {
 
 export default function Header() {
     return (
-        <AppBar position="static" sx={{ backgroundColor: "background.default" }}>
+        <AppBar
+            position="static"
+            sx={{ backgroundColor: "background.default" }}
+        >
             <Container>
                 <Box
                     sx={{
@@ -26,57 +29,61 @@ export default function Header() {
                         justifyContent: "center",
                     }}
                 >
-                    <Img src="/logo_ny.svg" alt="logo" />
-                    <Typography variant="h4">
+                    <Logo src="/logo_ny.svg" alt="logo" />
+                    <Typography variant="h4" component="div">
                         Врятуй свято з Robocode
                     </Typography>
                 </Box>
+
                 <Nav>
-                    <Link
+                    <NavLink
                         text="Головна сторінка"
                         icon={<HomeIcon />}
                         path="/"
                     />
-                    <Link
+                    <NavLink
                         text="Розшифрувати файл"
                         icon={<LockOpen />}
                         path="/decode"
                     />
-                    <Link
+                    <NavLink
                         text="Ваш прогрес"
                         icon={<ShowChart />}
                         path="/progress"
                     />
-                    <Link
+                    <NavLink
                         text="Таблиця лідерів"
                         icon={<MilitaryTech />}
                         path="/leader_board"
                     />
                 </Nav>
             </Container>
+
             <Hr />
         </AppBar>
     );
 }
-
-function Link({
+function NavLink({
     text,
     icon,
     path,
 }: {
     text: string;
-    icon: any;
+    icon: React.ReactNode;
     path?: string;
 }) {
-    let navigate = useNavigate();
-    let location = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const active = location.pathname === path;
+
     return (
         <NavButton
-            variant={location.pathname != path ? "contained" : "outlined"}
-            onClick={() => navigate(path || "/")}
+            variant={active ? "outlined" : "contained"}
             color="secondary"
             startIcon={icon}
-            isActive={location.pathname == path}
+            isActive={active}
+            onClick={() => navigate(path || "/")}
         >
             {text}
         </NavButton>
@@ -89,13 +96,15 @@ const Nav = styled(Box)`
     padding: 1rem 0;
 `;
 
-const NavButton = styled(Button)<{ isActive: boolean }>`
+const NavButton = styled(Button, {
+    shouldForwardProp: (prop) => prop !== "isActive",
+})<{ isActive: boolean }>`
     flex-grow: 1;
-    ${({ isActive }) =>
+    ${({ isActive, theme }) =>
         isActive &&
         `
-        background-color: #e3f2fd;
-    `}
+    background-color: ${theme.palette.action.selected};
+  `}
 `;
 
 const Hr = styled(Box)`
@@ -104,7 +113,7 @@ const Hr = styled(Box)`
     background-color: ${({ theme }) => theme.palette.text.secondary};
 `;
 
-const Img = styled("img")`
+const Logo = styled("img")`
     height: 3rem;
     filter: drop-shadow(1px 1px 2px rgba(255, 255, 255, 0.5));
 `;

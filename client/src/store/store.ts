@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authReducer";
 import { createLogger } from "redux-logger";
+import modalReducer from "./modalSlice";
 
 const logger = createLogger({
     collapsed: true,
@@ -15,6 +16,7 @@ const logger = createLogger({
 export const store = configureStore({
     reducer: {
         auth: authReducer,
+        modal: modalReducer,
     },
     middleware: (getDefaultMiddleware) =>
         import.meta.env.DEV

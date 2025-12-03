@@ -1,10 +1,6 @@
 import { Box, Container, styled, ThemeProvider } from "@mui/material";
 import Theme from "./styles/muiTheme";
 import "./styles/generalStyles.scss";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "./store/store";
-import { useEffect } from "react";
-import { getUsers } from "./store/authReducer";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
@@ -12,10 +8,6 @@ import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 
 export default function App() {
-    const dispatch = useDispatch<AppDispatch>();
-    useEffect(() => {
-        dispatch(getUsers());
-    }, []);
     return (
         <ThemeProvider theme={Theme}>
             <Wrapper>
