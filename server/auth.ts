@@ -56,7 +56,7 @@ authRouter.get(
   }
 );
 
-authRouter.get("/auth/me", (req, res) => {
+authRouter.get("/auth/me", async(req, res) => {
     res.json(req.user || null);
 });
 

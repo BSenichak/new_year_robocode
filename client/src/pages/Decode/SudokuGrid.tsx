@@ -4,6 +4,7 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { setChosenCell } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
+import VictoryModal from "./VictoryModal";
 
 type Props = {
     puzzle: string;
@@ -39,6 +40,7 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                     </Typography>
                 </Blocker>
             )}
+            <VictoryModal isOpen={correct} />
             {Array.from({ length: 9 }).map((_, row) => (
                 <div key={row} style={{ display: "flex" }}>
                     {Array.from({ length: 9 }).map((_, col) => {
