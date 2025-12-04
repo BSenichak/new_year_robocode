@@ -6,11 +6,9 @@ import IconButton from "@mui/material/IconButton";
 import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import {
-    clearValues,
-    getSudoku,
-    setChosenCellValue,
-} from "../../store/sudokuSlice";
+import { setChosenCellValue } from "../../store/sudokuSlice";
+import ClearModal from "./ClearModal";
+import RegenerateModal from "./RegenerateModal";
 
 export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
     const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
@@ -23,8 +21,6 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
         useSelector<RootState, RootState["sudoku"]["correctCount"]>(
             (state) => state.sudoku.correctCount
         ) == 81;
-
-    // Клавіші блоковані, якщо не обрана комірка
     const disabled = !chosenCell || correct;
 
     const handleKeyPress = (key: string) => {
@@ -37,6 +33,9 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
             })
         );
     };
+
+    let [clearModalOpen, setClearModalOpen] = React.useState(false);
+    let [regenerateOpen, setRegenerateOpen] = React.useState(false);
 
     return (
         <Box
@@ -109,8 +108,7 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
             <Button
                 variant="contained"
                 color="secondary"
-                disabled={disabled}
-                onClick={() => dispatch(clearValues())}
+                onClick={() => setClearModalOpen(true)}
                 sx={{ m: 2 }}
             >
                 Розпочати дешифровку заново
@@ -118,15 +116,19 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
             <Button
                 variant="contained"
                 color="secondary"
-                disabled={disabled}
-                onClick={() => {
-                    dispatch(clearValues());
-                    dispatch(getSudoku("easy"));
-                }}
+                onClick={() => setRegenerateOpen(true)}
                 sx={{ m: 2 }}
             >
                 Спробувати дешифрувати інший файл
             </Button>
+            <ClearModal
+                isOpen={clearModalOpen}
+                closeModal={() => setClearModalOpen(false)}
+            />
+            <RegenerateModal
+                isOpen={regenerateOpen}
+                closeModal={() => setRegenerateOpen(false)}
+            />
         </Box>
     );
 };

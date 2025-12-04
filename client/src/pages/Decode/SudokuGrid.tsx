@@ -58,7 +58,6 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                         const borderBottom =
                             row === 8 ? "2px solid black" : "1px solid black";
 
-                        // Визначаємо, що показувати: початкове число або відповідь користувача
                         let displayValue = "";
                         if (value !== 0) displayValue = String(value);
                         else if (playerValue && playerValue !== "0")

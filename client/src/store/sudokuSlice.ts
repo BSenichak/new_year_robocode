@@ -13,7 +13,7 @@ type SudokuState = {
     difficulty: Difficulty;
     chosenCell: { row: number; col: number } | null;
     playerAnswers: string[];
-    correctCount: number; // нове поле
+    correctCount: number; 
 };
 
 const initialState: SudokuState = {
@@ -60,10 +60,8 @@ const sudokuSlice = createSlice({
             if (!state.sudoku) return;
             const index = row * 9 + col;
 
-            // Записуємо значення
             state.playerAnswers[index] = value;
 
-            // Перевіряємо довжину перед викликом countCorrectMatches
             if (
                 state.sudoku.puzzle.length === 81 &&
                 state.sudoku.solution.length === 81 &&
@@ -89,8 +87,6 @@ const sudokuSlice = createSlice({
             .addCase(getSudoku.fulfilled, (state, action) => {
                 state.sudoku = action.payload;
                 state.isLoading = false;
-
-                // Ініціалізуємо playerAnswers як масив рядків довжини 81
                 state.playerAnswers = Array(81).fill("0");
                 state.correctCount = 0;
             })
