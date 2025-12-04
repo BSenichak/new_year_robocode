@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import LoginModal from "./components/LoginModal/LoginModal";
+import Decode from "./pages/Decode/Decode";
 
 export default function App() {
     return (
@@ -17,6 +18,7 @@ export default function App() {
                 <Content>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/decode" element={<Decode />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Content>

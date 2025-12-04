@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authReducer";
 import { createLogger } from "redux-logger";
 import modalReducer from "./modalSlice";
+import sudokuReducer from "./sudokuSlice";
 
 const logger = createLogger({
     collapsed: true,
@@ -17,6 +18,7 @@ export const store = configureStore({
     reducer: {
         auth: authReducer,
         modal: modalReducer,
+        sudoku: sudokuReducer
     },
     middleware: (getDefaultMiddleware) =>
         import.meta.env.DEV

@@ -8,6 +8,8 @@ import {
     DialogContent,
     Button,
     IconButton,
+    Typography,
+    Avatar,
 } from "@mui/material";
 import { closeLoginModal } from "../../store/modalSlice";
 import { Close, Google } from "@mui/icons-material";
@@ -44,7 +46,9 @@ export default function LoginModal() {
 
             if (event.data.success) {
                 await dispatch(fetchMe());
-                handleClose();
+                setTimeout(() => {
+                    handleClose();
+                }, 2000)
             }
         };
 
@@ -52,10 +56,11 @@ export default function LoginModal() {
         return () => window.removeEventListener("message", handler);
     }, [dispatch]);
 
+    let user: any = useSelector<RootState, RootState["auth"]["user"]>(state => state.auth.user);
     return (
         <Dialog open={isOpen} onClose={handleClose} maxWidth="xs" fullWidth>
             <DialogTitle>Вхід</DialogTitle>
-            <DialogContent>
+            {!user && <DialogContent>
                 <Button
                     startIcon={<Google />}
                     size="large"
@@ -64,10 +69,16 @@ export default function LoginModal() {
                     onClick={loginWithGoogle}
                     fullWidth
                     sx={{ mt: 2 }}
+                    
                 >
                     Увійти через Google
                 </Button>
-            </DialogContent>
+            </DialogContent>}
+            {user && <DialogContent>
+                <Avatar src={user.photos[0].value} sx={{ width: 100, height: 100, mx: "auto" }} />
+                <br />
+                <Typography textAlign="center" variant="body1">Привіт, {user.displayName}</Typography>
+            </DialogContent>}
 
             <IconButton
                 onClick={handleClose}
