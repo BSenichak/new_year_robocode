@@ -11,14 +11,14 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID || "GOOGLE_CLIENT_ID",
             clientSecret: process.env.CLIENT_SECRET || "GOOGLE_CLIENT_SECRET",
-            callbackURL: `${process.env.RAILWAY_PUBLIC_DOMAIN}/api/auth/google/callback`,
+            callbackURL: `${process.env.PUBLIC_DOMAIN}/api/auth/google/callback`,
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
         }
     )
 );
-console.log(process.env.RAILWAY_PUBLIC_DOMAIN);
+console.log(process.env.PUBLIC_DOMAIN);
 
 passport.serializeUser((user, done) => {
     done(null, user);

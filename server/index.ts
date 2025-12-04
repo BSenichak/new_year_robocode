@@ -43,5 +43,5 @@ app.get(/.*/, (req, res) => {
 });
 
 app.listen(5000, () => {
-    console.log(`Server running on ${import.meta.env.RAILWAY_PUBLIC_DOMAIN}`);
+    console.log(`Server running on ${process.env.PUBLIC_DOMAIN}`);
 });
