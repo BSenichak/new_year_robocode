@@ -11,7 +11,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID || "GOOGLE_CLIENT_ID",
             clientSecret: process.env.CLIENT_SECRET || "GOOGLE_CLIENT_SECRET",
-            callbackURL: "http://localhost:5000/api/auth/google/callback",
+            callbackURL: `${import.meta.env.RAILWAY_PUBLIC_DOMAIN}/api/auth/google/callback`,
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
@@ -38,7 +38,7 @@ authRouter.get(
   (req, res) => {
     res.send(`
   <script>
-    window.opener.postMessage({ success: true }, "http://localhost:5173");
+    window.opener.postMessage({ success: true }, window.location.origin);
     window.close();
   </script>
 `);

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OAuth Callback</title>
+  </head>
+  <body>
+    <script>
+      // Отримуємо параметри з URL
+      const params = new URLSearchParams(window.location.search);
+      const success = params.get("success");
+
+      // Передаємо дані головному вікну
+      if (window.opener) {
+        window.opener.postMessage({ success }, window.location.origin);
+        window.close(); // закриваємо попап
+      }
+    </script>
+    <h1>Авторизація...</h1>
+  </body>
+</html>
