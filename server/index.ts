@@ -5,11 +5,14 @@ import path from "path";
 import session from "express-session";
 import passport from "passport";
 import authRouter from "./auth";
+import { config } from "dotenv";
+
+config();
 
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:5173", // React
+  origin:  import.meta.env.RAILWAY_PUBLIC_DOMAIN, 
   credentials: true
 }));
 
@@ -29,5 +32,5 @@ app.use("/api", router);
 app.use("/api", authRouter);
 
 app.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
+  console.log(`Server running on ${import.meta.env.RAILWAY_PUBLIC_DOMAIN}`);
 });
