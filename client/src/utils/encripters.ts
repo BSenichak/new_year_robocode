@@ -13,15 +13,4 @@ function caesarDecipher(text: string, shift: number) {
         .join("");
 }
 
-
-function getDateKey() {
-    const now = new Date();
-    const day = now.getDate();
-    const month = now.getMonth() + 1;
-    const year = now.getFullYear();
-    const hour = now.getHours();
-
-    return day + month + year + hour;
-}
-
-export { caesarDecipher, getDateKey };
+export { caesarDecipher };
