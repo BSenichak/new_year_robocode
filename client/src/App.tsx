@@ -6,19 +6,19 @@ import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
-import LoginModal from "./components/LoginModal/LoginModal";
 import Decode from "./pages/Decode/Decode";
+import Progress from "./pages/Progress/Progress";
 
 export default function App() {
     return (
         <ThemeProvider theme={Theme}>
-            <LoginModal />
             <Wrapper>
                 <Header />
                 <Content>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/decode" element={<Decode />} />
+                        <Route path="/progress" element={<Progress />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Content>

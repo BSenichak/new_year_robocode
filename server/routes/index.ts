@@ -55,5 +55,59 @@ router.get("/sudoku", async (req: Request, res: Response) => {
     }
 });
 
+enum Difficulty {
+  easy = 1,
+  medium = 2,
+  hard = 3,
+}
+
+router.post("/victory", async (req: Request, res: Response) => {
+  try {
+
+    const difficulty = req.body.difficulty as keyof typeof Difficulty;
+    const count = Difficulty[difficulty];
+    if (!count) {
+      return res.status(400).json({ message: "Invalid difficulty" });
+    }
+
+    const user: any = req.user;
+
+    if (!user?.id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    await db.query(
+      `
+      INSERT INTO victories (user_id, count)
+      VALUES (?, ?)
+      ON DUPLICATE KEY UPDATE count = count + VALUES(count)
+      `,
+      [user.id, count]
+    );
+
+    res.status(200).json({ message: "Victory saved" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+router.get("/progress", async (req: Request, res: Response) => {
+    try {
+        let user: any = req.user;
+        if (user) {
+            const [result]: any = await db.query("SELECT count FROM victories WHERE user_id = ?", [user.id]);
+            res.status(200).send(result[0]);
+        } else {
+            res.status(200).send({ count: 0 });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    }
+})
+
 
 export default router;

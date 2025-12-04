@@ -29,12 +29,13 @@ async function initDatabase() {
         });
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                password VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
+            CREATE TABLE IF NOT EXISTS \`victories\` (
+  \`id\` BIGINT NOT NULL AUTO_INCREMENT,
+  \`count\` INT NOT NULL DEFAULT 0,
+  \`user_id\` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (\`id\`),
+  UNIQUE KEY \`uniq_user\` (\`user_id\`)
+);
         `);
         return pool;
     } catch (err) {

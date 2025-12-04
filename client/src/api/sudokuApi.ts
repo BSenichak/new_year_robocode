@@ -1,6 +1,5 @@
 import api from "./axios";
-
-type Difficulty = "easy" | "medium" | "hard";
+import type { Difficulty } from "../utils/types";
 
 const getSudoku = (difficulty: Difficulty) =>
     api.get("sudoku", { params: { difficulty } });

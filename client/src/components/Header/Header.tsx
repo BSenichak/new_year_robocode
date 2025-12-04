@@ -18,7 +18,6 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../store/store";
 import { useEffect } from "react";
 import { fetchMe } from "../../store/authReducer";
-import AuthBar from "./AuthBar";
 
 export default function Header() {
     let dispatch = useDispatch<AppDispatch>();
@@ -47,7 +46,6 @@ export default function Header() {
                     >
                         Врятуй свято з Robocode
                     </Typography>
-                    <AuthBar />
                 </Box>
 
                 <Nav>
