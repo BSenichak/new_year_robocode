@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: import.meta.env.RAILWAY_PUBLIC_DOMAIN,
+        origin: "http://localhost:5173",
         credentials: true,
     })
 );

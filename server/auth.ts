@@ -37,10 +37,20 @@ authRouter.get(
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
     res.send(`
-  <script>
-    window.opener.postMessage({ success: true }, window.location.origin);
+
+<script>
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const targetOrigin = params.get('origin') || '*';
+    try {
+      window.opener && window.opener.postMessage({ success: true }, targetOrigin);
+    } catch (e) {
+      console.error('postMessage failed', e);
+    }
     window.close();
-  </script>
+  })();
+</script>
+
 `);
   }
 );

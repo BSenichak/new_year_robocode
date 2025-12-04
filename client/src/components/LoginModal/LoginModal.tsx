@@ -16,7 +16,7 @@ export default function LoginModal() {
   const loginWithGoogle = () => {
     // відкриваємо OAuth у новому вікні
     window.open(
-      "http://localhost:5000/api/auth/google",
+      `${ import.meta.env.DEV ? "http://localhost:5000" : window.location.origin}/api/auth/google`,
       "_blank",
       "width=500,height=600"
     );
@@ -25,7 +25,7 @@ export default function LoginModal() {
   useEffect(() => {
     const handler = async (event: MessageEvent) => {
       // перевіряємо origin бекенду
-      if (event.origin !== "http://localhost:5000") return;
+      if (event.origin !== (import.meta.env.DEV ? "http://localhost:5000" : window.location.origin)) return;
 
       if (event.data.success) {
         // отримуємо користувача з сервера
