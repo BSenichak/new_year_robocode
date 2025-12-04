@@ -11,7 +11,7 @@ passport.use(
         {
             clientID: process.env.CLIENT_ID || "GOOGLE_CLIENT_ID",
             clientSecret: process.env.CLIENT_SECRET || "GOOGLE_CLIENT_SECRET",
-            callbackURL: `http://${process.env.RAILWAY_PUBLIC_DOMAIN}/api/auth/google/callback`,
+            callbackURL: `https://${process.env.RAILWAY_PUBLIC_DOMAIN}/api/auth/google/callback`,
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
