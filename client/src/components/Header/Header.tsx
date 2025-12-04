@@ -5,6 +5,7 @@ import {
     Container,
     styled,
     Typography,
+    useMediaQuery,
 } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -13,8 +14,17 @@ import {
     ShowChart,
     MilitaryTech,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../store/store";
+import { useEffect } from "react";
+import { fetchMe } from "../../store/authReducer";
+import AuthBar from "./AuthBar";
 
 export default function Header() {
+    let dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        dispatch(fetchMe());
+    }, []);
     return (
         <AppBar
             position="static"
@@ -30,9 +40,14 @@ export default function Header() {
                     }}
                 >
                     <Logo src="/logo_ny.svg" alt="logo" />
-                    <Typography variant="h4" component="div">
+                    <Typography
+                        variant="h4"
+                        component="div"
+                        sx={{ flexGrow: 1 }}
+                    >
                         Врятуй свято з Robocode
                     </Typography>
+                    <AuthBar />
                 </Box>
 
                 <Nav>
@@ -74,6 +89,7 @@ function NavLink({
 }) {
     const navigate = useNavigate();
     const location = useLocation();
+    let isTablet = useMediaQuery("(max-width: 600px)");
 
     const active = location.pathname === path;
 
@@ -85,7 +101,7 @@ function NavLink({
             isActive={active}
             onClick={() => navigate(path || "/")}
         >
-            {text}
+            {!isTablet && text}
         </NavButton>
     );
 }
@@ -100,10 +116,21 @@ const NavButton = styled(Button, {
     shouldForwardProp: (prop) => prop !== "isActive",
 })<{ isActive: boolean }>`
     flex-grow: 1;
+
     ${({ isActive, theme }) =>
         isActive &&
         `
-    background-color: ${theme.palette.action.selected};
+      background-color: ${theme.palette.action.selected};
+    `}
+    ${({ theme }) => `
+    ${theme.breakpoints.down("sm")} {
+      & .MuiButton-startIcon {
+        margin: 0;
+      }
+      padding-left: ${theme.spacing(1)};
+      padding-right: ${theme.spacing(1)};
+      min-width: auto; 
+    }
   `}
 `;
 

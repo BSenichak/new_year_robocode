@@ -6,10 +6,12 @@ import Footer from "./components/Footer/Footer";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
+import LoginModal from "./components/LoginModal/LoginModal";
 
 export default function App() {
     return (
         <ThemeProvider theme={Theme}>
+            <LoginModal />
             <Wrapper>
                 <Header />
                 <Content>
