@@ -18,6 +18,7 @@ passport.use(
         }
     )
 );
+console.log(process.env.RAILWAY_PUBLIC_DOMAIN);
 
 passport.serializeUser((user, done) => {
     done(null, user);
