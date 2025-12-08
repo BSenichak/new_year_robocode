@@ -1,41 +1,36 @@
-import { styled, Box, Container, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled, Box, Container } from "@mui/material";
+import Contacts from "./Contacts";
+import LogoBar from "./LogoBar";
+import Social from "./Social";
 
 export default function Footer() {
     return (
         <Wrapper>
-            <Hr />
-            <Container>
-                <Typography variant="body1">
-                    ТОВ "Робокод Плюс". Всі права захищені
-                </Typography>
-                <Typography variant="body2">
-                    <Link to="http://robocode.ua">Robocode.ua</Link>
-                </Typography>
-            </Container>
+            <Content>
+                <Contacts />
+                <Social />
+                <LogoBar />
+            </Content>
         </Wrapper>
     );
 }
 
 const Wrapper = styled(Box)`
-    text-align: center;
     display: flex;
-    flex-direction: column;
-    background-color: ${({ theme }) => theme.palette.background.default};
+
+    background-color: ${({ theme }) => theme.palette.background.paper};
     color: ${({ theme }) => theme.palette.text.primary};
-    box-shadow: ${({ theme }) => theme.shadows[4]};
-    & a {
-        text-decoration: none;
-        color: inherit;
-        &:hover {
-            text-decoration: underline;
-        }
+    padding: 4rem 0;
+`;
+
+const Content = styled(Container)`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;   
+    @media (max-width: 639px) {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 1rem;
     }
 `;
-
-const Hr = styled(Box)`
-    width: 100%;
-    height: 0.6rem;
-    background-color: ${({ theme }) => theme.palette.text.secondary};
-`;
-

@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
-import GoogleLoginButton from "../../components/LoginButton";
+import LoginButton from "../../components/LoginButton";
 import { useEffect } from "react";
 import {
   victory,
@@ -58,7 +58,7 @@ export default function VictoryModal({ isOpen }: { isOpen: boolean }) {
           </DialogTitle>
 
           <DialogActions sx={{ justifyContent: "center", pb: 3 }}>
-            <GoogleLoginButton />
+            <LoginButton />
           </DialogActions>
         </>
       ) : (

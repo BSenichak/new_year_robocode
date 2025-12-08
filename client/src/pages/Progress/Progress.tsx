@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { getProgress } from "../../store/resultsSlice";
 import styled from "@emotion/styled";
 import { Box, Button, Typography } from "@mui/material";
-import GoogleLoginButton from "../../components/LoginButton";
+import LoginButton from "../../components/LoginButton";
 import { logout } from "../../store/authReducer";
 
 export default function Progress() {
@@ -41,7 +41,7 @@ export default function Progress() {
                         Авторизуйтеся на сайті, щоб зберегти та відсідковувати
                         Ваш прогрес.
                     </Typography>
-                    <GoogleLoginButton />
+                    <LoginButton />
                 </>
             )}
         </Wrapper>

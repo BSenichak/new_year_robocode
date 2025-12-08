@@ -1,5 +1,4 @@
-import { Box, Container, styled, ThemeProvider } from "@mui/material";
-import Theme from "./styles/muiTheme";
+import { Box, Container, styled } from "@mui/material";
 import "./styles/generalStyles.scss";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -8,10 +7,11 @@ import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import Decode from "./pages/Decode/Decode";
 import Progress from "./pages/Progress/Progress";
+import { ThemeProvider } from "./styles/ThemeProvider";
 
 export default function App() {
     return (
-        <ThemeProvider theme={Theme}>
+        <ThemeProvider>
             <Wrapper>
                 <Header />
                 <Content>
@@ -32,7 +32,7 @@ const Wrapper = styled(Box)`
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: ${({ theme }) => theme.palette.primary.main};
+    background-color: ${({ theme }) => theme.palette.background.default};
     color: ${({ theme }) => theme.palette.text.primary};
 `;
 
