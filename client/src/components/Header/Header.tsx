@@ -3,8 +3,11 @@ import {
     Box,
     Button,
     Container,
+    Divider,
     Drawer,
     IconButton,
+    List,
+    ListItem,
     styled,
     useMediaQuery,
 } from "@mui/material";
@@ -27,7 +30,7 @@ export default function Header() {
     return (
         <AppBar
             position="static"
-            sx={{ backgroundColor: "background.default" }}
+            sx={{ backgroundColor: "background.default", zIndex: 100 }}
         >
             <Wrapper>
                 <Logo
@@ -55,20 +58,90 @@ export default function Header() {
                             color="inherit"
                             onClick={() => setOpen(!open)}
                         >
-                            {open ? <Menu /> : <Close />}
+                            {!open ? <Menu /> : <Close />}
                         </IconButton>
-                        <Drawer
-                            open={open}
-                            onClose={() => setOpen(false)}
-                            anchor="top"
-                        ></Drawer>
                     </>
                 )}
             </Wrapper>
+            <Drawer
+                open={open}
+                anchor="top"
+                variant="temporary" // або "temporary" якщо треба анімацію
+                onClose={() => setOpen(false)}
+                ModalProps={{
+                    BackdropProps: {
+                        style: {
+                            backdropFilter: "blur(5px)",
+                        },
+                    },
+                }}
+                sx={{
+                    "& .MuiDrawer-paper": {
+                        zIndex: (theme) => theme.zIndex.appBar - 1, // під хедером
+                    },
+                }}
+            >
+                <List sx={{bgcolor: (theme) => theme.palette.background.paper}}>
+                    <ListItem
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <Logo
+                            onClick={() => navigate("/")}
+                            src="/logo white.png"
+                            alt="logo"
+                        />
+                        <IconButton
+                            color="inherit"
+                            onClick={() => setOpen(!open)}
+                        >
+                            {open ? <Menu /> : <Close />}
+                        </IconButton>
+                    </ListItem>
+                    <Divider />
+                    <ListItem onClick={() => setOpen(false)}>
+                        <NavLink text="Головна сторінка" path="/" fullWidth />
+                    </ListItem>
+                    <ListItem onClick={() => setOpen(false)}>
+                        <NavLink
+                            text="Розшифрувати файл"
+                            path="/decode"
+                            fullWidth
+                        />
+                    </ListItem>
+                    <ListItem onClick={() => setOpen(false)}>
+                        <NavLink
+                            text="Ваш прогрес"
+                            path="/progress"
+                            fullWidth
+                        />
+                    </ListItem>
+                    <ListItem onClick={() => setOpen(false)}>
+                        <NavLink
+                            text="Таблиця лідерів"
+                            path="/leader_board"
+                            fullWidth
+                        />
+                    </ListItem>
+                    <ListItem>
+                        <LoginButton fullWidth />
+                    </ListItem>
+                </List>
+            </Drawer>
         </AppBar>
     );
 }
-function NavLink({ text, path }: { text: string; path?: string }) {
+function NavLink({
+    text,
+    path,
+    fullWidth = false,
+}: {
+    text: string;
+    path?: string;
+    fullWidth?: boolean;
+}) {
     const navigate = useNavigate();
     const location = useLocation();
     const active = location.pathname === path;
@@ -76,9 +149,13 @@ function NavLink({ text, path }: { text: string; path?: string }) {
     return (
         <Button
             variant={active ? "contained" : "text"}
-            onClick={() => navigate(path || "/")}
+            onClick={() => {
+                navigate(path || "/");
+                window.scrollTo(0, 0);
+            }}
             color={active ? "primary" : "secondary"}
-            sx={{ fontWeight: "100" }}
+            sx={{ fontWeight: "100", justifyContent: "start" }}
+            fullWidth={fullWidth}
         >
             {text}
         </Button>
@@ -99,5 +176,7 @@ const Wrapper = styled(Container)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    @media (max-width: 639px) {
+        padding: 1rem;
+    }
 `;

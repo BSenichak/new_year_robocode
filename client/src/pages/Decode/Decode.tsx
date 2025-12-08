@@ -48,6 +48,7 @@ export default function Decode() {
 
 const Wrapper = styled(Box)`
     display: grid;
+    flex-wrap: wrap;
     grid-template-columns: 1fr 1fr 1fr;
     padding: 2rem 0;
     align-items: center;

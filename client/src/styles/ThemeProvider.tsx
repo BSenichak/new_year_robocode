@@ -94,7 +94,7 @@ const appTheme = createTheme({
     },
     body1: {
       fontSize: "14px",
-      fontWeight: 700,
+      fontWeight: 400,
       letterSpacing: "0px",
       lineHeight: "18px",
       fontStyle: "normal",
