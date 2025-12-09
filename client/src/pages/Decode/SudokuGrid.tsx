@@ -140,13 +140,13 @@ let Wrapper = styled.div`
     border-radius: 1rem;
     overflow: hidden;
     width: fit-content;
-        @media (max-width: 1099px) {
+    @media (max-width: 1099px) {
         grid-row: 1;
         grid-column: 2;
     }
     @media (max-width: 639px) {
         grid-column: 1;
-        grid-row: 1;
+        grid-row: 2;
     }
 `;
 

@@ -3,12 +3,9 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { useEffect } from "react";
 import { getSudoku } from "../../store/sudokuSlice";
 import SudokuGrid from "./SudokuGrid";
-import { Box, CircularProgress, Typography, Button } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import styled from "@emotion/styled";
 import { NumericKeyboard } from "./NumericKeyboard";
-import * as React from "react";
-import ClearModal from "./ClearModal";
-import RegenerateModal from "./RegenerateModal";
 import DifficultySelector from "./DifficultySelector";
 import InfoBar from "./InfoBar";
 
@@ -26,8 +23,7 @@ export default function Decode() {
         if (!sudoku) dispatch(getSudoku());
     }, [sudoku]);
 
-    let [clearModalOpen, setClearModalOpen] = React.useState(false);
-    let [regenerateOpen, setRegenerateOpen] = React.useState(false);
+
 
     if (loading || !sudoku)
         return (
@@ -61,30 +57,6 @@ export default function Decode() {
                 <SudokuGrid puzzle={sudoku.puzzle} />
                 <InfoBar />
             </Grid>
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => setClearModalOpen(true)}
-                sx={{ m: 2 }}
-            >
-                Розпочати дешифровку заново
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => setRegenerateOpen(true)}
-                sx={{ m: 2 }}
-            >
-                Спробувати дешифрувати інший файл
-            </Button>
-            <ClearModal
-                isOpen={clearModalOpen}
-                closeModal={() => setClearModalOpen(false)}
-            />
-            <RegenerateModal
-                isOpen={regenerateOpen}
-                closeModal={() => setRegenerateOpen(false)}
-            />
         </Wrapper>
     );
 }

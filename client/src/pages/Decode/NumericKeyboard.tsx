@@ -30,6 +30,7 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
             <Grid>
                 {keys.map((k) => (
                     <Button
+                        key={k}
                         variant="outlined"
                         disableElevation
                         onClick={() => handleKeyPress(k)}
@@ -74,5 +75,6 @@ const Wrapper = styled(Box)`
     }
     @media (max-width: 639px) {
         grid-column: 1;
+        grid-row: 3;
     }
 `;
