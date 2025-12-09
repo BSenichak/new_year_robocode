@@ -12,7 +12,7 @@ export default function RulesCards() {
     const theme = useTheme();
     return (
         <Wrapper>
-            <Typography variant="h2" textAlign="center">
+            <Typography variant="h2" textAlign="center" sx={{my: 3}}>
                 Як врятувати{" "}
                 <Typography component="span" variant="h2" color="warning">
                     Різдво

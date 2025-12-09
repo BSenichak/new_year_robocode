@@ -7,9 +7,11 @@ import {
     useMediaQuery,
 } from "@mui/material";
 import { alpha } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Poster() {
     let isPhone = useMediaQuery("(max-width: 639px)");
+    let navigate = useNavigate();
     return (
         <Wrapper>
             <Content>
@@ -65,6 +67,7 @@ export default function Poster() {
                             textTransform: "uppercase",
                             fontSize: "1.2rem",
                         }}
+                        onClick={()=>navigate("/decode")}
                     >
                         Почати місію
                     </Button>
@@ -77,6 +80,7 @@ export default function Poster() {
                             fontSize: "1.2rem",
                             border: "1px solid #ffffff3b",
                         }}
+                        onClick={() => navigate("/rules")}
                     >
                         Правила місії
                     </Button>
@@ -167,7 +171,7 @@ let Youtube = styled("iframe")`
     width: 100%;
     min-height: 300px;
     border-radius: 24px;
-
+    z-index: 1;
     @media (max-width: 639px) {
         min-height: 220px;
     }
@@ -178,7 +182,7 @@ let Content = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
+    z-index: 1;
     @media (max-width: 639px) {
         align-items: center;
         text-align: center;
@@ -187,6 +191,7 @@ let Content = styled(Box)`
 `;
 
 let BluePoint = styled("img")`
+z-index: 0;
     position: absolute;
     left: 0;
     transform: translate(-50%, -15%);
