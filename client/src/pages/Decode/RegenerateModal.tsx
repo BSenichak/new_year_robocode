@@ -17,7 +17,7 @@ export default function RegenerateModal({ isOpen, closeModal }: any) {
                     color="success"
                     onClick={() => {
                         dispatch(clearValues());
-                        dispatch(getSudoku("easy"));
+                        dispatch(getSudoku());
                         closeModal();
                     }}
                 >

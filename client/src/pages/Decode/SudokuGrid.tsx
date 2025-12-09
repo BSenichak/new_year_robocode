@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
 import { setChosenCell } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
-import { Typography } from "@mui/material";
+import { Typography, useTheme, alpha } from "@mui/material";
 import VictoryModal from "./VictoryModal";
 
 type Props = {
@@ -25,14 +25,10 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
         useSelector<RootState, RootState["sudoku"]["correctCount"]>(
             (state) => state.sudoku.correctCount
         ) == 81;
+
+    let theme = useTheme();
     return (
-        <div
-            style={{
-                display: "inline-block",
-                border: "2px solid black",
-                position: "relative",
-            }}
-        >
+        <Wrapper>
             {correct && (
                 <Blocker>
                     <Typography variant="h4" textAlign="center">
@@ -48,17 +44,32 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                         const playerValue = playerAnswers[row * 9 + col];
 
                         const borderTop =
-                            row % 3 === 0
-                                ? "2px solid black"
-                                : "1px solid black";
+                            row === 0
+                                ? "none"
+                                : row % 3 === 0
+                                ? "2px solid " + theme.palette.primary.main
+                                : "none";
+
                         const borderLeft =
-                            col % 3 === 0
-                                ? "2px solid black"
-                                : "1px solid black";
+                            col === 0
+                                ? "none"
+                                : col % 3 === 0
+                                ? "2px solid " + theme.palette.primary.main
+                                : "none";
+
                         const borderRight =
-                            col === 8 ? "2px solid black" : "1px solid black";
+                            col === 8
+                                ? "none"
+                                : (col + 1) % 3 === 0
+                                ? "2px solid " + theme.palette.primary.main
+                                : "none";
+
                         const borderBottom =
-                            row === 8 ? "2px solid black" : "1px solid black";
+                            row === 8
+                                ? "none"
+                                : (row + 1) % 3 === 0
+                                ? "2px solid " + theme.palette.primary.main
+                                : "none";
 
                         let displayValue = "";
                         if (value !== 0) displayValue = String(value);
@@ -75,14 +86,23 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                                     alignItems: "center",
                                     justifyContent: "center",
                                     fontSize: 20,
+                                    flexShrink: 0,
                                     backgroundColor:
                                         value === 0
                                             ? chosenCell?.row === row &&
                                               chosenCell?.col === col
-                                                ? "#5f5e5e"
-                                                : "#fff"
-                                            : "#ccc",
-                                    color: value === 0 ? "#000" : "#333",
+                                                ? alpha(
+                                                      theme.palette.primary
+                                                          .main,
+                                                      0.5
+                                                  )
+                                                : theme.palette.background
+                                                      .default
+                                            : "#2A2A3A",
+                                    color:
+                                        value === 0
+                                            ? theme.palette.text.secondary
+                                            : theme.palette.text.primary,
                                     borderTop,
                                     borderLeft,
                                     borderRight,
@@ -99,7 +119,7 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                     })}
                 </div>
             ))}
-        </div>
+        </Wrapper>
     );
 };
 
@@ -110,6 +130,24 @@ let Blocker = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+let Wrapper = styled.div`
+    display: inline-block;
+    border: 2px solid black;
+    position: relative;
+    border: 3px solid ${({ theme }: any) => theme.palette.primary.main};
+    border-radius: 1rem;
+    overflow: hidden;
+    width: fit-content;
+        @media (max-width: 1099px) {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    @media (max-width: 639px) {
+        grid-column: 1;
+        grid-row: 1;
+    }
 `;
 
 export default SudokuGrid;

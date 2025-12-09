@@ -46,7 +46,7 @@ export default function VictoryModal({ isOpen }: { isOpen: boolean }) {
   const handleClose = () => {
     dispatch(resetVictorySent()); // ✅ дозволяємо наступну перемогу
     dispatch(clearValues());
-    dispatch(getSudoku("easy"));
+    dispatch(getSudoku());
   };
 
   return (

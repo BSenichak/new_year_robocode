@@ -1,27 +1,18 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import BackspaceOutlinedIcon from "@mui/icons-material/BackspaceOutlined";
+import React from "react";
+import { Box, Button as MuiButton, alpha } from "@mui/material";
+import { BackspaceOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState, AppDispatch } from "../../store/store";
 import { setChosenCellValue } from "../../store/sudokuSlice";
-import ClearModal from "./ClearModal";
-import RegenerateModal from "./RegenerateModal";
+import styled from "@emotion/styled";
 
-export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
+export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
     const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const dispatch = useDispatch<AppDispatch>();
     const chosenCell = useSelector<
         RootState,
         RootState["sudoku"]["chosenCell"]
     >((state) => state.sudoku.chosenCell);
-    const correct =
-        useSelector<RootState, RootState["sudoku"]["correctCount"]>(
-            (state) => state.sudoku.correctCount
-        ) == 81;
-    const disabled = !chosenCell || correct;
 
     const handleKeyPress = (key: string) => {
         if (!chosenCell) return;
@@ -34,101 +25,54 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = ({ gap = 2 }) => {
         );
     };
 
-    let [clearModalOpen, setClearModalOpen] = React.useState(false);
-    let [regenerateOpen, setRegenerateOpen] = React.useState(false);
-
     return (
-        <Box
-            sx={{
-                width: 280,
-                mx: "auto",
-                p: 2,
-                borderRadius: 2,
-                bgcolor: "#228B22",
-            }}
-        >
-            <Grid container spacing={gap} justifyContent="center">
+        <Wrapper>
+            <Grid>
                 {keys.map((k) => (
-                    <Grid
-                        key={k}
-                        sx={{ display: "flex", justifyContent: "center" }}
+                    <Button
+                        variant="outlined"
+                        disableElevation
+                        onClick={() => handleKeyPress(k)}
+                        color="inherit"
                     >
-                        <Button
-                            variant="contained"
-                            disableElevation
-                            disabled={disabled}
-                            onClick={() => handleKeyPress(k)}
-                            sx={{
-                                width: 64,
-                                height: 64,
-                                minWidth: 0,
-                                borderRadius: 2.5,
-                                bgcolor: "#D2691E",
-                                color: "#fff",
-                                fontSize: "1.25rem",
-                                fontWeight: 600,
-                                "&:hover": { bgcolor: "#c4621c" },
-                                "&:active": { bgcolor: "#b7591a" },
-                                "&:focus-visible": {
-                                    outline: "3px solid rgba(255,255,255,0.6)",
-                                    outlineOffset: 2,
-                                },
-                            }}
-                        >
-                            {k}
-                        </Button>
-                    </Grid>
+                        {k}
+                    </Button>
                 ))}
-
-                <Grid sx={{ display: "flex", justifyContent: "center" }}>
-                    <IconButton
-                        disabled={disabled}
-                        onClick={() => handleKeyPress("0")}
-                        aria-label="Backspace"
-                        sx={{
-                            width: 64,
-                            height: 64,
-                            borderRadius: 2.5,
-                            bgcolor: "#D2691E",
-                            color: "#fff",
-                            "&:hover": { bgcolor: "#c4621c" },
-                            "&:active": { bgcolor: "#b7591a" },
-                            "& .MuiSvgIcon-root": { fontSize: 28 },
-                            "&:focus-visible": {
-                                outline: "3px solid rgba(255,255,255,0.6)",
-                                outlineOffset: 2,
-                            },
-                        }}
-                    >
-                        <BackspaceOutlinedIcon />
-                    </IconButton>
-                </Grid>
+                <Button
+                    onClick={() => handleKeyPress("0")}
+                    color="inherit"
+                    sx={{
+                        gridColumn: "span 3",
+                    }}
+                    variant="outlined"
+                    startIcon={<BackspaceOutlined />}
+                >
+                    Видалити
+                </Button>
             </Grid>
-
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => setClearModalOpen(true)}
-                sx={{ m: 2 }}
-            >
-                Розпочати дешифровку заново
-            </Button>
-            <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => setRegenerateOpen(true)}
-                sx={{ m: 2 }}
-            >
-                Спробувати дешифрувати інший файл
-            </Button>
-            <ClearModal
-                isOpen={clearModalOpen}
-                closeModal={() => setClearModalOpen(false)}
-            />
-            <RegenerateModal
-                isOpen={regenerateOpen}
-                closeModal={() => setRegenerateOpen(false)}
-            />
-        </Box>
+        </Wrapper>
     );
 };
+
+const Grid = styled(Box)`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+`;
+
+const Button = styled(MuiButton)`
+    padding: 1rem;
+    border: 1px solid ${({ theme }: any) => alpha(theme.palette.grey[300], 0.5)};
+    font-size: 1.2rem;
+`;
+
+const Wrapper = styled(Box)`
+    max-width: 280px;
+    @media (max-width: 1099px) {
+        grid-row: 2;
+        grid-column: 2;
+    }
+    @media (max-width: 639px) {
+        grid-column: 1;
+    }
+`;

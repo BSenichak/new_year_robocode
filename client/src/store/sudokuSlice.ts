@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { Difficulty } from "../utils/types";
 import api from "../api/sudokuApi";
 import { caesarDecipher } from "../utils/encripters";
+import type { RootState } from "./store";
 
 type SudokuState = {
     sudoku: {
@@ -13,7 +14,7 @@ type SudokuState = {
     difficulty: Difficulty;
     chosenCell: { row: number; col: number } | null;
     playerAnswers: string[];
-    correctCount: number; 
+    correctCount: number;
 };
 
 const initialState: SudokuState = {
@@ -27,7 +28,8 @@ const initialState: SudokuState = {
 
 export const getSudoku = createAsyncThunk(
     "sudoku/getSudoku",
-    async (difficulty: Difficulty) => {
+    async (_, { getState }) => {
+        const difficulty =  (getState() as RootState).sudoku.difficulty as Difficulty;
         const result = await api.getSudoku(difficulty);
         const keyHeader = result.headers["x-caesar-key".toLowerCase()];
         if (!keyHeader) {
@@ -77,7 +79,7 @@ const sudokuSlice = createSlice({
         clearValues(state) {
             state.playerAnswers = Array(81).fill("0");
             state.chosenCell = null;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -89,6 +91,7 @@ const sudokuSlice = createSlice({
                 state.isLoading = false;
                 state.playerAnswers = Array(81).fill("0");
                 state.correctCount = 0;
+                state.chosenCell = null;
             })
             .addCase(getSudoku.rejected, (state, action) => {
                 state.sudoku = null;
