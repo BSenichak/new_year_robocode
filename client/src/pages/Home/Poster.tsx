@@ -148,25 +148,29 @@ export default function Poster() {
     );
 }
 
-let BluePoint = styled("img")`
-    position: absolute;
-    left: 0;
-    transform: translate(-50%, -15%);
-`;
-
 let Wrapper = styled(Box)`
     display: flex;
     padding: 2rem 0;
     position: relative;
     gap: 2rem;
+    width: 100%;
+
     @media (max-width: 639px) {
         flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 `;
 
 let Youtube = styled("iframe")`
     flex: 1;
+    width: 100%;
+    min-height: 300px;
     border-radius: 24px;
+
+    @media (max-width: 639px) {
+        min-height: 220px;
+    }
 `;
 
 let Content = styled(Box)`
@@ -174,4 +178,21 @@ let Content = styled(Box)`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+
+    @media (max-width: 639px) {
+        align-items: center;
+        text-align: center;
+        width: 100%;
+    }
 `;
+
+let BluePoint = styled("img")`
+    position: absolute;
+    left: 0;
+    transform: translate(-50%, -15%);
+
+    @media (max-width: 639px) {
+        display: none;
+    }
+`;
+
