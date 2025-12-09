@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Decode from "./pages/Decode/Decode";
 import Progress from "./pages/Progress/Progress";
 import { ThemeProvider } from "./styles/ThemeProvider";
+import Rules from "./pages/Rules/Rules";
 
 export default function App() {
     return (
@@ -19,6 +20,7 @@ export default function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/decode" element={<Decode />} />
                         <Route path="/progress" element={<Progress />} />
+                        <Route path="/rules" element={<Rules />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Content>
