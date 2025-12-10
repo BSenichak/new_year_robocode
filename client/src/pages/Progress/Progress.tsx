@@ -3,47 +3,29 @@ import type { AppDispatch, RootState } from "../../store/store";
 import { useEffect } from "react";
 import { getProgress } from "../../store/resultsSlice";
 import styled from "@emotion/styled";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import LoginButton from "../../components/LoginButton";
-import { logout } from "../../store/authReducer";
+import NotAuth from "./NotAuth";
 
 export default function Progress() {
     let dispatch = useDispatch<AppDispatch>();
     let user: any = useSelector<RootState, RootState["auth"]["user"]>(
         (state) => state.auth.user
     );
-    let progress = useSelector<RootState, RootState["results"]["progress"]>(
-        (state) => state.results.progress
-    );
+    // let progress = useSelector<RootState, RootState["results"]["progress"]>(
+    //     (state) => state.results.progress
+    // );
     useEffect(() => {
         if (user) dispatch(getProgress());
     }, [user]);
+    if (!user) return <NotAuth />;
     return (
         <Wrapper>
-            {user ? (
-                <>
-                    <Typography variant="h2">
-                        Вітаю, {user.displayName}!
-                    </Typography>
-                    <Typography variant="h4">
-                        Ви розшифрували {progress} пазл(ів)!
-                    </Typography>
-                    <Button variant="contained" color="secondary">
-                        Поділитися результатом
-                    </Button>
-                    <Button variant="contained" color="error" onClick={() => dispatch(logout())}>
-                        Вийти з облікового запису
-                    </Button>
-                </>
-            ) : (
-                <>
-                    <Typography variant="h4" textAlign="center">
-                        Авторизуйтеся на сайті, щоб зберегти та відсідковувати
-                        Ваш прогрес.
-                    </Typography>
-                    <LoginButton />
-                </>
-            )}
+            <Typography variant="h4" textAlign="center">
+                Авторизуйтеся на сайті, щоб зберегти та відсідковувати Ваш
+                прогрес.
+            </Typography>
+            <LoginButton />
         </Wrapper>
     );
 }
@@ -56,6 +38,4 @@ let Wrapper = styled(Box)`
     align-items: center;
     justify-content: center;
     gap: 2rem;
-    background-color: ${({ theme }: any) => theme.palette.primary.main};
-    color: ${({ theme }: any) => theme.palette.text.primary};
 `;
