@@ -11,11 +11,18 @@ import ClearModal from "./ClearModal";
 import RegenerateModal from "./RegenerateModal";
 import { useState } from "react";
 import CheckModal from "./CheckModal";
+import HelpModal from "./HelpModal";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../store/store";
 
 export default function InfoBar() {
     let [clearModalOpen, setClearModalOpen] = useState(false);
     let [regenerateOpen, setRegenerateOpen] = useState(false);
     let [checkIsOpen, setCheckIsOpen] = useState(false);
+    let [helpOpen, setHelpOpen] = useState(false);
+    let helpedCell = useSelector<RootState, RootState["sudoku"]["helpedCell"]>(
+        (state: RootState) => state.sudoku.helpedCell
+    )
     return (
         <Wrapper>
             <Card
@@ -111,10 +118,12 @@ export default function InfoBar() {
                 fullWidth
                 size="large"
                 color="inherit"
-                startIcon={<img src="./elf.png" alt="arrow" height={40} />}
+                startIcon={<img src="./elf.png" alt="arrow" height={40} style={!!helpedCell ? { filter: "grayscale()"} : {}}/>}
                 sx={{
                     background: "#2b2b34",
                 }}
+                onClick={() => setHelpOpen(true)}
+                disabled={!!helpedCell}
             >
                 ЕЛЬФ-ПОМІЧ
             </Button>
@@ -142,13 +151,26 @@ export default function InfoBar() {
                     background: "transparent",
                     border: "1px solid #ffffff44",
                 }}
-                onClick={()=>setRegenerateOpen(true)}
+                onClick={() => setRegenerateOpen(true)}
             >
                 ІНШИЙ ФАЙЛ
             </Button>
-            <ClearModal isOpen={clearModalOpen} closeModal={() => setClearModalOpen(false)} />
-            <RegenerateModal isOpen={regenerateOpen} closeModal={()=>setRegenerateOpen(false)} />
-            <CheckModal isOpen={checkIsOpen} closeModal={() => setCheckIsOpen(false)} />
+            <ClearModal
+                isOpen={clearModalOpen}
+                closeModal={() => setClearModalOpen(false)}
+            />
+            <RegenerateModal
+                isOpen={regenerateOpen}
+                closeModal={() => setRegenerateOpen(false)}
+            />
+            <CheckModal
+                isOpen={checkIsOpen}
+                closeModal={() => setCheckIsOpen(false)}
+            />
+            <HelpModal
+                isOpen={helpOpen}
+                closeModal={() => setHelpOpen(false)}
+            />
         </Wrapper>
     );
 }

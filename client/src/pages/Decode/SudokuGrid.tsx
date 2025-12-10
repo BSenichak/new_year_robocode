@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
 import { setChosenCell } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
-import {  useTheme, alpha } from "@mui/material";
+import { useTheme, alpha } from "@mui/material";
 
 type Props = {
     puzzle: string;
@@ -21,6 +21,10 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
         RootState["sudoku"]["playerAnswers"]
     >((state) => state.sudoku.playerAnswers);
 
+    let helpedCell = useSelector<RootState, RootState["sudoku"]["helpedCell"]>(
+        (state) => state.sudoku.helpedCell
+    );
+
     let theme = useTheme();
     return (
         <Wrapper>
@@ -29,6 +33,9 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                     {Array.from({ length: 9 }).map((_, col) => {
                         const value = cells[row * 9 + col];
                         const playerValue = playerAnswers[row * 9 + col];
+
+                        const isHelped =
+                            helpedCell?.row === row && helpedCell?.col === col;
 
                         const borderTop =
                             row === 0
@@ -74,22 +81,25 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                                     justifyContent: "center",
                                     fontSize: 20,
                                     flexShrink: 0,
-                                    backgroundColor:
-                                        value === 0
-                                            ? chosenCell?.row === row &&
-                                              chosenCell?.col === col
-                                                ? alpha(
-                                                      theme.palette.primary
-                                                          .main,
-                                                      0.5
-                                                  )
-                                                : theme.palette.background
-                                                      .default
-                                            : "#2A2A3A",
-                                    color:
-                                        value === 0
-                                            ? theme.palette.text.secondary
-                                            : theme.palette.text.primary,
+
+                                    backgroundColor: isHelped
+                                        ? alpha(theme.palette.success.main, 0.6)
+                                        : value === 0
+                                        ? chosenCell?.row === row &&
+                                          chosenCell?.col === col
+                                            ? alpha(
+                                                  theme.palette.primary.main,
+                                                  0.5
+                                              )
+                                            : theme.palette.background.default
+                                        : "#2A2A3A",
+
+                                    color: isHelped
+                                        ? theme.palette.success.main
+                                        : value === 0
+                                        ? theme.palette.text.secondary
+                                        : theme.palette.text.primary,
+
                                     borderTop,
                                     borderLeft,
                                     borderRight,
@@ -109,7 +119,6 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
         </Wrapper>
     );
 };
-
 
 let Wrapper = styled.div`
     display: inline-block;
