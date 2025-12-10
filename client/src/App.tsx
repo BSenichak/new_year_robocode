@@ -9,8 +9,17 @@ import Decode from "./pages/Decode/Decode";
 import Progress from "./pages/Progress/Progress";
 import { ThemeProvider } from "./styles/ThemeProvider";
 import Rules from "./pages/Rules/Rules";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "./store/store";
+import { useEffect } from "react";
+import { getProgress } from "./store/resultsSlice";
 
 export default function App() {
+    let dispatch = useDispatch<AppDispatch>();
+    let user = useSelector<RootState, RootState["auth"]["user"]>((state) => state.auth.user);
+    useEffect(() => {
+        if (user) dispatch(getProgress());
+    }, [user]);
     return (
         <ThemeProvider>
             <Wrapper>

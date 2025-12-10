@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store";
 import { setChosenCell } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
-import { Typography, useTheme, alpha } from "@mui/material";
-import VictoryModal from "./VictoryModal";
+import {  useTheme, alpha } from "@mui/material";
 
 type Props = {
     puzzle: string;
@@ -21,22 +20,10 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
         RootState,
         RootState["sudoku"]["playerAnswers"]
     >((state) => state.sudoku.playerAnswers);
-    const correct =
-        useSelector<RootState, RootState["sudoku"]["correctCount"]>(
-            (state) => state.sudoku.correctCount
-        ) == 81;
 
     let theme = useTheme();
     return (
         <Wrapper>
-            {correct && (
-                <Blocker>
-                    <Typography variant="h4" textAlign="center">
-                        Розшифровано
-                    </Typography>
-                </Blocker>
-            )}
-            <VictoryModal isOpen={correct} />
             {Array.from({ length: 9 }).map((_, row) => (
                 <div key={row} style={{ display: "flex" }}>
                     {Array.from({ length: 9 }).map((_, col) => {
@@ -123,14 +110,6 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
     );
 };
 
-let Blocker = styled.div`
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
 
 let Wrapper = styled.div`
     display: inline-block;

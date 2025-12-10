@@ -10,10 +10,12 @@ import {
 import ClearModal from "./ClearModal";
 import RegenerateModal from "./RegenerateModal";
 import { useState } from "react";
+import CheckModal from "./CheckModal";
 
 export default function InfoBar() {
     let [clearModalOpen, setClearModalOpen] = useState(false);
     let [regenerateOpen, setRegenerateOpen] = useState(false);
+    let [checkIsOpen, setCheckIsOpen] = useState(false);
     return (
         <Wrapper>
             <Card
@@ -100,6 +102,7 @@ export default function InfoBar() {
                     />
                 }
                 sx={{ py: 2 }}
+                onClick={() => setCheckIsOpen(true)}
             >
                 ПЕРЕВІРИТИ КЛЮЧ
             </Button>
@@ -145,6 +148,7 @@ export default function InfoBar() {
             </Button>
             <ClearModal isOpen={clearModalOpen} closeModal={() => setClearModalOpen(false)} />
             <RegenerateModal isOpen={regenerateOpen} closeModal={()=>setRegenerateOpen(false)} />
+            <CheckModal isOpen={checkIsOpen} closeModal={() => setCheckIsOpen(false)} />
         </Wrapper>
     );
 }
