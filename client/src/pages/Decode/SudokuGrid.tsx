@@ -26,6 +26,53 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
     );
 
     let theme = useTheme();
+    React.useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!chosenCell) return;
+
+            const { row, col } = chosenCell;
+
+            let dir: { r: number; c: number } | null = null;
+
+            if (e.key === "ArrowUp") dir = { r: -1, c: 0 };
+            else if (e.key === "ArrowDown") dir = { r: 1, c: 0 };
+            else if (e.key === "ArrowLeft") dir = { r: 0, c: -1 };
+            else if (e.key === "ArrowRight") dir = { r: 0, c: 1 };
+            else return;
+
+            e.preventDefault();
+
+            if (!dir) return;
+
+            // Пошук наступної клітинки, яка є порожньою (value===0)
+            let nextRow = row + dir.r;
+            let nextCol = col + dir.c;
+
+            const isEmpty = (r: number, c: number) => {
+                const v = cells[r * 9 + c];
+                return v === 0;
+            };
+
+            while (
+                nextRow >= 0 &&
+                nextRow <= 8 &&
+                nextCol >= 0 &&
+                nextCol <= 8
+            ) {
+                if (isEmpty(nextRow, nextCol)) {
+                    dispatch(setChosenCell({ row: nextRow, col: nextCol }));
+                    return;
+                }
+
+                nextRow += dir.r;
+                nextCol += dir.c;
+            }
+        };
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [chosenCell, cells, dispatch]);
+
     return (
         <Wrapper>
             {Array.from({ length: 9 }).map((_, row) => (

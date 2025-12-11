@@ -16,8 +16,9 @@ import { clearCorrectCount, getSudoku } from "../../store/sudokuSlice";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import LoginButton from "../../components/LoginButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { victory } from "../../store/resultsSlice";
+import ShareModal from "../Progress/ShareModal";
 
 export default function CheckModal({ isOpen, closeModal }: any) {
     const dispatch = useDispatch<AppDispatch>();
@@ -44,6 +45,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
             dispatch(victory());
         }
     }, [correct, user, isOpen]);
+    let [shareIsOpen, setShareIsOpen] = useState(false);
 
     if (correct)
         return (
@@ -159,10 +161,14 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                         <DialogActions sx={{ p: 2, justifyContent: "center" }}>
                             {user ? (
                                 <>
+                                <ShareModal
+                                    isOpen={shareIsOpen}
+                                    closeModal={() => setShareIsOpen(false)}
+                                />
                                     <Button
                                         variant="outlined"
                                         color="inherit"
-                                        onClick={closeModal}
+                                        onClick={() => setShareIsOpen(true)}
                                     >
                                         Поділитись результатом
                                     </Button>
