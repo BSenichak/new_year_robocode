@@ -6,8 +6,12 @@ import { fetchMe, logout } from "../store/authReducer";
 
 export default function LoginButton({
     fullWidth = false,
+    color = "warning",
+    style = {},
 }: {
     fullWidth?: boolean;
+    color?: any;
+    style?: any;
 }) {
     const dispatch = useDispatch<AppDispatch>();
     const user: any = useSelector((state: RootState) => state.auth.user);
@@ -98,9 +102,10 @@ export default function LoginButton({
     return (
         <Button
             variant="contained"
-            color="warning"
+            color={color}
             onClick={loginWithGoogle}
             fullWidth={fullWidth}
+            sx={style}
         >
             Увійти
         </Button>

@@ -1,13 +1,14 @@
 import styled from "@emotion/styled";
 import {
+    Avatar,
     Box,
-    Button,
     Card,
     CardContent,
     Typography,
     alpha,
     useTheme,
 } from "@mui/material";
+import LoginButton from "../../components/LoginButton";
 
 export default function NotAuth() {
     let theme = useTheme();
@@ -35,6 +36,8 @@ export default function NotAuth() {
                                 theme.palette.primary.main,
                                 0.3
                             )}`,
+                            position: "relative",
+                            overflow: "visible",
                         }}
                     >
                         <CardContent
@@ -55,24 +58,68 @@ export default function NotAuth() {
                                 команди рятувальників!
                             </Typography>
                         </CardContent>
+                        <Avatar
+                            sx={{
+                                bgcolor: theme.palette.warning.main,
+                                zIndex: 1,
+                                width: "50px",
+                                height: "50px",
+                                position: "absolute",
+                                left: 0,
+                                bottom: 0,
+                                transform: "translate(-50%, 50%)",
+                            }}
+                        >
+                            <img
+                                src="./santa.png"
+                                height="90px"
+                                alt=""
+                                style={{
+                                    height: "38px",
+                                }}
+                            />
+                        </Avatar>
+                        <Avatar
+                            sx={{
+                                bgcolor: theme.palette.success.light,
+                                zIndex: 1,
+                                width: "50px",
+                                height: "50px",
+                                position: "absolute",
+                                right: 0,
+                                top: 0,
+                                transform: "translate(50%, -50%)",
+                            }}
+                        >
+                            <img
+                                src="./gift.png"
+                                height="90px"
+                                alt=""
+                                style={{
+                                    height: "38px",
+                                }}
+                            />
+                        </Avatar>
                     </Card>
                 </Box>
             </Wrapper>
             <Box
                 sx={{
-                    p: 4,
+                    py: 8,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                 }}
             >
-                <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ width: "100%" }}
-                >
-                    Зареєструватися
-                </Button>
+                <LoginButton
+                    color={"primary"}
+                    style={{
+                        padding: "12px 24px",
+                        "&:hover": {
+                            boxShadow: `0 0 100px 5px ${theme.palette.primary.main}`,
+                        },
+                    }}
+                />
             </Box>
         </>
     );

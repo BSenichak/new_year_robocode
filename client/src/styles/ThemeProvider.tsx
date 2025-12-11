@@ -43,7 +43,7 @@ const appTheme = createTheme({
     },
     text: {
       primary: "rgba(255, 255, 255, 1)",
-      secondary: "rgba(157, 157, 255, 1)",
+      secondary: "#9D9DFF",
       disabled: "rgba(255, 255, 255, 0.65)",
     },
     divider: "rgba(255, 255, 255, 0.1)",
