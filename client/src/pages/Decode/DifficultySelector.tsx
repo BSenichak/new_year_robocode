@@ -85,7 +85,6 @@ export default function DifficultySelector() {
             <Dialog
                 open={!!chosen}
                 onClose={() => setChosen(null)}
-                hideBackdrop
                 PaperProps={{
                     sx: {
                         borderRadius: "12px",

@@ -31,9 +31,10 @@ export default function CheckModal({ isOpen, closeModal }: any) {
     let difficulty = useSelector<RootState, RootState["sudoku"]["difficulty"]>(
         (state) => state.sudoku.difficulty
     );
-    let progress: any = useSelector<RootState, RootState["results"]["progress"]>(
-        (state) => state.results.progress
-    );
+    let progress: any = useSelector<
+        RootState,
+        RootState["results"]["progress"]
+    >((state) => state.results.progress);
     let loading = useSelector<RootState, RootState["results"]["loading"]>(
         (state) => state.results.loading
     );
@@ -58,7 +59,6 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                     closeModal();
                     dispatch(clearCorrectCount());
                 }}
-                hideBackdrop
                 PaperProps={{
                     sx: {
                         borderRadius: "12px",
@@ -112,8 +112,15 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                         color="text.secondary"
                                         textAlign="center"
                                     >
-                                        Файл розшифровано і ти маєш +{difficulties.indexOf(difficulty) + 1} ба{difficulties.indexOf(difficulty) + 1 === 1 ? "л" : "ли"}!
-                                        Місія продовжується!
+                                        Файл розшифровано і ти маєш +
+                                        {difficulties.indexOf(difficulty) + 1}{" "}
+                                        ба
+                                        {difficulties.indexOf(difficulty) +
+                                            1 ===
+                                        1
+                                            ? "л"
+                                            : "ли"}
+                                        ! Місія продовжується!
                                     </Typography>
                                     <Typography
                                         variant="body1"
@@ -140,8 +147,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                             color="success"
                                             component={"span"}
                                         >
-                                            {progress.decode_count} { " "}
-                                            розкодовок
+                                            {progress.decode_count} розкодовок
                                         </Typography>
                                     </Typography>
                                 </>
@@ -161,14 +167,21 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                         <DialogActions sx={{ p: 2, justifyContent: "center" }}>
                             {user ? (
                                 <>
-                                <ShareModal
-                                    isOpen={shareIsOpen}
-                                    closeModal={() => setShareIsOpen(false)}
-                                />
+                                    <ShareModal
+                                        isOpen={shareIsOpen}
+                                        closeModal={() => setShareIsOpen(false)}
+                                    />
                                     <Button
                                         variant="outlined"
                                         color="inherit"
                                         onClick={() => setShareIsOpen(true)}
+                                        sx={{
+                                            "&:hover": {
+                                                borderWidth: 0.1,
+                                                background:
+                                                    "rgba(147, 50, 214, 1)",
+                                            },
+                                        }}
                                     >
                                         Поділитись результатом
                                     </Button>
@@ -196,7 +209,6 @@ export default function CheckModal({ isOpen, closeModal }: any) {
         <Dialog
             open={isOpen}
             onClose={closeModal}
-            hideBackdrop
             PaperProps={{
                 sx: {
                     borderRadius: "12px",
@@ -240,6 +252,12 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                     variant="outlined"
                     color="inherit"
                     onClick={() => dispatch(getSudoku())}
+                    sx={{
+                        "&:hover": {
+                            borderWidth: 0.1,
+                            background: "rgba(147, 50, 214, 1)",
+                        },
+                    }}
                 >
                     Спробувати інший файл
                 </Button>

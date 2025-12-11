@@ -83,6 +83,10 @@ export default function Poster() {
                             textTransform: "uppercase",
                             fontSize: "16px",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
+                            "&:hover": {
+                            borderWidth: 0.1, 
+                            background: "rgba(147, 50, 214, 1)"
+                        },
                         }}
                         onClick={() => navigate("/rules")}
                     >

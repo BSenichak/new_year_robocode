@@ -63,10 +63,11 @@ export default function LoginButton({
                     color="inherit"
                     sx={{
                         fontWeight: "100",
-                        borderWidth: 0.1, // товщина бордера в px
-                        borderColor: "currentColor", // щоб колір збігався з текстом
+                        borderWidth: 0.1, 
+                        borderColor: "currentColor", 
                         "&:hover": {
-                            borderWidth: 0.1, // щоб при ховері не товстішав
+                            borderWidth: 0.1, 
+                            background: "rgba(147, 50, 214, 1)"
                         },
                     }}
                     onClick={() => dispatch(logout())}
@@ -88,8 +89,9 @@ export default function LoginButton({
                     borderWidth: 0.1, 
                     borderColor: "rgba(255, 255, 255, 0.1)",
                     "&:hover": {
-                        borderWidth: 0.1, 
-                    },
+                            borderWidth: 0.1, 
+                            background: "rgba(147, 50, 214, 1)"
+                        },
                     justifyContent: "start",
                     ...style,
                 }}

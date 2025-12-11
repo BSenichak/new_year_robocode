@@ -235,6 +235,7 @@ appTheme = createTheme(appTheme, {
         background: "rgba(255, 255, 255, 0.04)"
     }
   },
+  
 });
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {

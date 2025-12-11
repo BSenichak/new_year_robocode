@@ -22,7 +22,7 @@ export default function InfoBar() {
     let [helpOpen, setHelpOpen] = useState(false);
     let helpedCell = useSelector<RootState, RootState["sudoku"]["helpedCell"]>(
         (state: RootState) => state.sudoku.helpedCell
-    )
+    );
     return (
         <Wrapper>
             <Card
@@ -118,7 +118,14 @@ export default function InfoBar() {
                 fullWidth
                 size="large"
                 color="inherit"
-                startIcon={<img src="./elf.png" alt="arrow" height={40} style={!!helpedCell ? { filter: "grayscale()"} : {}}/>}
+                startIcon={
+                    <img
+                        src="./elf.png"
+                        alt="arrow"
+                        height={40}
+                        style={!!helpedCell ? { filter: "grayscale()" } : {}}
+                    />
+                }
                 sx={{
                     background: "#2b2b34",
                 }}
@@ -128,28 +135,38 @@ export default function InfoBar() {
                 ЕЛЬФ-ПОМІЧ
             </Button>
             <Button
-                variant="contained"
+                variant="outlined"
                 fullWidth
                 size="large"
                 color="inherit"
                 startIcon={<Cached />}
                 sx={{
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
                     background: "transparent",
-                    border: "1px solid #ffffff44",
+                    p: "8px 16px",
+                    "&:hover": {
+                        borderWidth: 0.1,
+                        background: "rgba(147, 50, 214, 1)",
+                    },
                 }}
                 onClick={() => setClearModalOpen(true)}
             >
                 РОЗПОЧАТИ ЗАНОВО
             </Button>
             <Button
-                variant="contained"
+                variant="outlined"
                 fullWidth
                 size="large"
                 color="inherit"
                 startIcon={<Shuffle />}
                 sx={{
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
                     background: "transparent",
-                    border: "1px solid #ffffff44",
+                    p: "8px 16px",
+                    "&:hover": {
+                        borderWidth: 0.1,
+                        background: "rgba(147, 50, 214, 1)",
+                    },
                 }}
                 onClick={() => setRegenerateOpen(true)}
             >

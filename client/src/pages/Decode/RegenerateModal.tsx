@@ -7,7 +7,7 @@ import {
     IconButton,
     Typography,
     alpha,
-    useTheme
+    useTheme,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
@@ -22,7 +22,6 @@ export default function RegenerateModal({ isOpen, closeModal }: any) {
         <Dialog
             open={isOpen}
             onClose={closeModal}
-            hideBackdrop
             PaperProps={{
                 sx: {
                     borderRadius: "12px",
@@ -56,6 +55,12 @@ export default function RegenerateModal({ isOpen, closeModal }: any) {
                     variant="outlined"
                     color="inherit"
                     onClick={closeModal}
+                    sx={{
+                        "&:hover": {
+                            borderWidth: 0.1,
+                            background: "rgba(147, 50, 214, 1)",
+                        },
+                    }}
                 >
                     Повернутись назад
                 </Button>

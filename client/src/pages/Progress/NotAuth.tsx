@@ -115,9 +115,7 @@ export default function NotAuth() {
                     color={"primary"}
                     style={{
                         padding: "12px 24px",
-                        "&:hover": {
-                            boxShadow: `0 0 100px 5px ${theme.palette.primary.main}`,
-                        },
+                        animation: "glowingBlue 2s ease-in-out infinite",
                     }}
                 />
             </Box>

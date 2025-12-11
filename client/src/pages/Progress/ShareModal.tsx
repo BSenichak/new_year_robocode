@@ -22,9 +22,10 @@ export default function ShareModal({ isOpen, closeModal }: any) {
     const theme = useTheme();
     const [snackbar, setSnackbar] = useState<string | null>(null);
 
-    let progress: any = useSelector<RootState, RootState["results"]["progress"]>(
-        (state) => state.results.progress
-    );
+    let progress: any = useSelector<
+        RootState,
+        RootState["results"]["progress"]
+    >((state) => state.results.progress);
 
     async function downloadImage() {
         const node = document.getElementById("share-image");
@@ -47,7 +48,9 @@ export default function ShareModal({ isOpen, closeModal }: any) {
             const blob = await htmlToImage.toBlob(node, { pixelRatio: 3 });
             if (!blob) throw new Error("Помилка при генерації зображення");
 
-            const file = new File([blob], "robocode.png", { type: "image/png" });
+            const file = new File([blob], "robocode.png", {
+                type: "image/png",
+            });
 
             if (navigator.share && navigator.canShare({ files: [file] })) {
                 await navigator.share({
@@ -68,7 +71,6 @@ export default function ShareModal({ isOpen, closeModal }: any) {
             <Dialog
                 open={isOpen}
                 onClose={closeModal}
-                hideBackdrop
                 PaperProps={{
                     sx: {
                         borderRadius: "12px",
@@ -88,18 +90,42 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                 </DialogTitle>
 
                 <DialogContent sx={{ p: 2 }}>
-                    <Typography variant="body1" color="text.secondary" sx={{ py: 1 }}>
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        sx={{ py: 1 }}
+                    >
                         Збережіть картинку або поділіться нею у сторіз!
                     </Typography>
-                    <ShareImage progress={progress.ease + progress.middle  * 2 + progress.hard * 3} />
+                    <ShareImage
+                        progress={
+                            progress.ease +
+                            progress.middle * 2 +
+                            progress.hard * 3
+                        }
+                    />
                 </DialogContent>
 
                 <DialogActions sx={{ p: 2, display: "flex", gap: 1 }}>
-                    <Button variant="outlined" color="inherit" onClick={shareToInstagram}>
+                    <Button
+                        variant="outlined"
+                        color="inherit"
+                        onClick={shareToInstagram}
+                        sx={{
+                            "&:hover": {
+                                borderWidth: 0.1,
+                                background: "rgba(147, 50, 214, 1)",
+                            },
+                        }}
+                    >
                         Посилання для друзів
                     </Button>
 
-                    <Button variant="contained" color="primary" onClick={downloadImage}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={downloadImage}
+                    >
                         Завантажити картинку
                     </Button>
                 </DialogActions>

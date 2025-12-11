@@ -22,7 +22,6 @@ export default function ClearModal({ isOpen, closeModal }: any) {
         <Dialog
             open={isOpen}
             onClose={closeModal}
-            hideBackdrop
             PaperProps={{
                 sx: {
                     borderRadius: "12px",
@@ -52,7 +51,17 @@ export default function ClearModal({ isOpen, closeModal }: any) {
 
             {/* === Buttons === */}
             <DialogActions sx={{ p: 2 }}>
-                <Button variant="outlined" color="inherit" onClick={closeModal}>
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={closeModal}
+                    sx={{
+                        "&:hover": {
+                            borderWidth: 0.1,
+                            background: "rgba(147, 50, 214, 1)",
+                        },
+                    }}
+                >
                     Повернутись назад
                 </Button>
 

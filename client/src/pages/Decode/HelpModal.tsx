@@ -21,7 +21,6 @@ export default function HelpModal({ isOpen, closeModal }: any) {
         <Dialog
             open={isOpen}
             onClose={closeModal}
-            hideBackdrop
             PaperProps={{
                 sx: {
                     borderRadius: "12px",
@@ -30,8 +29,15 @@ export default function HelpModal({ isOpen, closeModal }: any) {
                 },
             }}
         >
-
-            <DialogContent sx={{ p: 2, position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <DialogContent
+                sx={{
+                    p: 2,
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                }}
+            >
                 <IconButton
                     sx={{ position: "absolute", top: 6, right: 6 }}
                     onClick={closeModal}
@@ -39,14 +45,28 @@ export default function HelpModal({ isOpen, closeModal }: any) {
                     <Close sx={{ color: "white" }} />
                 </IconButton>
                 <img src="./elf.png" alt="elf" style={{ height: "160px" }} />
-                <Typography variant="body1" color="text.secondary" textAlign="center">
+                <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    textAlign="center"
+                >
                     Буде заповнено 1 комірку правильним значенням
                 </Typography>
             </DialogContent>
 
             {/* === Buttons === */}
             <DialogActions sx={{ p: 2, alignItems: "center" }}>
-                <Button variant="outlined" color="inherit" onClick={closeModal}>
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    onClick={closeModal}
+                    sx={{
+                        "&:hover": {
+                            borderWidth: 0.1,
+                            background: "rgba(147, 50, 214, 1)",
+                        },
+                    }}
+                >
                     Повернутись назад
                 </Button>
 

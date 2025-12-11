@@ -7,11 +7,12 @@ import { setChosenCellValue } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
 
 export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
-    const keys = ["1","2","3","4","5","6","7","8","9"];
+    const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
     const dispatch = useDispatch<AppDispatch>();
-    const chosenCell = useSelector<RootState, RootState["sudoku"]["chosenCell"]>(
-        (state) => state.sudoku.chosenCell
-    );
+    const chosenCell = useSelector<
+        RootState,
+        RootState["sudoku"]["chosenCell"]
+    >((state) => state.sudoku.chosenCell);
 
     const handleKeyPress = (key: string) => {
         if (!chosenCell) return;
@@ -50,6 +51,12 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
                         disableElevation
                         onClick={() => handleKeyPress(k)}
                         color="inherit"
+                        sx={{
+                            "&:hover": {
+                                borderWidth: 0.1,
+                                background: "rgba(22, 70, 255, 1)",
+                            },
+                        }}
                     >
                         {k}
                     </Button>
@@ -57,7 +64,10 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
                 <Button
                     onClick={() => handleKeyPress("0")}
                     color="inherit"
-                    sx={{ gridColumn: "span 3" }}
+                    sx={{ gridColumn: "span 3","&:hover": {
+                            borderWidth: 0.1, 
+                            background: "rgba(217, 41, 63, 1)"
+                        }, }}
                     variant="outlined"
                     startIcon={<BackspaceOutlined />}
                 >
