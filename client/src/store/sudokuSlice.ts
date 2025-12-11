@@ -54,6 +54,9 @@ const sudokuSlice = createSlice({
     name: "sudoku",
     initialState,
     reducers: {
+        clearCorrectCount(state) {
+            state.correctCount = 0;
+        },
         setDifficulty(state, action) {
             state.difficulty = action.payload;
         },
@@ -150,6 +153,7 @@ export const {
     setChosenCellValue,
     clearValues,
     giveHint,
+    clearCorrectCount,
 } = sudokuSlice.actions;
 
 export default sudokuSlice.reducer;

@@ -6,13 +6,19 @@ import type { RootState } from "./store";
 type ResultsState = {
     loading: boolean;
     progress: number;
-    victorySent: boolean;
+};
+
+export type Results = {
+    decode_count: number;
+    ease: number;
+    middle: number;
+    hard: number;
+    rank: number | null;
 };
 
 const initialState: ResultsState = {
     loading: false,
     progress: 0,
-    victorySent: false,
 };
 
 export const victory = createAsyncThunk(
@@ -41,7 +47,7 @@ const resultsSlice = createSlice({
                 state.loading = true;
             })
             .addCase(getProgress.fulfilled, (state, action) => {
-                state.progress = action.payload.count || 0;
+                state.progress = action.payload || 0;
                 state.loading = false;
             })
             .addCase(getProgress.rejected, (state) => {
@@ -52,7 +58,7 @@ const resultsSlice = createSlice({
                 state.loading = true;
             })
             .addCase(victory.fulfilled, (state, action) => {
-                state.progress = action.payload.victories || 0;
+                state.progress = action.payload || 0;
                 state.loading = false;
             })
             .addCase(victory.rejected, (state) => {

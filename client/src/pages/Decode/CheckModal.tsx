@@ -12,7 +12,7 @@ import {
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../store/store";
-import { getSudoku } from "../../store/sudokuSlice";
+import { clearCorrectCount, getSudoku } from "../../store/sudokuSlice";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../store/store";
 import LoginButton from "../../components/LoginButton";
@@ -30,7 +30,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
     let difficulty = useSelector<RootState, RootState["sudoku"]["difficulty"]>(
         (state) => state.sudoku.difficulty
     );
-    let progress = useSelector<RootState, RootState["results"]["progress"]>(
+    let progress: any = useSelector<RootState, RootState["results"]["progress"]>(
         (state) => state.results.progress
     );
     let loading = useSelector<RootState, RootState["results"]["loading"]>(
@@ -40,10 +40,10 @@ export default function CheckModal({ isOpen, closeModal }: any) {
         (state) => state.auth.user
     );
     useEffect(() => {
-        if (correct && user) {
+        if (correct && user && isOpen) {
             dispatch(victory());
         }
-    }, [correct, user]);
+    }, [correct, user, isOpen]);
 
     if (correct)
         return (
@@ -54,6 +54,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                         dispatch(getSudoku());
                     }
                     closeModal();
+                    dispatch(clearCorrectCount());
                 }}
                 hideBackdrop
                 PaperProps={{
@@ -107,8 +108,9 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                     <Typography
                                         variant="body1"
                                         color="text.secondary"
+                                        textAlign="center"
                                     >
-                                        Файл розшифровано і ти маєш +1 бал!
+                                        Файл розшифровано і ти маєш +{difficulties.indexOf(difficulty) + 1} ба{difficulties.indexOf(difficulty) + 1 === 1 ? "л" : "ли"}!
                                         Місія продовжується!
                                     </Typography>
                                     <Typography
@@ -136,11 +138,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                             color="success"
                                             component={"span"}
                                         >
-                                            {progress +
-                                                difficulties.indexOf(
-                                                    difficulty
-                                                ) +
-                                                1}{" "}
+                                            {progress.decode_count} { " "}
                                             розкодовок
                                         </Typography>
                                     </Typography>

@@ -20,15 +20,15 @@ import { Share, Logout } from "@mui/icons-material";
 import { useState } from "react";
 import ShareModal from "./ShareModal";
 
-
 export default function Progress() {
     let dispatch = useDispatch<AppDispatch>();
     let user: any = useSelector<RootState, RootState["auth"]["user"]>(
         (state) => state.auth.user
     );
-    let progress = useSelector<RootState, RootState["results"]["progress"]>(
-        (state) => state.results.progress
-    );
+    let progress: any = useSelector<
+        RootState,
+        RootState["results"]["progress"]
+    >((state) => state.results.progress);
     useEffect(() => {
         if (user) dispatch(getProgress());
     }, [user]);
@@ -36,6 +36,20 @@ export default function Progress() {
     let navigate = useNavigate();
     let [shareIsOpen, setShareIsOpen] = useState(false);
     if (!user) return <NotAuth />;
+
+    const calculateAverage = () => {
+        const ease = Number(progress.ease);
+        const middle = Number(progress.middle);
+        const hard = Number(progress.hard);
+
+        const totalTests = ease + middle + hard;
+        if (totalTests === 0) return 0;
+
+        const totalPoints = ease * 1 + middle * 2 + hard * 3;
+
+        return (totalPoints / totalTests).toFixed(1);
+    };
+
     return (
         <Wrapper>
             <Typography variant="h4" textAlign="center">
@@ -44,7 +58,6 @@ export default function Progress() {
             <Card
                 sx={{
                     width: "100%",
-                    maxWidth: 800,
                     border: `1px solid ${alpha(theme.palette.grey[300], 0.1)}`,
                     backgroundColor: "#1d1d27",
                     position: "relative",
@@ -93,7 +106,7 @@ export default function Progress() {
                             component={"span"}
                             color="warning"
                         >
-                            {progress} файлів
+                            {progress.decode_count} файлів
                         </Typography>
                         !
                     </Typography>
@@ -119,7 +132,7 @@ export default function Progress() {
                                     }}
                                 />
                                 <Typography variant="h3" textAlign="center">
-                                    5
+                                    {progress.rank || "-"}
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -151,7 +164,9 @@ export default function Progress() {
                                     }}
                                 />
                                 <Typography variant="h3" textAlign="center">
-                                    5
+                                    {progress.ease +
+                                        progress.middle * 2 +
+                                        progress.hard * 3}
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -183,7 +198,7 @@ export default function Progress() {
                                     }}
                                 />
                                 <Typography variant="h3" textAlign="center">
-                                    5
+                                    {progress.decode_count}
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -215,7 +230,7 @@ export default function Progress() {
                                     }}
                                 />
                                 <Typography variant="h3" textAlign="center">
-                                    5
+                                    {calculateAverage()}
                                 </Typography>
                                 <Typography
                                     variant="body2"
@@ -242,7 +257,15 @@ export default function Progress() {
                                 <Typography variant="h5" textAlign="center">
                                     За рівнями складності
                                 </Typography>
-                                <Box sx={{ display: "flex", gap: 2, mt: 1, justifyContent: "space-around", alignSelf: "stretch" }}>
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        gap: 2,
+                                        mt: 1,
+                                        justifyContent: "space-around",
+                                        alignSelf: "stretch",
+                                    }}
+                                >
                                     <Box
                                         sx={{
                                             display: "flex",
@@ -250,8 +273,11 @@ export default function Progress() {
                                             alignItems: "center",
                                         }}
                                     >
-                                        <Typography variant="h3" color="success">
-                                            20
+                                        <Typography
+                                            variant="h3"
+                                            color="success"
+                                        >
+                                            {progress.ease}
                                         </Typography>
                                         <Typography variant="body2">
                                             Легкий
@@ -264,8 +290,11 @@ export default function Progress() {
                                             alignItems: "center",
                                         }}
                                     >
-                                        <Typography variant="h3" color="warning">
-                                            12
+                                        <Typography
+                                            variant="h3"
+                                            color="warning"
+                                        >
+                                            {progress.middle}
                                         </Typography>
                                         <Typography variant="body2">
                                             Середній
@@ -279,7 +308,7 @@ export default function Progress() {
                                         }}
                                     >
                                         <Typography variant="h3" color="error">
-                                            6
+                                            {progress.hard}
                                         </Typography>
                                         <Typography variant="body2">
                                             Складний
@@ -289,14 +318,43 @@ export default function Progress() {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Box sx={{display: "flex", justifyContent: "center", gap: 1 }}>
-                        <Button variant="contained" sx={{bgcolor: theme.palette.secondary.main}} startIcon={<Share/>} onClick={()=>setShareIsOpen(true)}>Поділитися результатами</Button>
-                        <Button variant="contained" color="success" onClick={()=>navigate("/decode")}>Продовжити гру</Button>
-                        <Button variant="contained" color="error" startIcon={<Logout/>} onClick={() => dispatch(logout())}>Вийти з облікового запису</Button>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: 1,
+                        }}
+                    >
+                        <Button
+                            variant="contained"
+                            sx={{ bgcolor: theme.palette.secondary.main }}
+                            startIcon={<Share />}
+                            onClick={() => setShareIsOpen(true)}
+                        >
+                            Поділитися результатами
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => navigate("/decode")}
+                        >
+                            Продовжити гру
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="error"
+                            startIcon={<Logout />}
+                            onClick={() => dispatch(logout())}
+                        >
+                            Вийти з облікового запису
+                        </Button>
                     </Box>
                 </CardContent>
             </Card>
-            <ShareModal isOpen={shareIsOpen} closeModal={() => setShareIsOpen(false)}/>
+            <ShareModal
+                isOpen={shareIsOpen}
+                closeModal={() => setShareIsOpen(false)}
+            />
         </Wrapper>
     );
 }

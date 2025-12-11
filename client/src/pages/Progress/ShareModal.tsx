@@ -22,7 +22,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
     const theme = useTheme();
     const [snackbar, setSnackbar] = useState<string | null>(null);
 
-    let progress = useSelector<RootState, RootState["results"]["progress"]>(
+    let progress: any = useSelector<RootState, RootState["results"]["progress"]>(
         (state) => state.results.progress
     );
 
@@ -91,7 +91,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                     <Typography variant="body1" color="text.secondary" sx={{ py: 1 }}>
                         Збережіть картинку або поділіться нею у сторіз!
                     </Typography>
-                    <ShareImage progress={progress} />
+                    <ShareImage progress={progress.ease + progress.middle  * 2 + progress.hard * 3} />
                 </DialogContent>
 
                 <DialogActions sx={{ p: 2, display: "flex", gap: 1 }}>

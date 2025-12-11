@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button as MuiButton, alpha } from "@mui/material";
 import { BackspaceOutlined } from "@mui/icons-material";
 import { useSelector, useDispatch } from "react-redux";
@@ -7,12 +7,11 @@ import { setChosenCellValue } from "../../store/sudokuSlice";
 import styled from "@emotion/styled";
 
 export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
-    const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    const keys = ["1","2","3","4","5","6","7","8","9"];
     const dispatch = useDispatch<AppDispatch>();
-    const chosenCell = useSelector<
-        RootState,
-        RootState["sudoku"]["chosenCell"]
-    >((state) => state.sudoku.chosenCell);
+    const chosenCell = useSelector<RootState, RootState["sudoku"]["chosenCell"]>(
+        (state) => state.sudoku.chosenCell
+    );
 
     const handleKeyPress = (key: string) => {
         if (!chosenCell) return;
@@ -24,6 +23,22 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
             })
         );
     };
+
+    // Додаємо обробку фізичної клавіатури
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!chosenCell) return;
+
+            if (e.key >= "1" && e.key <= "9") {
+                handleKeyPress(e.key);
+            } else if (e.key === "0" || e.key === "Backspace") {
+                handleKeyPress("0"); // або видалити
+            }
+        };
+
+        document.addEventListener("keydown", handleKeyDown);
+        return () => document.removeEventListener("keydown", handleKeyDown);
+    }, [chosenCell]);
 
     return (
         <Wrapper>
@@ -42,9 +57,7 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
                 <Button
                     onClick={() => handleKeyPress("0")}
                     color="inherit"
-                    sx={{
-                        gridColumn: "span 3",
-                    }}
+                    sx={{ gridColumn: "span 3" }}
                     variant="outlined"
                     startIcon={<BackspaceOutlined />}
                 >
