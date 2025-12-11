@@ -86,11 +86,12 @@ export default function LoginButton({
                 sx={{
                     fontWeight: "100",
                     borderWidth: 0.1, 
-                    borderColor: "currentColor",
+                    borderColor: "rgba(255, 255, 255, 0.1)",
                     "&:hover": {
                         borderWidth: 0.1, 
                     },
                     justifyContent: "start",
+                    ...style,
                 }}
                 onClick={() => dispatch(logout())}
             >
