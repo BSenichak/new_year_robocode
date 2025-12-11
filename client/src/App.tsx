@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "./store/store";
 import { useEffect } from "react";
 import { getProgress } from "./store/resultsSlice";
+import LeaderBoard from "./pages/LeaderBorad/LeaderBoard";
 
 export default function App() {
     let dispatch = useDispatch<AppDispatch>();
@@ -30,7 +31,9 @@ export default function App() {
                         <Route path="/decode" element={<Decode />} />
                         <Route path="/progress" element={<Progress />} />
                         <Route path="/rules" element={<Rules />} />
+                        <Route path="/leader_board" element={<LeaderBoard />} />
                         <Route path="*" element={<NotFound />} />
+
                     </Routes>
                 </Content>
                 <Footer />
