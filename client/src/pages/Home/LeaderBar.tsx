@@ -4,11 +4,9 @@ import {
     Card,
     CardContent,
     Typography,
-    useTheme,
 } from "@mui/material";
 
 export default function LeaderBar() {
-    const theme = useTheme();
     return (
         <Wrapper>
             <Background />

@@ -1,5 +1,4 @@
 import {
-    alpha,
     Accordion,
     AccordionDetails,
     AccordionSummary,
@@ -38,7 +37,7 @@ export default function AccordionRules() {
 
     return (
         <>
-            <Typography variant="h2" textAlign="center">
+            <Typography variant="h2" textAlign="center" sx={{mt: "128px"}}>
                 Часті запитання
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -57,9 +56,9 @@ export default function AccordionRules() {
 function MyAccordion({ title, text }: { title: string; text: string }) {
     return (
         <Accordion
-            sx={(theme) => ({
+            sx={{
                 borderRadius: 3,
-                border: `1px solid ${alpha(theme.palette.text.secondary, 0.3)}`,
+                border: `1px solid rgba(255, 255, 255, 0.1)`,
                 overflow: "hidden",
 
                 // критично: підвищує специфічність (&&)
@@ -67,13 +66,13 @@ function MyAccordion({ title, text }: { title: string; text: string }) {
                     borderTopLeftRadius: 12,
                     borderTopRightRadius: 12,
                 },
-            })}
+            }}
         >
-            <AccordionSummary expandIcon={<ExpandMoreIcon color="info" />}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon style={{color: "white"}} />}>
                 <Typography component="span" variant="h6">{title}</Typography>
             </AccordionSummary>
 
-            <AccordionDetails><Typography component="span" color="text.secondary">{text}</Typography></AccordionDetails>
+            <AccordionDetails><Typography variant="body2" component="span" color="text.secondary">{text}</Typography></AccordionDetails>
         </Accordion>
     );
 }

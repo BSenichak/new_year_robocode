@@ -6,7 +6,6 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    alpha,
     Typography,
 } from "@mui/material";
 import AccordionRules from "./AccordionRules";
@@ -21,15 +20,16 @@ export default function Rules() {
                 variant="body1"
                 textAlign="center"
                 color="text.secondary"
-                sx={{ my: 2 }}
+                sx={{ mt: -1, mb: 2 }}
             >
                 Все, що потрібно знати про Різдвяну місію Robocode
             </Typography>
             <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid #ffffff44`,
-                    borderRadius: 3,
+                    borderRadius: "24px",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    background: "rgba(255, 255, 255, 0.04)",
                 }}
             >
                 <CardContent
@@ -53,8 +53,9 @@ export default function Rules() {
             <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid #ffffff44`,
-                    borderRadius: 3,
+                    borderRadius: "24px",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    background: "rgba(255, 255, 255, 0.04)",
                 }}
             >
                 <CardContent
@@ -80,8 +81,9 @@ export default function Rules() {
             <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid #ffffff44`,
-                    borderRadius: 3,
+                    borderRadius: "24px",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    background: "rgba(255, 255, 255, 0.04)",
                 }}
             >
                 <CardContent
@@ -144,8 +146,9 @@ export default function Rules() {
             <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid #ffffff44`,
-                    borderRadius: 3,
+                    borderRadius: "24px",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    background: "rgba(255, 255, 255, 0.04)",
                 }}
             >
                 <CardContent
@@ -163,79 +166,74 @@ export default function Rules() {
                     </CardHead>
                     <Box sx={{ display: "flex", gap: "1rem" }}>
                         <Card
-                            sx={(theme) => ({
-                                background: alpha(
-                                    theme.palette.success.main,
-                                    0.5
-                                ),
+                            sx={{
+                                background:"rgba(51, 249, 129, 0.3)",
                                 flexGrow: 1,
-                                border: `1px solid ${theme.palette.success.main}`,
-                                p: 1
-                            })}
+                                border: `1px solid rgba(51, 249, 129, 1)`,
+                                p: 1,
+                                borderRadius: "12px",
+                            }}
                         >
                             <Typography
                                 variant="h2"
-                                color="success.light"
+                                color="rgba(51, 249, 129, 1)"
                                 textAlign="center"
                             >
                                 1
                             </Typography>
-                            <Typography variant="body1" textAlign="center">
+                            <Typography variant="body2" textAlign="center">
                                 Легкий
                             </Typography>
                         </Card>
                         <Card
-                            sx={(theme) => ({
-                                background: alpha(
-                                    theme.palette.warning.main,
-                                    0.5
-                                ),
+                            sx={{
+                                background:"rgba(255, 121, 57, 0.3)",
                                 flexGrow: 1,
-                                border: `1px solid ${theme.palette.warning.main}`,
-                                p: 1
-                            })}
+                                border: `1px solid rgba(255, 121, 57, 1)`,
+                                p: 1,
+                                borderRadius: "12px",
+                            }}
                         >
                             <Typography
                                 variant="h2"
-                                color="warning.light"
+                                color="rgba(255, 121, 57, 1)"
                                 textAlign="center"
                             >
                                 2
                             </Typography>
-                            <Typography variant="body1" textAlign="center">
+                            <Typography variant="body2" textAlign="center">
                                 Середній
                             </Typography>
                         </Card>
                         <Card
-                            sx={(theme) => ({
-                                background: alpha(
-                                    theme.palette.error.main,
-                                    0.5
-                                ),
+                            sx={{
+                                background:"rgba(254, 57, 78, 0.3)",
                                 flexGrow: 1,
-                                border: `1px solid ${theme.palette.error.main}`,
-                                p: 1
-                            })}
+                                border: `1px solid rgba(254, 57, 78, 1)`,
+                                p: 1,
+                                borderRadius: "12px",
+                            }}
                         >
                             <Typography
                                 variant="h2"
-                                color="error.light"
+                                color="rgba(254, 57, 78, 1)"
                                 textAlign="center"
                             >
                                 3
                             </Typography>
-                            <Typography variant="body1" textAlign="center">
+                            <Typography variant="body2" textAlign="center">
                                 Складний
                             </Typography>
                         </Card>
                     </Box>
                 </CardContent>
             </Card>
-             <Card
+            <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid #ffffff44`,
-                    borderRadius: 3,
+                    borderRadius: "24px",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    background: "rgba(255, 255, 255, 0.04)",
                 }}
             >
                 <CardContent
@@ -274,7 +272,6 @@ export default function Rules() {
                                 3 місце – Брендований мерч Robocode
                             </Typography>
                         </ListItem>
-                        
                     </List>
                 </CardContent>
             </Card>
@@ -287,7 +284,7 @@ let Wrapper = styled(Box)`
     display: flex;
     flex-direction: column;
     padding: 3rem 0;
-    gap: 1rem;
+    gap: 24px;
 `;
 
 let CardHead = styled(Box)`
