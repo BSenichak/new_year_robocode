@@ -7,33 +7,55 @@ import {
     useTheme,
     alpha,
     useMediaQuery,
+    CircularProgress,
 } from "@mui/material";
+import type { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 export default function LeadersBar() {
     const theme = useTheme();
+    let leaders = useSelector<RootState, RootState["leaderboard"]["leaders"]>(
+        (state) => state.leaderboard.leaders
+    );
+    let loading = useSelector<RootState, RootState["leaderboard"]["loading"]>(
+        (state) => state.leaderboard.loading
+    );
+    if (loading || !leaders)
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexGrow: 1,
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
     return (
         <Wrapper>
             <Cards>
                 <CardItem
                     icon="./1st.png"
                     color={theme.palette.warning.light}
-                    name="aboba"
-                    score="1000"
-                    count="1"
+                    name={(leaders[0] && leaders[0].name) || "-"}
+                    score={(leaders[0] && leaders[0].points) || "-"}
+                    count={(leaders[0] && leaders[0].filesDecoded) || "-"}
                 />
                 <CardItem
                     icon="./2st.png"
                     color={theme.palette.grey[500]}
-                    name="aboba"
-                    score="1000"
-                    count="1"
+                    name={(leaders[1] && leaders[1].name) || "-"}
+                    score={(leaders[1] && leaders[1].points) || "-"}
+                    count={(leaders[1] && leaders[1].filesDecoded) || "-"}
                 />
                 <CardItem
                     icon="./3st.png"
                     color={theme.palette.warning.dark}
-                    name="aboba"
-                    score="1000"
-                    count="1"
+                    name={(leaders[2] && leaders[2].name) || "-"}
+                    score={(leaders[2] && leaders[2].points) || "-"}
+                    count={(leaders[2] && leaders[2].filesDecoded) || "-"}
                     islast={true}
                 />
             </Cards>
@@ -78,7 +100,7 @@ function CardItem({
 }) {
     let small = useMediaQuery("(max-width: 639px)");
     return (
-        <Card sx={islast && small ? {gridColumn: "1/-1" } : {}}>
+        <Card sx={islast && small ? { gridColumn: "1/-1" } : {}}>
             <CardContent
                 sx={{
                     display: "flex",

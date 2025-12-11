@@ -9,28 +9,27 @@ import {
     useTheme,
     alpha,
     Typography,
+    CircularProgress,
+    Box,
 } from "@mui/material";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../store/store";
-
-const leaderboard = [
-    { place: 1, name: "CyberNinja_2024", filesDecoded: 100, points: 256 },
-    { place: 2, name: "Bohdan S", filesDecoded: 78, points: 198 },
-    { place: 3, name: "CodeWizard_UA", filesDecoded: 50, points: 145 },
-    { place: 4, name: "SantaHelper42", filesDecoded: 45, points: 120 },
-    { place: 5, name: "PuzzleSolver", filesDecoded: 38, points: 98 },
-    { place: 6, name: "RoboKid_Master", filesDecoded: 32, points: 87 },
-    { place: 7, name: "TechKid_Kyiv", filesDecoded: 28, points: 76 },
-    { place: 8, name: "AIExplorer", filesDecoded: 24, points: 65 },
-    { place: 9, name: "LogicMaster", filesDecoded: 20, points: 54 },
-    { place: 10, name: "HolidayGamer", filesDecoded: 16, points: 43 },
-];
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store/store";
+import { useEffect } from "react";
+import { fetchLeaders } from "../../store/leaderboardSlice";
 
 export default function LeaderTable() {
     const theme = useTheme();
     let user: any = useSelector<RootState, RootState["auth"]["user"]>(
         (state) => state.auth.user
     );
+    let leaderboard =
+        useSelector<RootState, RootState["leaderboard"]["leaders"]>(
+            (state) => state.leaderboard.leaders
+        ) || [];
+    let dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        dispatch(fetchLeaders());
+    }, []);
 
     const getRowStyle = (place: number, isMe: boolean) => {
         if (place === 1) {
@@ -72,8 +71,28 @@ export default function LeaderTable() {
         return number;
     };
 
+    let loading = useSelector<RootState, RootState["leaderboard"]["loading"]>(
+        (state) => state.leaderboard.loading
+    );
+    if (loading || !leaderboard)
+        return (
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexGrow: 1,
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        );
+
     return (
-        <TableContainer component={Paper} sx={{ p: 2, border: "1px solid #ffffff19", borderRadius: 3 }}>
+        <TableContainer
+            component={Paper}
+            sx={{ p: 2, border: "1px solid #ffffff19", borderRadius: 3 }}
+        >
             <Table size="small" sx={{ width: "100%" }}>
                 <TableHead>
                     <TableRow>
@@ -100,7 +119,7 @@ export default function LeaderTable() {
                 </TableHead>
 
                 <TableBody>
-                    {leaderboard.map((row, index) => {
+                    {leaderboard.map((row: any, index: number) => {
                         const isLast = index === leaderboard.length - 1;
 
                         return (

@@ -7,6 +7,10 @@ import {
     LinearProgress,
 } from "@mui/material";
 import { linearProgressClasses } from "@mui/material/LinearProgress";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store/store";
+import { useEffect } from "react";
+import { fetchLeaderboardStats } from "../../store/leaderboardSlice";
 
 export default function Progress() {
     return (
@@ -37,8 +41,6 @@ export default function Progress() {
 }
 
 let Wrapper = styled(Box)`
-    /* background-color: ${({ theme }: any) =>
-        theme.palette.background.paper}; */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -82,6 +84,18 @@ let Background = styled(Box)`
 `;
 
 export function ProgressCard() {
+    let dispatch = useDispatch<AppDispatch>();
+    let stats = useSelector<RootState, RootState["leaderboard"]["stats"]>((state) => state.leaderboard.stats);
+    useEffect(() => {
+        if (!stats) dispatch(fetchLeaderboardStats());
+    }, [stats]);
+    const totalFiles = 10000; // наприклад, максимально можливі файли
+    const completedFiles = stats?.totalDecodeCount || 0;
+    const remainingFiles = totalFiles - completedFiles;
+    const progressPercent = Math.min(
+        100,
+        Math.round((completedFiles / totalFiles) * 100)
+    );
     return (
         <Card sx={{ width: "100%" }}>
             <CardContent sx={{ display: "flex", gap: "1rem" }}>
@@ -94,13 +108,13 @@ export function ProgressCard() {
                     >
                         <Typography variant="h5">Прогрес спільноти</Typography>
                         <Typography variant="body2" color="info.light">
-                            28.5% завершено
+                            {progressPercent}% завершено
                         </Typography>
                     </Box>
                     <ProgressWrapper>
                         <BorderLinearProgress
                             variant="determinate"
-                            value={20}
+                            value={progressPercent}
                         />
                     </ProgressWrapper>
                     <Box
@@ -110,10 +124,10 @@ export function ProgressCard() {
                         }}
                     >
                         <Typography variant="body2" color="success">
-                            Врятовано: 2 847 файлів
+                            Врятовано: {completedFiles.toLocaleString()} файлів
                         </Typography>
                         <Typography variant="body2" color="info.light">
-                            Залишилось: 7 153
+                            Залишилось: {remainingFiles.toLocaleString()}
                         </Typography>
                     </Box>
                     <Box
@@ -135,7 +149,7 @@ export function ProgressCard() {
                                 color="success.light"
                                 textAlign="center"
                             >
-                                1245
+                                {stats?.totalPlayers || 0}
                             </Typography>
                             <Typography
                                 variant="body2"
@@ -157,7 +171,7 @@ export function ProgressCard() {
                                 color="warning"
                                 textAlign="center"
                             >
-                                8432
+                                {stats?.todayDecodeCount || 0}
                             </Typography>
                             <Typography
                                 variant="body2"
@@ -179,7 +193,7 @@ export function ProgressCard() {
                                 color="primary"
                                 textAlign="center"
                             >
-                                24
+                                {Math.ceil((new Date("2026-01-01").getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
                             </Typography>
                             <Typography
                                 variant="body2"

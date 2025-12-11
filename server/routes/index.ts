@@ -178,4 +178,60 @@ router.get("/progress", async (req: Request, res: Response) => {
     }
 });
 
+router.get("/stats", async (req: Request, res: Response) => {
+    try {
+        // Загальна кількість гравців та сумарний decode_count
+        const [overall]: any = await db.query(`
+            SELECT 
+                COUNT(*) AS totalPlayers,
+                SUM(decode_count) AS totalDecodeCount
+            FROM users_stats
+        `);
+
+        // Кількість decode_count за сьогодні
+        const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+        const [todayResult]: any = await db.query(
+            `SELECT total_decode_count AS todayDecodeCount
+             FROM daily_overall_progress
+             WHERE date = ?`,
+            [today]
+        );
+
+        res.status(200).json({
+            totalPlayers: overall[0]?.totalPlayers || 0,
+            totalDecodeCount: Number(overall[0]?.totalDecodeCount) || 0,
+            todayDecodeCount: todayResult[0]?.todayDecodeCount || 0,
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+router.get("/leaderboard", async (req: Request, res: Response) => {
+    try {
+        // Отримуємо топ-10 гравців за очками
+        const [rows]: any = await db.query(`
+            SELECT 
+                display_name AS name,
+                decode_count AS filesDecoded,
+                (ease*1 + middle*2 + hard*3) AS points
+            FROM users_stats
+            ORDER BY points DESC, decode_count DESC
+            LIMIT 10
+        `);
+
+        // Додаємо поле place
+        const leaderboard = rows.map((row: any, index: number) => ({
+            place: index + 1,
+            ...row,
+        }));
+
+        res.status(200).json(leaderboard);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
 export default router;

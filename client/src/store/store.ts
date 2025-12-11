@@ -4,6 +4,7 @@ import { createLogger } from "redux-logger";
 import modalReducer from "./modalSlice";
 import sudokuReducer from "./sudokuSlice";
 import resultsReducer from "./resultsSlice";
+import leaderboardReducer from "./leaderboardSlice";
 
 const logger = createLogger({
     collapsed: true,
@@ -21,6 +22,7 @@ export const store = configureStore({
         modal: modalReducer,
         sudoku: sudokuReducer,
         results: resultsReducer,
+        leaderboard: leaderboardReducer
     },
     middleware: (getDefaultMiddleware) =>
         import.meta.env.DEV
