@@ -6,6 +6,7 @@ import {
     Typography,
     useTheme,
     alpha,
+    useMediaQuery,
 } from "@mui/material";
 
 export default function LeadersBar() {
@@ -75,8 +76,9 @@ function CardItem({
     count: string;
     islast?: boolean;
 }) {
+    let small = useMediaQuery("(max-width: 639px)");
     return (
-        <Card sx={islast ? {gridColumn: "1/-1" } : {}}>
+        <Card sx={islast && small ? {gridColumn: "1/-1" } : {}}>
             <CardContent
                 sx={{
                     display: "flex",

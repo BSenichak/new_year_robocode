@@ -83,7 +83,7 @@ let Background = styled(Box)`
 
 export function ProgressCard() {
     return (
-        <Card sx={{ width: "100%", maxWidth: 800 }}>
+        <Card sx={{ width: "100%" }}>
             <CardContent sx={{ display: "flex", gap: "1rem" }}>
                 <ProgressBar>
                     <Box
