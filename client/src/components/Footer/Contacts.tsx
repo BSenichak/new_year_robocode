@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 export default function Contacts() {
     return (
         <Box>
-            <Typography variant="h3">Контакти</Typography>
+            <Typography variant="h2">Контакти</Typography>
             <Wrapper>
                 <Typography variant="body2">+38 (093) 170-64-42</Typography>
                 <Typography variant="body2">

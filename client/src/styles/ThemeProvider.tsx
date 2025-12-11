@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const appTheme = createTheme({
+let appTheme = createTheme({
   palette: {
     primary: {
       main: "rgba(22, 70, 255, 1)",
@@ -33,7 +33,7 @@ const appTheme = createTheme({
       dark: "rgba(72, 187, 120, 1)",
     },
     info: {
-      main: "rgba(21, 115, 255, 1)",
+      main: "rgba(22, 70, 255, 1)",
       light: "rgba(157, 157, 255, 1)",
       dark: "rgba(22, 70, 255, 1)",
     },
@@ -42,8 +42,8 @@ const appTheme = createTheme({
       paper: "rgba(30, 29, 41, 0.5)",
     },
     text: {
-      primary: "rgba(255, 255, 255, 1)",
-      secondary: "#9D9DFF",
+      primary: "rgba(250, 249, 250, 1)",
+      secondary: "rgba(157, 157, 255, 1)",
       disabled: "rgba(255, 255, 255, 0.65)",
     },
     divider: "rgba(255, 255, 255, 0.1)",
@@ -93,14 +93,14 @@ const appTheme = createTheme({
       fontStyle: "normal",
     },
     body1: {
-      fontSize: "14px",
+      fontSize: "16px",
       fontWeight: 400,
       letterSpacing: "0px",
       lineHeight: "18px",
       fontStyle: "normal",
     },
     body2: {
-      fontSize: "12px",
+      fontSize: "14px",
       fontWeight: 400,
       letterSpacing: "0px",
       lineHeight: "normal",
@@ -147,6 +147,93 @@ const appTheme = createTheme({
         },
       },
     },
+  },
+});
+
+appTheme = createTheme(appTheme, {
+  typography: {
+    h1: {
+      fontSize: "48px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "40px",   // планшет
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "32px",   // телефон
+      },
+    },
+    h2: {
+      fontSize: "36px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "30px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "26 px",
+      },
+    },
+    h3: {
+      fontSize: "28px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "24px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "20px",
+      },
+    },
+    h4: {
+      fontSize: "22px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "20px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "18px",
+      },
+    },
+    h5: {
+      fontSize: "18px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "16px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "14px",
+      },
+    },
+    h6: {
+      fontSize: "16px",
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "14px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "12px",
+      },
+    },
+    body1: {
+      fontSize: "18px",
+      fontWeight: 400,
+      [appTheme.breakpoints.down("md")]: {
+        fontSize: "18px",
+      },
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "16px",
+      },
+    },
+    body2: {
+      fontSize: "16px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "14px",
+      },
+    },
+    button: {
+      fontSize: "16px",
+      borderRadius: "16px",
+      [appTheme.breakpoints.down("sm")]: {
+        fontSize: "14px",
+      },
+    },
+    card: {
+        borderRadius: "24px",
+        border: "1px solid rgba(255, 255, 255, 0.1)",
+        background: "rgba(255, 255, 255, 0.04)"
+    }
   },
 });
 

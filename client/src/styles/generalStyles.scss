@@ -2,3 +2,22 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+
+@keyframes glowingBlue {
+  0% {
+    box-shadow: 0 0 4px rgba(22, 70, 255, 0.4),
+                0 0 10px rgba(22, 70, 255, 0.3),
+                0 0 20px rgba(22, 70, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 6px rgba(22, 70, 255, 0.7),
+                0 0 14px rgba(22, 70, 255, 0.55),
+                0 0 28px rgba(22, 70, 255, 0.45);
+  }
+  100% {
+    box-shadow: 0 0 4px rgba(22, 70, 255, 0.4),
+                0 0 10px rgba(22, 70, 255, 0.3),
+                0 0 20px rgba(22, 70, 255, 0.2);
+  }
+}

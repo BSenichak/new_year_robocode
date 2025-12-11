@@ -6,7 +6,6 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material";
-import { alpha } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export default function Poster() {
@@ -19,10 +18,10 @@ export default function Poster() {
                     icon={<img src="Error.png" />}
                     label="УВАГА: Файли зашифровано!"
                     sx={{
-                        background: (theme) =>
-                            alpha(theme.palette.error.main, 0.5),
-                        padding: "0.5rem 1rem",
-                        color: (theme) => theme.palette.error.main,
+                        background: "rgba(254, 57, 78, 0.2)",
+                        padding: "8px 16px",
+                        color: "rgba(254, 57, 78, 1)",
+                        fontSize: "14px"
                     }}
                 />
                 <Typography
@@ -30,12 +29,13 @@ export default function Poster() {
                     sx={{
                         marginY: "2rem",
                         color: (theme) => theme.palette.success.light,
+                        fontSize:"48px"
                     }}
                 >
                     Різдвяна місія{" "}
                     <span style={{ color: "white" }}>Robocode</span>
                 </Typography>
-                <Typography variant="body1" color="info.light">
+                <Typography variant="body1" color="textSecondary">
                     Злі грінч-хакери взламали комп’ютер Санта Клауса! Злодії
                     зашифрували файли зі списком дітей та їхніх подарунків. Щоб
                     допомогти Санті, потрібно відкрити кожен файл. А ключ до
@@ -48,6 +48,9 @@ export default function Poster() {
                         marginY: "1rem",
                         color: "InfoText",
                         alignSelf: !isPhone ? "flex-start" : "center",
+                        p: "2px 0",
+                        height: "auto",
+                        lineHeight: "16px"
                     }}
                 />
                 <Box
@@ -61,11 +64,12 @@ export default function Poster() {
                     <Button
                         variant="contained"
                         color="primary"
-                        startIcon={<img src="./Accept.svg" />}
+                        startIcon={<img src="./Accept.svg" style={{height: "20px"}}/>}
                         sx={{
-                            padding: "1rem 2rem",
+                            padding: "16px 20px",
                             textTransform: "uppercase",
-                            fontSize: "1.2rem",
+                            fontSize: "16px",
+                            animation: "glowingBlue 2s ease-in-out infinite",
                         }}
                         onClick={()=>navigate("/decode")}
                     >
@@ -75,10 +79,10 @@ export default function Poster() {
                         variant="outlined"
                         color="inherit"
                         sx={{
-                            padding: "1rem 2rem",
+                            padding: "16px 20px",
                             textTransform: "uppercase",
-                            fontSize: "1.2rem",
-                            border: "1px solid #ffffff3b",
+                            fontSize: "16px",
+                            border: "1px solid rgba(255, 255, 255, 0.1)",
                         }}
                         onClick={() => navigate("/rules")}
                     >
@@ -95,12 +99,12 @@ export default function Poster() {
                     <Box sx={{ display: "flex", flexDirection: "column" }}>
                         <Typography
                             variant="h2"
-                            color="info.dark"
+                            color="primary.main"
                             sx={{ fontWeight: "bold" }}
                         >
                             10 000+
                         </Typography>
-                        <Typography variant="body1" color="info.light">
+                        <Typography variant="body2" color="text.secondary">
                             Файлів для розшифровки
                         </Typography>
                     </Box>
@@ -118,7 +122,7 @@ export default function Poster() {
                         >
                             3
                         </Typography>
-                        <Typography variant="body1" color="info.light">
+                        <Typography variant="body2" color="text.secondary">
                             Рівні складності
                         </Typography>
                     </Box>
@@ -132,9 +136,9 @@ export default function Poster() {
                         <img
                             src="Trophy.png"
                             alt="trophy"
-                            style={{ height: "35px", width: "35px" }}
+                            style={{ height: "36px", width: "36px" }}
                         />
-                        <Typography variant="body1" color="info.light">
+                        <Typography variant="body2" color="text.secondary">
                             Призи топ-3 гравцям
                         </Typography>
                     </Box>

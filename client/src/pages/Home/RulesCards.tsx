@@ -5,11 +5,9 @@ import {
     styled,
     Typography,
     alpha,
-    useTheme,
 } from "@mui/material";
 
 export default function RulesCards() {
-    const theme = useTheme();
     return (
         <Wrapper>
             <Typography variant="h2" textAlign="center" sx={{my: 3}}>
@@ -22,28 +20,28 @@ export default function RulesCards() {
             <Cards>
                 <CardItem
                     icon="./lock.png"
-                    color={theme.palette.error.light}
+                    color="rgba(51, 249, 129, 0.2)"
                     number="01"
                     title="Обери рівень"
                     text="Easy (1 бал), Medium (2 бали) або Hard (3 бали)"
                 />
                 <CardItem
                     icon="./puzzle.png"
-                    color={theme.palette.primary.dark}
+                    color="rgba(22, 70, 255, 0.2)"
                     number="02"
                     title="Розв'яжи судоку"
                     text="Заповни клітинки цифрами від 1 до 9 за правилами"
                 />
                 <CardItem
                     icon="./folder.png"
-                    color={theme.palette.warning.main}
+                    color="rgba(255, 121, 57, 0.2)"
                     number="03"
                     title="Розшифруй файл"
                     text="Кожне вирішене судоку розшифровує 1 файл та повертає свято ще одній сім’ї"
                 />
                 <CardItem
                     icon="./Trophy.png"
-                    color={theme.palette.info.light}
+                    color="rgba(169, 57, 255, 0.2)"
                     number="04"
                     title="Змагайся"
                     text="Потрап у топ-3 та отримай приз від Robocode!"
@@ -77,7 +75,12 @@ let IconBox = styled(Card)`
 
 function CardItem({ icon, color, number, title, text }: any) {
     return (
-        <Card>
+        <Card sx={{
+            border: `1px solid rgba(255, 255, 255, 0.1)`,
+            borderRadius: "22px",
+            padding: "16px 8px",
+            bgcolor: "rgba(255, 255, 255, 0.04)"
+        }}>
             <CardContent
                 sx={{
                     display: "flex",
@@ -85,20 +88,22 @@ function CardItem({ icon, color, number, title, text }: any) {
                     gap: "0.6rem",
                 }}
             >
-                <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                <Box sx={{ display: "flex", gap: "16px", alignItems: "center" }}>
                     <IconBox
                         sx={{
                             bgcolor: alpha(color, 0.3),
+                            borderRadius: "12px",
+                            p: "10px"
                         }}
                     >
                         <img src={icon} style={{ height: "20px" }} alt="icon" />
                     </IconBox>
-                    <Typography variant="h3" color="textDisabled">
+                    <Typography variant="h2" color="rgba(157, 157, 255, 0.3)">
                         {number}
                     </Typography>
                 </Box>
-                <Typography variant="h5">{title}</Typography>
-                <Typography variant="body2" color="info.light">
+                <Typography variant="h4">{title}</Typography>
+                <Typography variant="body2" color="text.secondary">
                     {text}
                 </Typography>
             </CardContent>

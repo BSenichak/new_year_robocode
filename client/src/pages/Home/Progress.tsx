@@ -26,7 +26,7 @@ export default function Progress() {
                 </Typography>
                 <Typography
                     variant="body1"
-                    color="info.light"
+                    color="text.secondary"
                     textAlign="center"
                     sx={{ my: 3 }}
                 >
@@ -56,15 +56,15 @@ let ProgressBar = styled(Box)`
 `;
 
 const ProgressWrapper = styled("div")(({ theme }: any) => ({
-    borderRadius: 5,
-    margin: "0.5rem 0",
+    borderRadius: "16px",
+    margin: "16px 0",
     backgroundColor: theme.palette.background.paper,
-    boxShadow: `0 0 12px ${theme.palette.primary.main}`,
+    animation: "glowingBlue 2s ease-in-out infinite",
 }));
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }: any) => ({
-    height: 10,
-    borderRadius: 5,
+    height: "16px",
+    borderRadius: "16px",
     [`&.${linearProgressClasses.colorPrimary}`]: {
         backgroundColor: theme.palette.background.paper,
     },
@@ -85,7 +85,9 @@ let Background = styled(Box)`
 
 export function ProgressCard() {
     let dispatch = useDispatch<AppDispatch>();
-    let stats = useSelector<RootState, RootState["leaderboard"]["stats"]>((state) => state.leaderboard.stats);
+    let stats = useSelector<RootState, RootState["leaderboard"]["stats"]>(
+        (state) => state.leaderboard.stats
+    );
     useEffect(() => {
         if (!stats) dispatch(fetchLeaderboardStats());
     }, [stats]);
@@ -97,8 +99,15 @@ export function ProgressCard() {
         Math.round((completedFiles / totalFiles) * 100)
     );
     return (
-        <Card sx={{ width: "100%" }}>
-            <CardContent sx={{ display: "flex", gap: "1rem" }}>
+        <Card
+            sx={{
+                width: "100%",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                borderRadius: "24px",
+                p: "24px",
+            }}
+        >
+            <CardContent sx={{ display: "flex", gap: "16px" }}>
                 <ProgressBar>
                     <Box
                         sx={{
@@ -107,7 +116,7 @@ export function ProgressCard() {
                         }}
                     >
                         <Typography variant="h5">Прогрес спільноти</Typography>
-                        <Typography variant="body2" color="info.light">
+                        <Typography variant="body2" color="text.secondary">
                             {progressPercent}% завершено
                         </Typography>
                     </Box>
@@ -126,7 +135,7 @@ export function ProgressCard() {
                         <Typography variant="body2" color="success">
                             Врятовано: {completedFiles.toLocaleString()} файлів
                         </Typography>
-                        <Typography variant="body2" color="info.light">
+                        <Typography variant="body2" color="text.secondary">
                             Залишилось: {remainingFiles.toLocaleString()}
                         </Typography>
                     </Box>
@@ -142,6 +151,7 @@ export function ProgressCard() {
                                 backgroundColor: "#2a2a3a",
                                 flexGrow: 1,
                                 padding: "0.5rem",
+                                borderRadius: "12px",
                             }}
                         >
                             <Typography
@@ -153,7 +163,7 @@ export function ProgressCard() {
                             </Typography>
                             <Typography
                                 variant="body2"
-                                color="info.light"
+                                color="text.secondary"
                                 textAlign="center"
                             >
                                 Гравців
@@ -164,6 +174,7 @@ export function ProgressCard() {
                                 backgroundColor: "#2a2a3a",
                                 flexGrow: 1,
                                 padding: "0.5rem",
+                                borderRadius: "12px",
                             }}
                         >
                             <Typography
@@ -175,7 +186,7 @@ export function ProgressCard() {
                             </Typography>
                             <Typography
                                 variant="body2"
-                                color="info.light"
+                                color="text.secondary"
                                 textAlign="center"
                             >
                                 Сьогодні
@@ -186,6 +197,7 @@ export function ProgressCard() {
                                 backgroundColor: "#2a2a3a",
                                 flexGrow: 1,
                                 padding: "0.5rem",
+                                borderRadius: "12px",
                             }}
                         >
                             <Typography
@@ -193,11 +205,15 @@ export function ProgressCard() {
                                 color="primary"
                                 textAlign="center"
                             >
-                                {Math.ceil((new Date("2026-01-01").getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
+                                {Math.ceil(
+                                    (new Date("2026-01-01").getTime() -
+                                        new Date().getTime()) /
+                                        (1000 * 60 * 60 * 24)
+                                )}
                             </Typography>
                             <Typography
                                 variant="body2"
-                                color="info.light"
+                                color="text.secondary"
                                 textAlign="center"
                             >
                                 Дні до свята

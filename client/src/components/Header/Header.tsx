@@ -47,7 +47,7 @@ export default function Header() {
                 {!isPhone ? (
                     <>
                         {" "}
-                        <Nav>
+                        <Nav sx={{gap: "8px"}}>
                             <NavLink text="Головна сторінка" path="/" />
                             <NavLink text="Розшифрувати файл" path="/decode" />
                             <NavLink text="Ваш прогрес" path="/progress" />

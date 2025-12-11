@@ -1,4 +1,4 @@
-import { Box, styled, Button, useTheme, alpha } from "@mui/material";
+import { Box, styled, Button } from "@mui/material";
 import Poster from "./Poster";
 import Progress from "./Progress";
 import RulesCards from "./RulesCards";
@@ -6,7 +6,6 @@ import LeaderBar from "./LeaderBar";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-    let theme = useTheme();
     let navigate = useNavigate();
     return (
         <Wrapper>
@@ -22,12 +21,9 @@ export default function Home() {
                     alignSelf: "center",
                     my: 6,
                     py: 2,
-                    boxShadow: `0px 0px 50px 20px ${alpha(
-                        theme.palette.primary.main,
-                        0.2
-                    )}`,
                     textTransform: "uppercase",
                     fontSize: 16,
+                    animation: "glowingBlue 2s ease-in-out infinite",
                 }}
                 onClick={() => navigate("/decode")}
             >

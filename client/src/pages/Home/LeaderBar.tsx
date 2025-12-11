@@ -5,7 +5,6 @@ import {
     CardContent,
     Typography,
     useTheme,
-    alpha,
 } from "@mui/material";
 
 export default function LeaderBar() {
@@ -14,7 +13,11 @@ export default function LeaderBar() {
         <Wrapper>
             <Background />
             <Box sx={{ zIndex: 1, width: "100%" }}>
-                <Typography variant="h2" color="info.light" textAlign="center">
+                <Typography
+                    variant="h2"
+                    color="rgba(169, 57, 255, 1)"
+                    textAlign="center"
+                >
                     Топ-3
                     <Box component="span" style={{ color: "white" }}>
                         {" "}
@@ -22,9 +25,8 @@ export default function LeaderBar() {
                     </Box>
                 </Typography>
                 <Typography
-                
                     variant="body2"
-                    color="info.light"
+                    color="text.secondary"
                     textAlign="center"
                     sx={{ my: 3, maxWidth: "400px", mx: "auto" }}
                 >
@@ -34,19 +36,22 @@ export default function LeaderBar() {
                 <Cards>
                     <CardItem
                         icon="./1st.png"
-                        color={theme.palette.warning.light}
+                        color="rgba(255, 157, 0, 0.3)"
+                        borderColor="rgba(239, 177, 0, 0.5)"
                         title="Перше місце"
                         text="Безкоштовний курс програмування"
                     />
                     <CardItem
                         icon="./2st.png"
-                        color={theme.palette.grey[500]}
+                        color="rgba(181, 205, 210, 0.3)"
+                        borderColor="rgba(230, 240, 240, 0.5)"
                         title="Друге місце"
                         text="Робокіт-іграшка + мерч"
                     />
                     <CardItem
                         icon="./3st.png"
-                        color={theme.palette.warning.dark}
+                        color="rgba(255, 104, 32, 0.3)"
+                        borderColor="rgba(255, 121, 57, 0.5)"
                         title="Третє місце"
                         text="Брендований мерч Robocode"
                     />
@@ -78,27 +83,39 @@ let Background = styled(Box)`
 let Cards = styled(Box)`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
+    gap: 24px;
     width: 100%;
 `;
 
-function CardItem({ icon, title, color, text }: any) {
+function CardItem({ icon, title, color, borderColor, text }: any) {
     return (
-        <Card sx={{flexGrow: 1}}>
+        <Card
+            sx={{
+                flexGrow: 1,
+                borderRadius: "24px",
+                border: `1px ${borderColor} solid`,
+            }}
+        >
             <CardContent
                 sx={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "0.3rem",
-                    background: alpha(color, 0.3),
-                    border: `1px ${color} solid`,
+                    background: color,
+
                     borderRadius: 3,
                 }}
             >
                 <img src={icon} style={{ height: "40px" }} alt="icon" />
-                <Typography variant="h5" textAlign="center">{title}</Typography>
-                <Typography variant="body2" color="textDisabled" textAlign="center">
+                <Typography variant="h4" textAlign="center">
+                    {title}
+                </Typography>
+                <Typography
+                    variant="body2"
+                    color="rgba(255, 255, 255, 0.65)"
+                    textAlign="center"
+                >
                     {text}
                 </Typography>
             </CardContent>
