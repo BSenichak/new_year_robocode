@@ -36,9 +36,8 @@ export default function Progress() {
     let theme = useTheme();
     let navigate = useNavigate();
     let [shareIsOpen, setShareIsOpen] = useState(false);
-    if (!user) return <NotAuth />;
     let isPhone = useMediaQuery("(max-width: 639px)");
-
+    
     const calculateAverage = () => {
         const ease = Number(progress.ease);
         const middle = Number(progress.middle);
@@ -51,7 +50,8 @@ export default function Progress() {
 
         return (totalPoints / totalTests).toFixed(1);
     };
-
+    
+    if (!user) return <NotAuth />;
     return (
         <Wrapper>
             <Typography variant="h2" textAlign="center">
@@ -88,7 +88,7 @@ export default function Progress() {
                                 height: "56px",
                                 width: "56px",
                             }}
-                            src={user.photos[0].value}
+                            src={user.avatar}
                         ></Avatar>
                     </Avatar>
                     <Typography variant="h3">
