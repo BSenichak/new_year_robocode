@@ -125,7 +125,7 @@ router.post("/victory", async (req: Request, res: Response) => {
 router.get("/progress", async (req: Request, res: Response) => {
     try {
         const user: any = req.user;
-        const userId = user?.id; // Google ID користувача
+        const userId = user?.google_id; // Google ID користувача
 
         if (!userId) {
             return res.status(200).json({

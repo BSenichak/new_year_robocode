@@ -33,8 +33,8 @@ app.use(passport.session());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", router);
 app.use("/api", authRouter);
+app.use("/api", router);
 
 const clientPath = path.resolve(__dirname, "./dist");
 app.use(express.static(clientPath));
