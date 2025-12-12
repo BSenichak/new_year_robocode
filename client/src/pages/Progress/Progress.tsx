@@ -13,6 +13,7 @@ import {
     styled,
     Avatar,
     Button,
+    useMediaQuery,
 } from "@mui/material";
 import NotAuth from "./NotAuth";
 import { useNavigate } from "react-router-dom";
@@ -36,6 +37,7 @@ export default function Progress() {
     let navigate = useNavigate();
     let [shareIsOpen, setShareIsOpen] = useState(false);
     if (!user) return <NotAuth />;
+    let isPhone = useMediaQuery("(max-width: 639px)");
 
     const calculateAverage = () => {
         const ease = Number(progress.ease);
@@ -52,16 +54,17 @@ export default function Progress() {
 
     return (
         <Wrapper>
-            <Typography variant="h4" textAlign="center">
+            <Typography variant="h2" textAlign="center">
                 Твій Прогрес
             </Typography>
             <Card
                 sx={{
                     width: "100%",
-                    border: `1px solid ${alpha(theme.palette.grey[300], 0.1)}`,
-                    backgroundColor: "#1d1d27",
+                    border: `1px solid rgba(255, 255, 255, 0.1)`,
+                    backgroundColor: "rgba(255, 255, 255, 0.04)",
                     position: "relative",
                     overflow: "visible",
+                    borderRadius: "24px",
                 }}
             >
                 <CardContent
@@ -99,12 +102,12 @@ export default function Progress() {
                         </Typography>
                         !
                     </Typography>
-                    <Typography variant="body1" color="secondary">
+                    <Typography variant="body2" color="text.secondary">
                         Ви розшифрували{" "}
                         <Typography
-                            variant="body1"
+                            variant="body2"
                             component={"span"}
-                            color="warning"
+                            color="success"
                         >
                             {progress.decode_count} файлів
                         </Typography>
@@ -113,7 +116,8 @@ export default function Progress() {
                     <Grid>
                         <Card
                             sx={{
-                                bgcolor: alpha(theme.palette.grey[100], 0.05),
+                                bgcolor: "rgba(42, 42, 58, 1)",
+                                borderRadius: "12px",
                             }}
                         >
                             <CardContent
@@ -137,7 +141,7 @@ export default function Progress() {
                                 <Typography
                                     variant="body2"
                                     textAlign="center"
-                                    color="secondary"
+                                    color="text.secondary"
                                 >
                                     Місце в рейтингу
                                 </Typography>
@@ -145,7 +149,8 @@ export default function Progress() {
                         </Card>
                         <Card
                             sx={{
-                                bgcolor: alpha(theme.palette.grey[100], 0.05),
+                                bgcolor: "rgba(42, 42, 58, 1)",
+                                borderRadius: "12px",
                             }}
                         >
                             <CardContent
@@ -171,7 +176,7 @@ export default function Progress() {
                                 <Typography
                                     variant="body2"
                                     textAlign="center"
-                                    color="secondary"
+                                    color="text.secondary"
                                 >
                                     Всього очок
                                 </Typography>
@@ -179,7 +184,8 @@ export default function Progress() {
                         </Card>
                         <Card
                             sx={{
-                                bgcolor: alpha(theme.palette.grey[100], 0.05),
+                                bgcolor: "rgba(42, 42, 58, 1)",
+                                borderRadius: "12px",
                             }}
                         >
                             <CardContent
@@ -203,7 +209,7 @@ export default function Progress() {
                                 <Typography
                                     variant="body2"
                                     textAlign="center"
-                                    color="secondary"
+                                    color="text.secondary"
                                 >
                                     Файлів розшифрувано
                                 </Typography>
@@ -211,7 +217,8 @@ export default function Progress() {
                         </Card>
                         <Card
                             sx={{
-                                bgcolor: alpha(theme.palette.grey[100], 0.05),
+                                bgcolor: "rgba(42, 42, 58, 1)",
+                                borderRadius: "12px",
                             }}
                         >
                             <CardContent
@@ -235,7 +242,7 @@ export default function Progress() {
                                 <Typography
                                     variant="body2"
                                     textAlign="center"
-                                    color="secondary"
+                                    color="text.secondary"
                                 >
                                     Середній бал
                                 </Typography>
@@ -243,7 +250,8 @@ export default function Progress() {
                         </Card>
                         <Card
                             sx={{
-                                bgcolor: alpha(theme.palette.grey[100], 0.05),
+                                bgcolor: "rgba(42, 42, 58, 1)",
+                                borderRadius: "12px",
                                 gridColumn: "1/-1",
                             }}
                         >
@@ -279,7 +287,10 @@ export default function Progress() {
                                         >
                                             {progress.ease}
                                         </Typography>
-                                        <Typography variant="body2">
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
                                             Легкий
                                         </Typography>
                                     </Box>
@@ -296,7 +307,10 @@ export default function Progress() {
                                         >
                                             {progress.middle}
                                         </Typography>
-                                        <Typography variant="body2">
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
                                             Середній
                                         </Typography>
                                     </Box>
@@ -310,7 +324,10 @@ export default function Progress() {
                                         <Typography variant="h3" color="error">
                                             {progress.hard}
                                         </Typography>
-                                        <Typography variant="body2">
+                                        <Typography
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
                                             Складний
                                         </Typography>
                                     </Box>
@@ -331,7 +348,7 @@ export default function Progress() {
                             startIcon={<Share />}
                             onClick={() => setShareIsOpen(true)}
                         >
-                            Поділитися результатами
+                            {isPhone ? "Поділитися" : "Поділитися результатами"}
                         </Button>
                         <Button
                             variant="contained"
@@ -346,7 +363,7 @@ export default function Progress() {
                             startIcon={<Logout />}
                             onClick={() => dispatch(logout())}
                         >
-                            Вийти з облікового запису
+                            {isPhone ? "Вийти" : "Вийти з облікового запису"}
                         </Button>
                     </Box>
                 </CardContent>

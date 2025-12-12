@@ -6,8 +6,7 @@ import {
     Button,
     IconButton,
     Typography,
-    alpha,
-    useTheme,
+    useMediaQuery,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
@@ -16,17 +15,16 @@ import { clearValues, getSudoku } from "../../store/sudokuSlice";
 
 export default function RegenerateModal({ isOpen, closeModal }: any) {
     const dispatch = useDispatch<AppDispatch>();
-    const theme = useTheme();
-
+    let isPhone = useMediaQuery("(max-width: 639px)");
     return (
         <Dialog
             open={isOpen}
             onClose={closeModal}
             PaperProps={{
                 sx: {
-                    borderRadius: "12px",
+                    borderRadius: "24px",
                     overflow: "hidden",
-                    background: alpha(theme.palette.background.paper, 1),
+                    background: "rgba(30, 30, 42, 1)",
                 },
             }}
         >
@@ -50,11 +48,23 @@ export default function RegenerateModal({ isOpen, closeModal }: any) {
             </DialogContent>
 
             {/* === Buttons === */}
-            <DialogActions sx={{ p: 2 }}>
+            <DialogActions
+                sx={{
+                    p: 2,
+                    "@media (max-width: 600px)": {
+                        flexDirection: "column",
+                        "& > button": {
+                            marginLeft: "0 !important",
+                        },
+                    },
+                    gap: 1,
+                }}
+            >
                 <Button
                     variant="outlined"
                     color="inherit"
                     onClick={closeModal}
+                    fullWidth={isPhone}
                     sx={{
                         "&:hover": {
                             borderWidth: 0.1,
@@ -68,6 +78,7 @@ export default function RegenerateModal({ isOpen, closeModal }: any) {
                 <Button
                     variant="contained"
                     color="primary"
+                    fullWidth={isPhone}
                     onClick={() => {
                         dispatch(clearValues());
                         dispatch(getSudoku());

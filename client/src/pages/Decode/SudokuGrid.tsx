@@ -135,10 +135,14 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
                                         ? chosenCell?.row === row &&
                                           chosenCell?.col === col
                                             ? "rgba(22, 70, 255, 0.3)"
-                                              
                                             : "rgba(30, 30, 42, 1)"
                                         : "rgba(42, 42, 58, 1)",
 
+                                    boxShadow:
+                                        chosenCell?.row === row &&
+                                        chosenCell?.col === col
+                                            ? `inset 0 0 0 2px ${theme.palette.primary.main}`
+                                            : "none",
                                     color: isHelped
                                         ? theme.palette.success.main
                                         : value === 0

@@ -8,6 +8,7 @@ import {
     alpha,
     useTheme,
     CircularProgress,
+    useMediaQuery,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
@@ -47,7 +48,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
         }
     }, [correct, user, isOpen]);
     let [shareIsOpen, setShareIsOpen] = useState(false);
-
+    let isPhone = useMediaQuery("(max-width: 639px)");
     if (correct)
         return (
             <Dialog
@@ -164,7 +165,19 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                             )}
                         </DialogContent>
 
-                        <DialogActions sx={{ p: 2, justifyContent: "center" }}>
+                        <DialogActions
+                            sx={{
+                                p: 2,
+                                justifyContent: "center",
+                                "@media (max-width: 600px)": {
+                                    flexDirection: "column",
+                                    "& > button": {
+                                        marginLeft: "0 !important",
+                                    },
+                                },
+                                gap: 1,
+                            }}
+                        >
                             {user ? (
                                 <>
                                     <ShareModal
@@ -182,6 +195,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                                     "rgba(147, 50, 214, 1)",
                                             },
                                         }}
+                                        fullWidth={isPhone}
                                     >
                                         Поділитись результатом
                                     </Button>
@@ -193,6 +207,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                             dispatch(getSudoku());
                                             closeModal();
                                         }}
+                                        fullWidth={isPhone}
                                     >
                                         Наступний файл
                                     </Button>
@@ -211,9 +226,9 @@ export default function CheckModal({ isOpen, closeModal }: any) {
             onClose={closeModal}
             PaperProps={{
                 sx: {
-                    borderRadius: "12px",
+                    borderRadius: "24px",
                     overflow: "hidden",
-                    background: alpha(theme.palette.background.paper, 1),
+                    background: "rgba(30, 30, 42, 1)",
                 },
             }}
         >
@@ -247,11 +262,24 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                 </Typography>
             </DialogContent>
 
-            <DialogActions sx={{ p: 2, justifyContent: "center" }}>
+            <DialogActions
+                sx={{
+                    p: 2,
+                    justifyContent: "center",
+                    "@media (max-width: 600px)": {
+                        flexDirection: "column",
+                        "& > button": {
+                            marginLeft: "0 !important",
+                        },
+                    },
+                    gap: 1,
+                }}
+            >
                 <Button
                     variant="outlined"
                     color="inherit"
                     onClick={() => dispatch(getSudoku())}
+                    fullWidth={isPhone}
                     sx={{
                         "&:hover": {
                             borderWidth: 0.1,
@@ -266,6 +294,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                     variant="contained"
                     color="primary"
                     onClick={closeModal}
+                    fullWidth={isPhone}
                 >
                     Повернутися та завершити
                 </Button>

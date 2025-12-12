@@ -1,4 +1,4 @@
-import { alpha, Box, Chip, Typography, useTheme } from "@mui/material";
+import { Box, Chip, Typography, useTheme } from "@mui/material";
 
 export default function ShareImage({ progress }: { progress: number }) {
     let theme = useTheme();
@@ -6,7 +6,8 @@ export default function ShareImage({ progress }: { progress: number }) {
         <Box
             id="share-image"
             sx={{
-                minWidth: 400,
+                maxWidth: 400,
+                width: "100%",
                 borderRadius: "20px",
                 display: "flex",
                 flexDirection: "column",
@@ -21,16 +22,16 @@ export default function ShareImage({ progress }: { progress: number }) {
                 🎄
             </Typography>
 
-            <Typography variant="h4" sx={{ textAlign: "center" }}>
+            <Typography variant="h2" sx={{ textAlign: "center" }}>
                 Набрав {progress} очок
             </Typography>
 
-            <Typography variant="body1" sx={{ mt: -0.5 }}>
+            <Typography variant="body2" sx={{}}>
                 у Різдвяній місії Robocode
             </Typography>
             <Typography
                 variant="body2"
-                sx={{ mt: 2, color: theme.palette.info.light }}
+                sx={{ mt: 2, color: theme.palette.text.secondary, p: 0 }}
             >
                 Хочеш теж спробувати?
             </Typography>
@@ -39,9 +40,11 @@ export default function ShareImage({ progress }: { progress: number }) {
                 variant="filled"
                 sx={{
                     mt: 1,
-                    background: alpha(theme.palette.grey[300], 0.5),
+                    background: "rgba(255, 255, 255, 0.5)",
                     color: "black",
-                    fontSize: "0.8rem",
+                    pl: 2,
+                    pr: 2,
+                    height: "auto",
                 }}
             />
         </Box>

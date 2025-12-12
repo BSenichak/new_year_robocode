@@ -5,7 +5,6 @@ import {
     Card,
     CardContent,
     Typography,
-    alpha,
     useTheme,
 } from "@mui/material";
 import LoginButton from "../../components/LoginButton";
@@ -28,18 +27,26 @@ export default function NotAuth() {
                         sx={{
                             width: "100%",
                             maxWidth: 800,
-                            backgroundColor: alpha(
-                                theme.palette.primary.main,
-                                0.2
-                            ),
-                            border: `1px solid ${alpha(
-                                theme.palette.primary.main,
-                                0.3
-                            )}`,
+                            background:
+                                "linear-gradient(rgba(22, 70, 255, 0.2), rgba(169, 57, 255, 0.2))",
+                            border: `1px solid rgba(255, 255, 255, 0.1)`,
                             position: "relative",
                             overflow: "visible",
                         }}
                     >
+                        <img
+                            src="./orange_blur.png"
+                            alt="orange"
+                            style={{
+                                position: "absolute",
+                                bottom: 0,
+                                right: 0,
+                                width: "256px",
+                                height: "256px",
+                                objectFit: "contain",
+                                transform: "translate(70%, 50%)",
+                            }}
+                        />
                         <CardContent
                             sx={{
                                 display: "flex",
@@ -47,13 +54,14 @@ export default function NotAuth() {
                                 alignItems: "center",
                                 justifyContent: "center",
                                 flexDirection: "column",
+                                position: "relative",
                             }}
                         >
                             <img src="./robot.png" height="90px" alt="" />
                             <Typography variant="h3">
                                 Робокотик-помічник
                             </Typography>
-                            <Typography variant="body1" color="secondary">
+                            <Typography variant="body1" color="text.secondary">
                                 Наші робокотики допомагають Санті! Приєднуйся до
                                 команди рятувальників!
                             </Typography>

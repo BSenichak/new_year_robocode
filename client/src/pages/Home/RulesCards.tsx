@@ -79,7 +79,11 @@ function CardItem({ icon, color, number, title, text }: any) {
             border: `1px solid rgba(255, 255, 255, 0.1)`,
             borderRadius: "22px",
             padding: "16px 8px",
-            bgcolor: "rgba(255, 255, 255, 0.04)"
+            bgcolor: "rgba(255, 255, 255, 0.04)",
+            "&:hover": {
+                border: `1px solid rgba(22, 70, 255, 1)`,
+            }
+
         }}>
             <CardContent
                 sx={{

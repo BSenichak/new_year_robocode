@@ -21,29 +21,50 @@ const ButtonComponent = ({
     variant,
     children,
     onClick,
+    difficulty,
 }: {
     variant: "contained" | "outlined";
     children: React.ReactNode;
     onClick: () => void;
+    difficulty: string;
 }) => {
     const theme = useTheme();
+
+    const colorMap: Record<string, string> = {
+        easy: theme.palette.success.main,
+        medium: theme.palette.warning.main,
+        hard: theme.palette.error.main,
+    };
+
+    const mainColor = colorMap[difficulty] ?? "#fff";
+
     return (
         <Button
             variant={variant}
             sx={{
                 flexGrow: 1,
-                background:
-                    variant === "contained"
-                        ? alpha(theme.palette.success.main, 0.2)
-                        : "none",
+                background: variant === "contained" ? mainColor : "none",
                 border:
                     variant === "contained"
-                        ? `1px solid ${theme.palette.success.main}`
-                        : `1px solid ${theme.palette.primary.main}`,
+                        ? `1px solid ${mainColor}`
+                        : `1px solid rgba(255, 255, 255, 0.1)`,
                 color:
                     variant === "contained"
-                        ? theme.palette.success.main
-                        : theme.palette.primary.main,
+                        ? theme.palette.getContrastText(mainColor)
+                        : "#fff",
+                fontWeight: "100",
+                transition: "0.2s",
+
+                "&:hover": {
+                    background:
+                        variant === "contained"
+                            ? mainColor
+                            : alpha(mainColor, 0.3),
+                    border:
+                        variant === "contained"
+                            ? `1px solid ${mainColor}`
+                            : `1px solid ${alpha(mainColor, 0.5)}`,
+                },
             }}
             onClick={onClick}
         >
@@ -65,18 +86,21 @@ export default function DifficultySelector() {
     return (
         <Wrapper>
             <ButtonComponent
+                difficulty={"easy"}
                 variant={difficulty === "easy" ? "contained" : "outlined"}
                 onClick={() => setChosen("easy")}
             >
                 Легкий (1 бал)
             </ButtonComponent>
             <ButtonComponent
+                difficulty={"medium"}
                 variant={difficulty === "medium" ? "contained" : "outlined"}
                 onClick={() => setChosen("medium")}
             >
                 Середній (2 бали)
             </ButtonComponent>
             <ButtonComponent
+                difficulty={"hard"}
                 variant={difficulty === "hard" ? "contained" : "outlined"}
                 onClick={() => setChosen("hard")}
             >

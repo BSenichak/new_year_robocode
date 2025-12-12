@@ -10,6 +10,7 @@ import {
     Alert,
     alpha,
     useTheme,
+    useMediaQuery,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useSelector } from "react-redux";
@@ -20,6 +21,7 @@ import * as htmlToImage from "html-to-image";
 
 export default function ShareModal({ isOpen, closeModal }: any) {
     const theme = useTheme();
+    let isPhone = useMediaQuery("(max-width: 639px)");
     const [snackbar, setSnackbar] = useState<string | null>(null);
 
     let progress: any = useSelector<
@@ -80,7 +82,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                 }}
             >
                 <DialogTitle sx={{ position: "relative", p: 2 }}>
-                    Поділитися в Instagram
+                    <Typography variant="h4">Поділитися в Instagram</Typography>
                     <IconButton
                         sx={{ position: "absolute", top: 6, right: 6 }}
                         onClick={closeModal}
@@ -91,9 +93,9 @@ export default function ShareModal({ isOpen, closeModal }: any) {
 
                 <DialogContent sx={{ p: 2 }}>
                     <Typography
-                        variant="body1"
+                        variant="body2"
                         color="text.secondary"
-                        sx={{ py: 1 }}
+                        sx={{ mb: 2 }}
                     >
                         Збережіть картинку або поділіться нею у сторіз!
                     </Typography>
@@ -106,11 +108,24 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                     />
                 </DialogContent>
 
-                <DialogActions sx={{ p: 2, display: "flex", gap: 1 }}>
+                <DialogActions
+                    sx={{
+                        p: 2,
+                        display: "flex",
+                        gap: 1,
+                        "@media (max-width: 600px)": {
+                            flexDirection: "column",
+                            "& > button": {
+                                marginLeft: "0 !important",
+                            },
+                        },
+                    }}
+                >
                     <Button
                         variant="outlined"
                         color="inherit"
                         onClick={shareToInstagram}
+                        fullWidth={isPhone}
                         sx={{
                             "&:hover": {
                                 borderWidth: 0.1,
@@ -125,6 +140,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                         variant="contained"
                         color="primary"
                         onClick={downloadImage}
+                        fullWidth={isPhone}
                     >
                         Завантажити картинку
                     </Button>
