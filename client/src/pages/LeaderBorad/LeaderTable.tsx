@@ -34,26 +34,26 @@ export default function LeaderTable() {
     const getRowStyle = (place: number, isMe: boolean) => {
         if (place === 1) {
             return {
-                background: alpha(theme.palette.warning.light, 0.5),
-                borderLeft: `5px solid ${theme.palette.warning.light}`,
+                background: "rgba(239, 177, 0, 0.3)",
+                borderLeft: `4px solid rgba(239, 177, 0, 1)`,
             };
         }
         if (place === 2) {
             return {
-                background: alpha(theme.palette.grey[300], 0.5),
-                borderLeft: `5px solid ${theme.palette.grey[300]}`,
+                background: "rgba(230, 240, 240, 0.3)",
+                borderLeft: `4px solid rgba(230, 240, 240, 1)`,
             };
         }
         if (place === 3) {
             return {
-                background: alpha(theme.palette.warning.dark, 0.3),
-                borderLeft: `5px solid ${theme.palette.warning.dark}`,
+                background: "rgba(255, 121, 57, 0.3)",
+                borderLeft: `4px solid rgba(255, 121, 57, 1)`,
             };
         }
         if (isMe) {
             return {
-                background: alpha(theme.palette.primary.dark, 0.5),
-                borderLeft: `5px solid ${theme.palette.primary.dark}`,
+                background: "rgba(255, 121, 57, 1)",
+                borderLeft: `4px solid $rgba(22, 70, 255, 1)`,
             };
         }
         return {};
@@ -198,6 +198,7 @@ export default function LeaderTable() {
                                                   theme.palette.grey[300],
                                                   0.1
                                               )}`,
+                                        color: getRowStyle(row.place, false).borderLeft?.substring(10) || "rgba(22, 70, 255, 1)",
                                     }}
                                 >
                                     {row.points}

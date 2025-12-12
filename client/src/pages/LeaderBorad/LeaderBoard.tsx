@@ -9,7 +9,7 @@ export default function LeaderBoard() {
             <Typography variant="h2" textAlign="center">
                 Таблиця лідерів
             </Typography>
-            <Typography variant="body1" textAlign="center" color="secondary">
+            <Typography variant="body1" textAlign="center" color="text.secondary">
                 Топ гравців, які врятували найбільше файлів Санти
             </Typography>
             <ProgressCard />

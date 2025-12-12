@@ -4,8 +4,6 @@ import {
     Card,
     CardContent,
     Typography,
-    useTheme,
-    alpha,
     useMediaQuery,
     CircularProgress,
 } from "@mui/material";
@@ -13,7 +11,6 @@ import type { RootState } from "../../store/store";
 import { useSelector } from "react-redux";
 
 export default function LeadersBar() {
-    const theme = useTheme();
     let leaders = useSelector<RootState, RootState["leaderboard"]["leaders"]>(
         (state) => state.leaderboard.leaders
     );
@@ -38,21 +35,24 @@ export default function LeadersBar() {
             <Cards>
                 <CardItem
                     icon="./1st.png"
-                    color={theme.palette.warning.light}
+                    color="linear-gradient(rgba(239, 177, 0, 0.3), rgba(255, 157, 0, 0.3))"
+                    borderColor="rgba(239, 177, 0, 0.5)"
                     name={(leaders[0] && leaders[0].name) || "-"}
                     score={(leaders[0] && leaders[0].points) || "-"}
                     count={(leaders[0] && leaders[0].filesDecoded) || "-"}
                 />
                 <CardItem
                     icon="./2st.png"
-                    color={theme.palette.grey[500]}
+                    color="linear-gradient(rgba(230, 240, 240, 0.3), rgba(181, 205, 210, 0.3))"
+                    borderColor="rgba(230, 240, 240, 0.5)"
                     name={(leaders[1] && leaders[1].name) || "-"}
                     score={(leaders[1] && leaders[1].points) || "-"}
                     count={(leaders[1] && leaders[1].filesDecoded) || "-"}
                 />
                 <CardItem
                     icon="./3st.png"
-                    color={theme.palette.warning.dark}
+                    color="linear-gradient(rgba(255, 121, 57, 0.3), rgba(255, 104, 32, 0.3))"
+                    borderColor="rgba(255, 121, 57, 0.5)"
                     name={(leaders[2] && leaders[2].name) || "-"}
                     score={(leaders[2] && leaders[2].points) || "-"}
                     count={(leaders[2] && leaders[2].filesDecoded) || "-"}
@@ -89,7 +89,8 @@ function CardItem({
     color,
     name,
     count,
-    islast = false,
+    islast: isLast = false,
+    borderColor = "transparent",
 }: {
     icon: string;
     score: string;
@@ -97,37 +98,38 @@ function CardItem({
     name: string;
     count: string;
     islast?: boolean;
+    borderColor?: string;
 }) {
     let small = useMediaQuery("(max-width: 639px)");
     return (
-        <Card sx={islast && small ? { gridColumn: "1/-1" } : {}}>
+        <Card sx={isLast && small ? { gridColumn: "1/-1" } : {}}>
             <CardContent
                 sx={{
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "0.3rem",
-                    background: alpha(color, 0.3),
-                    border: `1px ${color} solid`,
-                    borderRadius: 3,
+                    background: color,
+                    border: `2px ${borderColor} solid`,
+                    borderRadius: "24px",
                 }}
             >
-                <img src={icon} style={{ height: "40px" }} alt="icon" />
+                <img src={icon} style={{ height: "72px" }} alt="icon" />
                 <Typography
-                    variant="body2"
+                    variant="body1"
                     color="textPrimary"
                     textAlign="center"
                 >
                     {name}
                 </Typography>
-                <Typography variant="h5" textAlign="center">
+                <Typography variant="h2" textAlign="center">
                     {score}
                 </Typography>
                 <Typography
                     variant="body2"
                     color="textDisabled"
                     textAlign="center"
-                    sx={{ fontSize: 10 }}
+                    sx={{ fontSize: "16px" }}
                 >
                     {count} файлів розшифровано
                 </Typography>
