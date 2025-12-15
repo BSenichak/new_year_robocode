@@ -126,9 +126,9 @@ router.get("/progress", async (req: Request, res: Response) => {
     try {
         const user: any = req.user;
         const userId = user?.google_id; // Google ID користувача
-
+        
         if (!userId) {
-            return res.status(200).json({
+            return res.status(404).json({
                 decode_count: 0,
                 ease: 0,
                 middle: 0,

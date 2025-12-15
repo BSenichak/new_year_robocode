@@ -16,6 +16,7 @@ export default function ShareImage({ progress }: { progress: number }) {
                 background: `linear-gradient(120deg,${theme.palette.primary.main},${theme.palette.secondary.main})`,
                 color: "white",
                 p: 4,
+                margin: "auto",
             }}
         >
             <Typography variant="h2" fontSize={"5rem"} sx={{ mb: 2 }}>

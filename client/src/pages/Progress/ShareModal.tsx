@@ -81,7 +81,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                     },
                 }}
             >
-                <DialogTitle sx={{ position: "relative", p: 2 }}>
+                <DialogTitle sx={{ position: "relative", p: 2 }} component={"div"}>
                     <Typography variant="h4">Поділитися в Instagram</Typography>
                     <IconButton
                         sx={{ position: "absolute", top: 6, right: 6 }}

@@ -15,14 +15,31 @@ import { useEffect } from "react";
 import { getProgress } from "./store/resultsSlice";
 import LeaderBoard from "./pages/LeaderBorad/LeaderBoard";
 
+import { Snackbar, Alert } from "@mui/material";
+import { clearError } from "./store/errorSlice";
+
 export default function App() {
     let dispatch = useDispatch<AppDispatch>();
-    let user = useSelector<RootState, RootState["auth"]["user"]>((state) => state.auth.user);
+    let user = useSelector<RootState, RootState["auth"]["user"]>(
+        (state) => state.auth.user
+    );
+    const message = useSelector<RootState, RootState["error"]["message"]>(
+        (state: RootState) => state.error.message
+    );
     useEffect(() => {
         if (user) dispatch(getProgress());
     }, [user]);
     return (
         <ThemeProvider>
+            <Snackbar
+                open={Boolean(message)}
+                autoHideDuration={4000}
+                onClose={() => dispatch(clearError())}
+            >
+                <Alert severity="error" onClose={() => dispatch(clearError())}>
+                    {message}
+                </Alert>
+            </Snackbar>
             <Wrapper>
                 <Header />
                 <Content>
@@ -33,7 +50,6 @@ export default function App() {
                         <Route path="/rules" element={<Rules />} />
                         <Route path="/leader_board" element={<LeaderBoard />} />
                         <Route path="*" element={<NotFound />} />
-
                     </Routes>
                 </Content>
                 <Footer />

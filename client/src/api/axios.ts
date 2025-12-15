@@ -6,14 +6,5 @@ const api = axios.create({
   timeout: 10000,
 });
 
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response?.status === 401) {
-      console.log("Unauthorized");
-    }
-    return Promise.reject(error);
-  }
-);
 
 export default api;

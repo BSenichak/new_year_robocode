@@ -5,6 +5,8 @@ import modalReducer from "./modalSlice";
 import sudokuReducer from "./sudokuSlice";
 import resultsReducer from "./resultsSlice";
 import leaderboardReducer from "./leaderboardSlice";
+import errorReducer from "./errorSlice";
+import { setupInterceptors } from "../api/apiInterceptors";
 
 const logger = createLogger({
     collapsed: true,
@@ -22,7 +24,8 @@ export const store = configureStore({
         modal: modalReducer,
         sudoku: sudokuReducer,
         results: resultsReducer,
-        leaderboard: leaderboardReducer
+        leaderboard: leaderboardReducer,
+        error: errorReducer
     },
     middleware: (getDefaultMiddleware) =>
         import.meta.env.DEV
@@ -32,3 +35,5 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+setupInterceptors(store.dispatch);
