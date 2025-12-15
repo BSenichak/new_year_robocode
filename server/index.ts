@@ -20,11 +20,19 @@ app.use(
 );
 
 app.use(
-    session({
-        secret: "secret123",
-        resave: false,
-        saveUninitialized: false,
-    })
+  session({
+    name: "sid",
+    secret: process.env.SESSION_SECRET || "secret123",
+    resave: false,
+    saveUninitialized: false,
+
+    cookie: {
+      httpOnly: true,
+      secure: false,  
+      sameSite: "lax",      
+      maxAge: 1000 * 60 * 60 * 24 * 7, 
+    },
+  })
 );
 
 app.use(passport.initialize());
