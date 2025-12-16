@@ -15,9 +15,11 @@
   "dependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/express-mysql-session": "^3.0.8",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-mysql-session": "^3.0.3",
     "express-session": "^1.18.2",
     "mysql2": "^3.15.3",
     "passport": "^0.7.0",

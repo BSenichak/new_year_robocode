@@ -179,7 +179,7 @@ authRouter.get("/auth/me", (req: Request, res: Response) => {
 authRouter.post("/auth/logout", (req: Request, res: Response) => {
     req.logout(() => {
         req.session.destroy(() => {
-            res.clearCookie("connect.sid");
+            res.clearCookie("connect.sid"); // Тепер збігається з name у session
             res.json({ success: true });
         });
     });

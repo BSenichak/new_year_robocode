@@ -6,10 +6,34 @@ import session from "express-session";
 import passport from "passport";
 import authRouter from "./auth";
 import { config } from "dotenv";
+import MySQLStoreConstructor from "express-mysql-session";
 
 config();
 
 const app = express();
+
+const MySQLStore = MySQLStoreConstructor(session);
+const sessionStore = new MySQLStore({
+    host: process.env.DB_HOST || process.env.MYSQLHOST || 'localhost',
+    port: Number(process.env.DB_PORT || process.env.MYSQLPORT || 3306),
+    user: process.env.DB_USER || process.env.MYSQLUSER || 'root',
+    password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || '',
+    database: process.env.DB_NAME || process.env.MYSQLDATABASE || '',
+    clearExpired: true,
+    checkExpirationInterval: 900000, // 15 хвилин
+    expiration: 1000 * 60 * 60 * 24 * 7, // 7 днів
+    createDatabaseTable: true,
+    schema: {
+        tableName: 'sessions',
+        columnNames: {
+            session_id: 'session_id',
+            expires: 'expires',
+            data: 'data'
+        }
+    }
+});
+
+app.set('trust proxy', 1);
 
 app.use(
     cors({
@@ -21,16 +45,16 @@ app.use(
 
 app.use(
   session({
-    name: "sid",
+    name: "connect.sid",
     secret: process.env.SESSION_SECRET || "secret123",
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
-
     cookie: {
       httpOnly: true,
-      secure: false,  
+      secure: false,
       sameSite: "lax",      
-      maxAge: 1000 * 60 * 60 * 24 * 7, 
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
 );
