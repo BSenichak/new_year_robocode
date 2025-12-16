@@ -68,16 +68,23 @@ router.post("/victory", async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Invalid difficulty" });
 
         const user: any = req.user;
-        if (!user?.id || !user?.emails?.[0]?.value || !user?.displayName) {
-            console.log(user);
+
+        if (!user?.id || !user?.google_id) {
+            console.log("❌ Victory failed - User object:", user);
             return res.status(401).json({ message: "Unauthorized" });
         }
 
-        // Витягуємо email та display_name
-        const email = user.emails[0].value;
-        const displayName = user.displayName;
+        const googleId = user.google_id;
+        const email = user.email || `user_${googleId}@unknown.com`;
+        const displayName = user.name || `User ${googleId}`;
 
-        // Вставка або оновлення статистики користувача
+        console.log("✅ Victory request:", {
+            googleId,
+            email,
+            displayName,
+            difficulty,
+        });
+
         await db.query(
             `
             INSERT INTO users_stats (google_id, email, display_name, decode_count, ease, middle, hard)
@@ -89,7 +96,7 @@ router.post("/victory", async (req: Request, res: Response) => {
                 hard = hard + VALUES(hard)
             `,
             [
-                user.id,
+                googleId,
                 email,
                 displayName,
                 difficulty === "easy" ? 1 : 0,
@@ -98,7 +105,6 @@ router.post("/victory", async (req: Request, res: Response) => {
             ]
         );
 
-        // Оновлюємо загальний прогрес за день
         const today = new Date().toISOString().split("T")[0];
         await db.query(
             `
@@ -109,15 +115,15 @@ router.post("/victory", async (req: Request, res: Response) => {
             [today]
         );
 
-        // Повертаємо оновлений прогрес користувача
         const [result]: any = await db.query(
             "SELECT decode_count, ease, middle, hard FROM users_stats WHERE google_id = ?",
-            [user.id]
+            [googleId]
         );
 
+        console.log("✅ Victory successful:", result[0]);
         res.status(200).json(result[0]);
     } catch (err) {
-        console.error(err);
+        console.error("❌ Victory error:", err);
         res.status(500).json({ message: "Server error" });
     }
 });
@@ -125,10 +131,10 @@ router.post("/victory", async (req: Request, res: Response) => {
 router.get("/progress", async (req: Request, res: Response) => {
     try {
         const user: any = req.user;
-        const userId = user?.google_id; // Google ID користувача
-        
+        const userId = user?.google_id;
+
         if (!userId) {
-            return res.status(404).json({
+            return res.status(200).json({
                 decode_count: 0,
                 ease: 0,
                 middle: 0,
@@ -155,17 +161,15 @@ router.get("/progress", async (req: Request, res: Response) => {
             });
         }
 
-        // Підрахунок загальних балів користувача
         const userPoints =
             userStats.ease * 1 + userStats.middle * 2 + userStats.hard * 3;
 
-        // Підрахунок місця в рейтингу
         const [rankResult]: any = await db.query(
             `
-    SELECT COUNT(*) + 1 AS \`rank\`
-    FROM users_stats
-    WHERE (ease*1 + middle*2 + hard*3) > ?
-    `,
+            SELECT COUNT(*) + 1 AS \`rank\`
+            FROM users_stats
+            WHERE (ease*1 + middle*2 + hard*3) > ?
+            `,
             [userPoints]
         );
 
@@ -180,7 +184,6 @@ router.get("/progress", async (req: Request, res: Response) => {
 
 router.get("/stats", async (req: Request, res: Response) => {
     try {
-        // Загальна кількість гравців та сумарний decode_count
         const [overall]: any = await db.query(`
             SELECT 
                 COUNT(*) AS totalPlayers,
@@ -188,8 +191,7 @@ router.get("/stats", async (req: Request, res: Response) => {
             FROM users_stats
         `);
 
-        // Кількість decode_count за сьогодні
-        const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+        const today = new Date().toISOString().split("T")[0];
         const [todayResult]: any = await db.query(
             `SELECT total_decode_count AS todayDecodeCount
              FROM daily_overall_progress
@@ -210,7 +212,6 @@ router.get("/stats", async (req: Request, res: Response) => {
 
 router.get("/leaderboard", async (req: Request, res: Response) => {
     try {
-        // Отримуємо топ-10 гравців за очками
         const [rows]: any = await db.query(`
             SELECT 
                 display_name AS name,
@@ -221,7 +222,6 @@ router.get("/leaderboard", async (req: Request, res: Response) => {
             LIMIT 10
         `);
 
-        // Додаємо поле place
         const leaderboard = rows.map((row: any, index: number) => ({
             place: index + 1,
             ...row,

@@ -44,7 +44,6 @@ const SudokuGrid: React.FC<Props> = ({ puzzle }) => {
 
             if (!dir) return;
 
-            // Пошук наступної клітинки, яка є порожньою (value===0)
             let nextRow = row + dir.r;
             let nextCol = col + dir.c;
 

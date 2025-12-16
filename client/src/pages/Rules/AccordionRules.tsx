@@ -60,8 +60,6 @@ function MyAccordion({ title, text }: { title: string; text: string }) {
                 borderRadius: 3,
                 border: `1px solid rgba(255, 255, 255, 0.1)`,
                 overflow: "hidden",
-
-                // критично: підвищує специфічність (&&)
                 "&&": {
                     borderTopLeftRadius: 12,
                     borderTopRightRadius: 12,

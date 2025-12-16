@@ -1,4 +1,3 @@
-// apiInterceptors.ts
 import  api  from "./axios";
 import type { AppDispatch } from "../store/store";
 import { setError } from "../store/errorSlice";

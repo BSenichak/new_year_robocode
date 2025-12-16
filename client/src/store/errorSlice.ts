@@ -1,4 +1,3 @@
-// store/errorSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 type ErrorState = {

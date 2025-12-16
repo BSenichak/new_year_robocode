@@ -204,7 +204,6 @@ Please change the parent <Route path="${N}"> to <Route path="${N==="/"?"*":`${N}
     display: flex;
     gap: "8px";
     align-items: center;
-    //padding: 1rem 0;
 `,Jz=fe("img")`
     height: 30px;
 `,e_=fe(lm)`

@@ -8,7 +8,6 @@ import {
 import { config } from "dotenv";
 import pool from "./db";
 
-// Тип користувача з БД
 export interface DBUser {
     id: number;
     google_id: string;
@@ -49,7 +48,6 @@ passport.use(
                 const name = profile.displayName || null;
                 const avatar = profile.photos?.[0]?.value || null;
 
-                // Перевірка існуючого користувача
                 const [existing] = await pool.query<any[]>(
                     "SELECT * FROM users WHERE google_id = ? LIMIT 1",
                     [googleId]
@@ -58,7 +56,6 @@ passport.use(
                 let user: DBUser;
 
                 if (existing.length === 0) {
-                    // Новий користувач
                     const [insert] = await pool.query<any>(
                         `INSERT INTO users (google_id, email, name, avatar, access_token, refresh_token)
              VALUES (?, ?, ?, ?, ?, ?)`,
@@ -81,7 +78,6 @@ passport.use(
 
                     user = rows[0];
                 } else {
-                    // Оновлюємо дані існуючого
                     await pool.query(
                         `UPDATE users
              SET email = ?, name = ?, avatar = ?, access_token = ?,
@@ -134,11 +130,6 @@ passport.deserializeUser(async (id: number, done) => {
     }
 });
 
-/* ====================================================
-   ROUTES
-==================================================== */
-
-// Login init
 authRouter.get(
     "/auth/google",
     passport.authenticate("google", {
@@ -148,7 +139,6 @@ authRouter.get(
     })
 );
 
-// Google redirects here
 authRouter.get(
     "/auth/google/callback",
     passport.authenticate("google", { failureRedirect: "/" }),
@@ -170,16 +160,14 @@ authRouter.get(
     }
 );
 
-// Current user session
 authRouter.get("/auth/me", (req: Request, res: Response) => {
     res.json(req.user || null);
 });
 
-// Logout
 authRouter.post("/auth/logout", (req: Request, res: Response) => {
     req.logout(() => {
         req.session.destroy(() => {
-            res.clearCookie("connect.sid"); // Тепер збігається з name у session
+            res.clearCookie("connect.sid"); 
             res.json({ success: true });
         });
     });

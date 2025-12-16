@@ -82,7 +82,7 @@ export default function Header() {
                 height: "calc(100vh - 62px)",
                 backgroundColor: "rgba(0,0,0,0.4)",
                 backdropFilter: "blur(5px)",
-                zIndex: 90, // нижче AppBar (100), але над сторінкою
+                zIndex: 90,
             }}
         />
 
@@ -164,7 +164,6 @@ const Nav = styled(Box)`
     display: flex;
     gap: "8px";
     align-items: center;
-    //padding: 1rem 0;
 `;
 
 const Logo = styled("img")`

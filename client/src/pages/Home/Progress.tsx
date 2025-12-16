@@ -91,7 +91,7 @@ export function ProgressCard() {
     useEffect(() => {
         if (!stats) dispatch(fetchLeaderboardStats());
     }, [stats]);
-    const totalFiles = 10000; // наприклад, максимально можливі файли
+    const totalFiles = 10000; 
     const completedFiles = stats?.totalDecodeCount || 0;
     const remainingFiles = totalFiles - completedFiles;
     const progressPercent = Math.min(

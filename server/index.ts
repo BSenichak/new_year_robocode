@@ -20,8 +20,8 @@ const sessionStore = new MySQLStore({
     password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || '',
     database: process.env.DB_NAME || process.env.MYSQLDATABASE || '',
     clearExpired: true,
-    checkExpirationInterval: 900000, // 15 хвилин
-    expiration: 1000 * 60 * 60 * 24 * 7, // 7 днів
+    checkExpirationInterval: 900000, 
+    expiration: 1000 * 60 * 60 * 24 * 7, 
     createDatabaseTable: true,
     schema: {
         tableName: 'sessions',

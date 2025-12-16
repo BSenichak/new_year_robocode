@@ -25,7 +25,6 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
         );
     };
 
-    // Додаємо обробку фізичної клавіатури
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (!chosenCell) return;
@@ -33,7 +32,7 @@ export const NumericKeyboard: React.FC<{ gap?: number }> = () => {
             if (e.key >= "1" && e.key <= "9") {
                 handleKeyPress(e.key);
             } else if (e.key === "0" || e.key === "Backspace") {
-                handleKeyPress("0"); // або видалити
+                handleKeyPress("0"); 
             }
         };
 

@@ -155,10 +155,10 @@ appTheme = createTheme(appTheme, {
     h1: {
       fontSize: "48px",
       [appTheme.breakpoints.down("md")]: {
-        fontSize: "40px",   // планшет
+        fontSize: "40px",   
       },
       [appTheme.breakpoints.down("sm")]: {
-        fontSize: "32px",   // телефон
+        fontSize: "32px",  
       },
     },
     h2: {
