@@ -52,17 +52,17 @@ export default function LoginButton({
                     display: "flex",
                     gap: "15px",
                     alignItems: "center",
-                    fontWeight: "100",
+                    fontWeight: "300",
                 }}
             >
-                <Typography variant="h6" sx={{ fontWeight: "100" }}>
+                <Typography variant="h6" sx={{ fontWeight: "300" }}>
                     {user.displayName}
                 </Typography>
                 <Button
                     variant="outlined"
                     color="inherit"
                     sx={{
-                        fontWeight: "100",
+                        fontWeight: "300",
                         borderWidth: 0.1, 
                         borderColor: "currentColor", 
                         "&:hover": {
@@ -85,7 +85,7 @@ export default function LoginButton({
                 color="inherit"
                 fullWidth={fullWidth}
                 sx={{
-                    fontWeight: "100",
+                    fontWeight: "300",
                     borderWidth: 0.1, 
                     borderColor: "rgba(255, 255, 255, 0.1)",
                     "&:hover": {

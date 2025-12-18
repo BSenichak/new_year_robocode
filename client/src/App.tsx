@@ -18,6 +18,8 @@ import LeaderBoard from "./pages/LeaderBorad/LeaderBoard";
 import { Snackbar, Alert } from "@mui/material";
 import { clearError } from "./store/errorSlice";
 
+import Snowfall from "react-snowfall";
+
 export default function App() {
     let dispatch = useDispatch<AppDispatch>();
     let user = useSelector<RootState, RootState["auth"]["user"]>(
@@ -31,6 +33,7 @@ export default function App() {
     }, [user]);
     return (
         <ThemeProvider>
+            <Snowfall style={{ position: "fixed", inset: 0 }} />
             <Snackbar
                 open={Boolean(message)}
                 autoHideDuration={4000}

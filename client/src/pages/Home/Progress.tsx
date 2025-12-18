@@ -104,7 +104,7 @@ export function ProgressCard() {
                 width: "100%",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
                 borderRadius: "24px",
-                p: "24px",
+                p: "12px",
             }}
         >
             <CardContent sx={{ display: "flex", gap: "16px" }}>

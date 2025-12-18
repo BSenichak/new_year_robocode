@@ -52,7 +52,7 @@ const ButtonComponent = ({
                     variant === "contained"
                         ? theme.palette.getContrastText(mainColor)
                         : "#fff",
-                fontWeight: "100",
+                fontWeight: "300",
                 transition: "0.2s",
 
                 "&:hover": {

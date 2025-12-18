@@ -144,7 +144,7 @@ function NavLink({
                 window.scrollTo(0, 0);
             }}
             sx={{
-                fontWeight: "100",
+                fontWeight: "300",
                 justifyContent: "start",
                 p: !fullWidth?"6px 14px": "12px 20px",
                 color: active
