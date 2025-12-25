@@ -1,25 +1,7 @@
 import { Box, Chip, Typography, useTheme } from "@mui/material";
-import QRCode from "easyqrcodejs";
-import { useEffect, useRef } from "react";
 
 export default function ShareImage({ progress }: { progress: number }) {
     const theme = useTheme();
-    const qrRef = useRef<HTMLDivElement | null>(null);
-
-    useEffect(() => {
-        if (!qrRef.current) return;
-        qrRef.current.innerHTML = "";
-
-        new QRCode(qrRef.current, {
-            text: window.location.origin,
-            width: 50,
-            height: 50,
-            colorDark: "white",
-            colorLight: "transparent",
-            correctLevel: QRCode.CorrectLevel.H,
-        });
-    }, []);
-
     return (
         <Box
             id="share-image"
@@ -60,11 +42,6 @@ export default function ShareImage({ progress }: { progress: number }) {
                     color: "black",
                     px: 2,
                 }}
-            />
-
-            <Box
-                ref={qrRef}
-                sx={{ mt: 1, background: "#ffffff14", p: 1, borderRadius: 1 }}
             />
         </Box>
     );
