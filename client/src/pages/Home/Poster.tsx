@@ -116,7 +116,7 @@ export default function Poster() {
                         sx={{
                             display: "flex",
                             flexDirection: "column",
-                            alignItems: "flex-start",
+                            alignItems: isPhone ? "center" : "flex-start",
                         }}
                     >
                         <Typography
@@ -135,6 +135,7 @@ export default function Poster() {
                             display: "flex",
                             flexDirection: "column",
                             justifyContent: "space-between",
+                            alignItems: isPhone ? "center" : "flex-start",
                         }}
                     >
                         <img
@@ -149,7 +150,7 @@ export default function Poster() {
                 </Box>
             </Content>
             <Youtube
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=_q3zVO02e8bm4yh5"
+                src="https://www.youtube.com/embed/x7AvsJJdVWs?si=kr3h3DTZO4mxc2jf"
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

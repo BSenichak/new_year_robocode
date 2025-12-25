@@ -59,6 +59,7 @@ export default function ShareModal({ isOpen, closeModal }: any) {
                     files: [file],
                     title: "Мій результат",
                     text: "Подивись мій результат у Robocode!",
+                    url: window.location.href,
                 });
             } else {
                 setSnackbar("Ваш браузер не підтримує пряме поширення.");

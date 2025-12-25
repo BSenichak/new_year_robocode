@@ -52,8 +52,8 @@ export default function LeaderTable() {
         }
         if (isMe) {
             return {
-                background: "rgba(255, 121, 57, 1)",
-                borderLeft: `4px solid $rgba(22, 70, 255, 1)`,
+                background: "rgba(22, 70, 255, 0.1)",
+                borderLeft: `4px solid rgba(22, 70, 255, 1)`,
             };
         }
         return {};
