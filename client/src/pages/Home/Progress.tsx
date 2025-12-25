@@ -16,12 +16,12 @@ export default function Progress() {
     return (
         <Wrapper>
             <Background />
-            <Box sx={{ zIndex: 1 }}>
+            <Box sx={{ zIndex: 1, maxWidth: "1200px" , width: "100%" }}>
                 <Typography variant="h2" color="info.light" textAlign="center">
-                    План порятунку{" "}
+                    Порядок листів відновлюється{" "}
                     <Box component="span" style={{ color: "white" }}>
                         {" "}
-                        вже працює
+                        і Санта радіє!
                     </Box>
                 </Typography>
                 <Typography
@@ -30,9 +30,7 @@ export default function Progress() {
                     textAlign="center"
                     sx={{ my: 3 }}
                 >
-                    Файли повертаються, грінч-хакери нервують. Скільки
-                    залишилось – показує індикатор. Долучайся до команди
-                    помічників!
+                    Скільки залишилося – показує індикатор. Долучайся до команди помічників!
                 </Typography>
                 <ProgressCard />
             </Box>
@@ -206,7 +204,7 @@ export function ProgressCard() {
                                 textAlign="center"
                             >
                                 {Math.ceil(
-                                    (new Date("2026-01-01").getTime() -
+                                    (new Date("2026-01-07").getTime() -
                                         new Date().getTime()) /
                                         (1000 * 60 * 60 * 24)
                                 )}

@@ -1,7 +1,25 @@
 import { Box, Chip, Typography, useTheme } from "@mui/material";
+import QRCode from "easyqrcodejs";
+import { useEffect, useRef } from "react";
 
 export default function ShareImage({ progress }: { progress: number }) {
-    let theme = useTheme();
+    const theme = useTheme();
+    const qrRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        if (!qrRef.current) return;
+        qrRef.current.innerHTML = "";
+
+        new QRCode(qrRef.current, {
+            text: window.location.origin,
+            width: 50,
+            height: 50,
+            colorDark: "white",
+            colorLight: "transparent",
+            correctLevel: QRCode.CorrectLevel.H,
+        });
+    }, []);
+
     return (
         <Box
             id="share-image"
@@ -19,34 +37,34 @@ export default function ShareImage({ progress }: { progress: number }) {
                 margin: "auto",
             }}
         >
-            <Typography variant="h2" fontSize={"5rem"} sx={{ mb: 2 }}>
-                🎄
-            </Typography>
+            <Box sx={{ mb: 3, fontSize: "4rem" }}>🎄</Box>
 
-            <Typography variant="h2" sx={{ textAlign: "center" }}>
+            <Typography variant="h4" sx={{ textAlign: "center" }}>
                 Набрав {progress} очок
             </Typography>
 
-            <Typography variant="body2" sx={{}}>
-                у Різдвяній місії Robocode
-            </Typography>
+            <Typography variant="body2">у Різдвяній місії Robocode</Typography>
+
             <Typography
                 variant="body2"
-                sx={{ mt: 2, color: theme.palette.text.secondary, p: 0 }}
+                sx={{ mt: 2, color: theme.palette.text.secondary }}
             >
                 Хочеш теж спробувати?
             </Typography>
+
             <Chip
                 label="* для топ-3 призи"
-                variant="filled"
                 sx={{
                     mt: 1,
                     background: "rgba(255, 255, 255, 0.5)",
                     color: "black",
-                    pl: 2,
-                    pr: 2,
-                    height: "auto",
+                    px: 2,
                 }}
+            />
+
+            <Box
+                ref={qrRef}
+                sx={{ mt: 1, background: "#ffffff14", p: 1, borderRadius: 1 }}
             />
         </Box>
     );

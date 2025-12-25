@@ -21,7 +21,7 @@ export default function Poster() {
                         background: "rgba(254, 57, 78, 0.2)",
                         padding: "8px 16px",
                         color: "rgba(254, 57, 78, 1)",
-                        fontSize: "14px"
+                        fontSize: "14px",
                     }}
                 />
                 <Typography
@@ -29,20 +29,45 @@ export default function Poster() {
                     sx={{
                         marginY: "2rem",
                         color: (theme) => theme.palette.success.light,
-                        fontSize:"48px"
+                        fontSize: "48px",
                     }}
                 >
                     Різдвяна місія{" "}
                     <span style={{ color: "white" }}>Robocode</span>
                 </Typography>
                 <Typography variant="body1" color="textSecondary">
-                    Злі грінч-хакери взламали комп’ютер Санта Клауса! Злодії
-                    зашифрували файли зі списком дітей та їхніх подарунків. Щоб
-                    допомогти Санті, потрібно відкрити кожен файл. А ключ до
-                    нього – правильно розв’язане судоку!
+                    Після Різдва Санта-Клаус почав перечитувати листи від дітей,
+                    де окрім бажаних подарунків та адрес містилися обіцянки про
+                    добрі справи, які дітки будуть робити наступного року. Але
+                    сталося лихо – листи переплуталися. Обіцянки, імена й адреси
+                    більше не збігаються між собою.
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    sx={{ mt: 1 }}
+                >
+                    Якщо порядок не відновити, Санта не знатиме: хто які добрі
+                    справи обіцяв, хто дотримався своїх слів, і кому за що
+                    дарувати подарунки наступного Різдва.{" "}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    sx={{ mt: 1 }}
+                >
+                    Щоб допомогти Санті, потрібно навести лад у числах.
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="textSecondary"
+                    sx={{ mt: 1 }}
+                >
+                    Судоку – це зашифрований порядок листів. Кожне правильно
+                    розв'язане судоку допомагає повернути листи на свої місця!
                 </Typography>
                 <Chip
-                    label="* Санта обов’язково нагородить топ-помічників"
+                    label="* Санта обов'язково нагородить топ-помічників"
                     sx={{
                         background: (theme) => theme.palette.info.light,
                         marginY: "1rem",
@@ -50,7 +75,7 @@ export default function Poster() {
                         alignSelf: !isPhone ? "flex-start" : "center",
                         p: "2px 0",
                         height: "auto",
-                        lineHeight: "16px"
+                        lineHeight: "16px",
                     }}
                 />
                 <Box
@@ -64,14 +89,19 @@ export default function Poster() {
                     <Button
                         variant="contained"
                         color="primary"
-                        startIcon={<img src="./Accept.svg" style={{height: "20px"}}/>}
+                        startIcon={
+                            <img
+                                src="./Accept.svg"
+                                style={{ height: "20px" }}
+                            />
+                        }
                         sx={{
                             padding: "16px 20px",
                             textTransform: "uppercase",
                             fontSize: "16px",
                             animation: "glowingBlue 2s ease-in-out infinite",
                         }}
-                        onClick={()=>navigate("/decode")}
+                        onClick={() => navigate("/decode")}
                     >
                         Почати місію
                     </Button>
@@ -84,9 +114,9 @@ export default function Poster() {
                             fontSize: "16px",
                             border: "1px solid rgba(255, 255, 255, 0.1)",
                             "&:hover": {
-                            borderWidth: 0.1, 
-                            background: "rgba(147, 50, 214, 1)"
-                        },
+                                borderWidth: 0.1,
+                                background: "rgba(147, 50, 214, 1)",
+                            },
                         }}
                         onClick={() => navigate("/rules")}
                     >
@@ -151,7 +181,6 @@ export default function Poster() {
             </Content>
             <Youtube
                 src="https://www.youtube.com/embed/x7AvsJJdVWs?si=kr3h3DTZO4mxc2jf"
-                title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -200,7 +229,7 @@ let Content = styled(Box)`
 `;
 
 let BluePoint = styled("img")`
-z-index: 0;
+    z-index: 0;
     position: absolute;
     left: 0;
     transform: translate(-50%, -15%);
@@ -209,4 +238,3 @@ z-index: 0;
         display: none;
     }
 `;
-

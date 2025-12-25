@@ -84,8 +84,25 @@ const sudokuSlice = createSlice({
         },
 
         clearValues(state) {
-            state.playerAnswers = Array(81).fill("0");
+            const newAnswers = Array(81).fill("0");
+
+            if (state.sudoku && state.helpedCell) {
+                const { row, col } = state.helpedCell;
+                const index = row * 9 + col;
+
+                newAnswers[index] = state.sudoku.solution[index];
+            }
+
+            state.playerAnswers = newAnswers;
             state.chosenCell = null;
+
+            if (state.sudoku) {
+                state.correctCount = countCorrectMatches(
+                    state.sudoku.puzzle,
+                    state.playerAnswers,
+                    state.sudoku.solution
+                );
+            }
         },
 
         giveHint(state) {

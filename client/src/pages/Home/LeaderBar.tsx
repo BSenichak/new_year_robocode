@@ -37,21 +37,21 @@ export default function LeaderBar() {
                         color="rgba(255, 157, 0, 0.3)"
                         borderColor="rgba(239, 177, 0, 0.5)"
                         title="Перше місце"
-                        text="Безкоштовний курс програмування"
+                        text="Навушники JBL"
                     />
                     <CardItem
                         icon="./2st.png"
                         color="rgba(181, 205, 210, 0.3)"
                         borderColor="rgba(230, 240, 240, 0.5)"
                         title="Друге місце"
-                        text="Робокіт-іграшка + мерч"
+                        text="Колонка JBL"
                     />
                     <CardItem
                         icon="./3st.png"
                         color="rgba(255, 104, 32, 0.3)"
                         borderColor="rgba(255, 121, 57, 0.5)"
                         title="Третє місце"
-                        text="Брендований мерч Robocode"
+                        text="Розумний годинник"
                     />
                 </Cards>
             </Box>
