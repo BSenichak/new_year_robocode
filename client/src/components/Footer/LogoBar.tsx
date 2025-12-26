@@ -1,9 +1,11 @@
 import { Box, Typography, styled } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function LogoBar() {
+    let navigate = useNavigate();
     return (
         <Wrapper>
-            <Logo src="./logo blue.png" alt="logo" />
+            <Logo src="./logo blue.png" alt="logo" onClick={()=>navigate("/")}/>
             <Typography variant="body2" color="textDisabled">
                 Всі права застережено, {new Date().getFullYear()}
             </Typography>
