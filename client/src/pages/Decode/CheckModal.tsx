@@ -67,7 +67,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
         if (!siteKey) {
             return Promise.reject(new Error("reCAPTCHA site key not configured"));
         }
-        return new Promise<string>((resolve, reject) => {
+        return new Promise<string>((_, reject) => {
             loadRecaptcha()
                 .then(() => {
                     (window as any).grecaptcha.render("recaptcha-container", {
