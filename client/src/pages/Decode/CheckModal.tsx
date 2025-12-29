@@ -9,6 +9,7 @@ import {
     useTheme,
     CircularProgress,
     useMediaQuery,
+    Box,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
@@ -42,11 +43,85 @@ export default function CheckModal({ isOpen, closeModal }: any) {
     let user = useSelector<RootState, RootState["auth"]["user"]>(
         (state) => state.auth.user
     );
-    useEffect(() => {
-        if (correct && user && isOpen) {
-            dispatch(victory());
+    // remove automatic victory dispatch; require captcha verification first
+    const [victorySent, setVictorySent] = useState(false);
+    const [captchaLoading, setCaptchaLoading] = useState(false);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+
+    async function loadRecaptcha(): Promise<void> {
+        if (!(window as any).grecaptcha) {
+            return new Promise<void>((resolve, reject) => {
+                const s = document.createElement("script");
+                s.src = "https://www.google.com/recaptcha/api.js";
+                s.async = true;
+                s.onload = () => resolve();
+                s.onerror = () => reject(new Error("recaptcha load error"));
+                document.head.appendChild(s);
+            });
         }
-    }, [correct, user, isOpen]);
+    }
+
+    function runRecaptcha(): Promise<string> {
+        if (!siteKey) {
+            return Promise.reject(new Error("reCAPTCHA site key not configured"));
+        }
+        return new Promise<string>((_, reject) => {
+            loadRecaptcha()
+                .then(() => {
+                    (window as any).grecaptcha.render("recaptcha-container", {
+                        sitekey: siteKey,
+                        callback: onRecaptchaSuccess,
+                    });
+                })
+                .catch(reject);
+        });
+    }
+
+    function onRecaptchaSuccess(token: string) {
+        setCaptchaToken(token);
+    }
+
+    async function ensureVictoryThen(cb?: () => void) {
+        if (victorySent) {
+            cb?.();
+            return;
+        }
+        if (!user) {
+            // not logged in — victory handled elsewhere or not applicable
+            setVictorySent(true);
+            dispatch(victory());
+            cb?.();
+            return;
+        }
+        if (captchaToken) {
+            // captcha already verified
+            dispatch(victory());
+            setVictorySent(true);
+            cb?.();
+            return;
+        }
+        // captcha not yet verified — render it
+        setCaptchaLoading(true);
+        try {
+            await runRecaptcha();
+            // wait for onRecaptchaSuccess callback to set captchaToken
+        } catch (err) {
+            console.error("reCAPTCHA error:", err);
+            setCaptchaLoading(false);
+        }
+    }
+
+    // trigger victory after captcha token is set
+    useEffect(() => {
+        if (captchaToken && victorySent === false && user) {
+            dispatch(victory());
+            setVictorySent(true);
+            setCaptchaLoading(false);
+        }
+    }, [captchaToken, user, dispatch]);
+
     let [shareIsOpen, setShareIsOpen] = useState(false);
     let isPhone = useMediaQuery("(max-width: 639px)");
     if (correct)
@@ -55,7 +130,8 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                 open={isOpen}
                 onClose={() => {
                     if (user && correct) {
-                        dispatch(getSudoku());
+                        // ensure victory already sent before fetching a new puzzle
+                        ensureVictoryThen(() => dispatch(getSudoku()));
                     }
                     closeModal();
                     dispatch(clearCorrectCount());
@@ -95,7 +171,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                 sx={{ position: "absolute", top: 6, right: 6 }}
                                 onClick={() => {
                                     if (user && correct) {
-                                        dispatch(getSudoku());
+                                        ensureVictoryThen(() => dispatch(getSudoku()));
                                     }
                                     closeModal();
                                 }}
@@ -106,6 +182,18 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                             <Typography variant="h5" color="success">
                                 Вітаємо!
                             </Typography>
+                            {captchaLoading && (
+                                <Box
+                                    sx={{
+                                        my: 2,
+                                        p: 2,
+                                        border: "1px solid rgba(255,255,255,0.2)",
+                                        borderRadius: "8px",
+                                    }}
+                                >
+                                    <div id="recaptcha-container" />
+                                </Box>
+                            )}
                             {user ? (
                                 <>
                                     <Typography
@@ -117,7 +205,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                         {difficulties.indexOf(difficulty) + 1}{" "}
                                         ба
                                         {difficulties.indexOf(difficulty) +
-                                        1 ===
+                                            1 ===
                                         1
                                             ? "л"
                                             : "ли"}
@@ -187,7 +275,11 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                     <Button
                                         variant="outlined"
                                         color="inherit"
-                                        onClick={() => setShareIsOpen(true)}
+                                        onClick={() =>
+                                            ensureVictoryThen(() =>
+                                                setShareIsOpen(true)
+                                            )
+                                        }
                                         sx={{
                                             "&:hover": {
                                                 borderWidth: 0.1,
@@ -203,13 +295,19 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                     <Button
                                         variant="contained"
                                         color="success"
-                                        onClick={() => {
-                                            dispatch(getSudoku());
-                                            closeModal();
-                                        }}
+                                        onClick={() =>
+                                            ensureVictoryThen(() => {
+                                                dispatch(getSudoku());
+                                                closeModal();
+                                            })
+                                        }
                                         fullWidth={isPhone}
                                     >
-                                        Наступний файл
+                                        {captchaLoading ? (
+                                            <CircularProgress size={20} />
+                                        ) : (
+                                            "Наступний файл"
+                                        )}
                                     </Button>
                                 </>
                             ) : (
@@ -246,7 +344,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                     sx={{ position: "absolute", top: 6, right: 6 }}
                     onClick={() => {
                         if (user && correct) {
-                            dispatch(getSudoku());
+                            ensureVictoryThen(() => dispatch(getSudoku()));
                         }
                         closeModal();
                     }}
@@ -278,7 +376,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                 <Button
                     variant="outlined"
                     color="inherit"
-                    onClick={() => dispatch(getSudoku())}
+                    onClick={() => ensureVictoryThen(() => dispatch(getSudoku()))}
                     fullWidth={isPhone}
                     sx={{
                         "&:hover": {
