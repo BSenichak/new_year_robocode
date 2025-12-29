@@ -117,7 +117,7 @@ export default function CheckModal({ isOpen, closeModal }: any) {
                                         {difficulties.indexOf(difficulty) + 1}{" "}
                                         ба
                                         {difficulties.indexOf(difficulty) +
-                                            1 ===
+                                        1 ===
                                         1
                                             ? "л"
                                             : "ли"}

@@ -38,7 +38,7 @@ router.get("/sudoku", async (req: Request, res: Response) => {
                 solution: true,
                 array: false,
             }),
-        }).then((res) => res.json());
+        }).then((res) => res.json()).catch((e) => console.log(e));
         const key = getDateKey();
 
         const encrypted = {
