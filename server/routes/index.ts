@@ -3,6 +3,9 @@ import db from "../db";
 const router = Router();
 import type { Request, Response } from "express";
 
+import { SudokuCreator } from "@algorithm.ts/sudoku";
+const creator = new SudokuCreator({ childMatrixWidth: 3 });
+
 function caesarCipher(text: string, shift: number) {
     const chars =
         "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -30,21 +33,20 @@ function getDateKey() {
 
 router.get("/sudoku", async (req: Request, res: Response) => {
     try {
-        const result: any = await fetch("https://youdosudoku.com/api/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                difficulty: req.query.difficulty,
-                solution: true,
-                array: false,
-            }),
-        }).then((res) => res.json()).catch((e) => console.log(e));
+        let difficulty = req.query.difficulty as keyof typeof Difficulty;
+        if (!difficulty)
+            return res.status(400).json({ message: "Invalid difficulty" });
+
+        let diff = difficulty == "easy" ? 0.5 : difficulty == "medium" ? 0.7 : 0.9;
+        const sudoku = creator.createSudoku(diff);
+        let puzzle = sudoku.puzzle.map((r) => normalize(r)).join("");
+        let solution = sudoku.solution.map((r) => normalize(r)).join("");
         const key = getDateKey();
 
         const encrypted = {
-            difficulty: caesarCipher(result.difficulty, key),
-            puzzle: caesarCipher(result.puzzle, key),
-            solution: caesarCipher(result.solution, key),
+            difficulty: caesarCipher(difficulty, key),
+            puzzle: caesarCipher(puzzle, key),
+            solution: caesarCipher(solution, key),
         };
         res.setHeader("x-caesar-key", String(key));
         res.status(200).json(encrypted);
@@ -235,3 +237,7 @@ router.get("/leaderboard", async (req: Request, res: Response) => {
 });
 
 export default router;
+
+function normalize(v: number) {
+    return v === -1 ? 0 : v + 1;
+}

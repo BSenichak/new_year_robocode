@@ -5,6 +5,7 @@
     "": {
       "name": "server",
       "dependencies": {
+        "@algorithm.ts/sudoku": "^4.0.3",
         "@types/cors": "^2.8.19",
         "@types/express": "^5.0.6",
         "@types/express-mysql-session": "^3.0.8",
@@ -29,6 +30,12 @@
     },
   },
   "packages": {
+    "@algorithm.ts/dlx": ["@algorithm.ts/dlx@4.0.3", "", {}, "sha512-fqAT7W43bV/xqTbQMuEgIJR8LJRqtDbl/9Vlhe6juaL6x2w6Zbk8o7HxYdZofK/j8Ed5JHdxbflzBXySB7j+9g=="],
+
+    "@algorithm.ts/shuffle": ["@algorithm.ts/shuffle@4.0.3", "", {}, "sha512-yG6L4K6HjTbl8MDU7bmhN/ZMUr3YIZV6gJa8Genwcp+Mk+cc/Q3Ei7kJWIaSYJaK8/n65Pkm5aNygplnWlHJOQ=="],
+
+    "@algorithm.ts/sudoku": ["@algorithm.ts/sudoku@4.0.3", "", { "dependencies": { "@algorithm.ts/dlx": "^4.0.3", "@algorithm.ts/shuffle": "^4.0.3" } }, "sha512-7jU6hDjyRfflkG9I8+aFHxe50fLqLlSWDdy3d5VR7YRoh07g+UC9aAdD4gzSxvTnjGKf8pYg+oLMlUwJHYMO1g=="],
+
     "@types/body-parser": ["@types/body-parser@1.19.6", "", { "dependencies": { "@types/connect": "*", "@types/node": "*" } }, "sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g=="],
 
     "@types/bun": ["@types/bun@1.3.3", "", { "dependencies": { "bun-types": "1.3.3" } }, "sha512-ogrKbJ2X5N0kWLLFKeytG0eHDleBYtngtlbu9cyBKFtNL3cnpDZkNdQj8flVf6WTZUX5ulI9AY1oa7ljhSrp+g=="],
